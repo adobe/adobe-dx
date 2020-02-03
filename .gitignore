@@ -1,0 +1,27 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+bash.exe.stackdump
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+.DS_Store
+node/
+**/target
+
+**.idea
+.vscode
+.metadata
+.checkstyle
+*.ipr
+*.iml
+*.iws
+.settings/
+.project
+.classpath
+
+.repo
