@@ -22,4 +22,4 @@ jobs:
     - name: build 
       run: |
         echo start maven build...
-        mvn
+        mvn -s settings.xml
