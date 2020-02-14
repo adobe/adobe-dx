@@ -1,10 +1,10 @@
-# Adobe Dx
+# Adobe Dx ![Build](https://github.com/adobe/adobe-dx/workflows/Build/badge.svg)
 
-### Description
+### Description 
 
 A toolkit for AEM to help build exceptional digital experiences.
 
-## building
+#### building DX modules
 
 DX is a set of modules that can be used separately, you can build them all using
  
