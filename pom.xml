@@ -36,7 +36,8 @@
             <id>build-all</id>
             <modules>
                 <module>parent</module>
-		        <module>admin.configmanager</module>
+                <module>bundles/testing</module>
+		        <module>admin-configmanager</module>
                 <module>all</module>
             </modules>
         </profile>

@@ -1,0 +1,20 @@
+{
+  "jcr:primaryType": "sling:Folder",
+  "whatever": {
+    "jcr:primaryType": "sling:Folder",
+    "page": {
+      "jcr:primaryType": "cq:Page",
+      "jcr:content": {
+        "jcr:primaryType": "cq:PageContent",
+        "jcr:title": "Some Random page"
+      }
+    }
+  },
+  "anotherPage": {
+    "jcr:primaryType": "cq:Page",
+    "jcr:content": {
+      "jcr:primaryType": "cq:PageContent",
+      "jcr:title": "Some Random page"
+    }
+  }
+}
