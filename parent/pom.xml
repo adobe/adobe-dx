@@ -495,6 +495,12 @@ ${bundle.additional.properties}
                 <sonar.login>${env.SONAR_TOKEN}</sonar.login>
                 <sonar.organization>adobeinc</sonar.organization>
                 <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco-merged/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+                <sonar.pullrequest.branch>${env.BRANCH_NAME}</sonar.pullrequest.branch>
+                <sonar.pullrequest.key>${env.CHANGE_ID}</sonar.pullrequest.key>
+                <sonar.pullrequest.provider>github</sonar.pullrequest.provider>
+                <sonar.pullrequest.endpoint>https://api.github.com</sonar.pullrequest.endpoint>
+                <sonar.pullrequest.github.repository>adobe/adobe-dx</sonar.pullrequest.github.repository>
+                <sonar.verbose>true</sonar.verbose>
             </properties>
         </profile>
         <profile>
