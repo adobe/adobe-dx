@@ -11,18 +11,26 @@
 name: Build
 
 on: [push, pull_request]
-
+  branches:
+    - master
 jobs:
-  build:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build
+        run: |
+          echo start simple maven build
+          mvn -s settings.xml
+  sonar:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: build
+    - name: sonar
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        echo start maven build...
-          mvn -s settings.xml -U clean verify sonar:sonar -Psonar -Pjacoco-report
+        echo start maven sonar analysis...
+          mvn -s settings.xml -U clean verify sonar:sonar -Psonar -Pjacoco-report -Dsonar.login=${{  secrets.SONAR_TOKEN  }}
