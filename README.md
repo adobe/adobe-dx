@@ -1,4 +1,5 @@
 # Adobe Dx ![Build](https://github.com/adobe/adobe-dx/workflows/Build/badge.svg)
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=com.adobe.dx%3Areactor)](https://sonarcloud.io/dashboard?id=com.adobe.dx%3Areactor)
 
 ### Description 
 
