@@ -24,6 +24,13 @@
 
     <name>Adobe DX - Reactor</name>
 
+    <scm>
+        <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
+        <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
+        <url>https://github.com/adobe/adobe-dx.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
