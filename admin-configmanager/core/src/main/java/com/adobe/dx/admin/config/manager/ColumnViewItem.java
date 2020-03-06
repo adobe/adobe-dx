@@ -15,10 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.admin.config.manager;
 
-import static com.adobe.dx.admin.config.manager.Constants.IGNORED_NODES;
-import static com.adobe.dx.admin.config.manager.Constants.FOLDER_TYPES;
-
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -38,6 +37,10 @@ public class ColumnViewItem {
     private static final String ICON_FOLDER = "folder";
 
     private static final String ICON_CONFIG = "config";
+
+    private static final Collection<String> IGNORED_NODES = Arrays.asList("jcr:content", "rep:policy", "workflow", "granite");
+
+    private static final Collection<String> FOLDER_TYPES = Arrays.asList("nt:folder", "sling:Folder", "sling:OrderedFolder");
 
     @Self
     private Resource resource;
@@ -78,10 +81,8 @@ public class ColumnViewItem {
     }
 
     public String getIconType() {
-        if (primaryType != null) {
-            if (FOLDER_TYPES.contains(primaryType)){
-                return ICON_FOLDER;
-            }
+        if (primaryType != null && FOLDER_TYPES.contains(primaryType)) {
+            return ICON_FOLDER;
         }
         return ICON_CONFIG;
     }

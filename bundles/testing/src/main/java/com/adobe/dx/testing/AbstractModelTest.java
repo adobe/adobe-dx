@@ -20,7 +20,7 @@ import org.apache.sling.models.factory.ModelFactory;
 
 public class AbstractModelTest extends AbstractTest {
 
-    protected <ModelType> ModelType getModel(final Class<ModelType> type) throws IllegalAccessException,
+    protected <T> T getModel(final Class<T> type) throws IllegalAccessException,
         InstantiationException {
         Resource resource = context.currentResource();
         if (resource != null) {

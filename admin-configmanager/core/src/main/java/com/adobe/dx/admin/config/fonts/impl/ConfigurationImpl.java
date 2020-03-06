@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.admin.config.fonts.impl;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -46,6 +47,11 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 )
 public class ConfigurationImpl implements Configuration {
 
+    static final List DEFAULT_QUICK_ACTIONS = Arrays.asList("cq-confadmin-actions-properties-activator",
+        "cq-confadmin-actions-publish-activator",
+        "cq-confadmin-actions-unpublish-activator",
+        "cq-confadmin-actions-delete-activator");
+
     private static final String CONF_CONTAINER_BUCKET_NAME = "settings";
 
     private static final String CLOUDCONFIG_BUCKET_NAME = "cloudconfigs";
@@ -67,9 +73,7 @@ public class ConfigurationImpl implements Configuration {
     @PostConstruct
     private void init() {
         pageResource = request.getResource();
-        if (pageResource != null) {
-            page = pageResource.adaptTo(Page.class);
-        }
+        page = pageResource.adaptTo(Page.class);
     }
 
     @Override

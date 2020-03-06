@@ -15,7 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.admin.config.fonts.impl;
 
-import static com.adobe.dx.admin.config.fonts.Configuration.DEFAULT_QUICK_ACTIONS;
+import static com.adobe.dx.admin.config.fonts.impl.ConfigurationImpl.DEFAULT_QUICK_ACTIONS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -55,15 +55,15 @@ public class ConfigurationImplTest extends AbstractModelTest {
     }
 
     @Test
-    public void testLastModified() {
+    void testLastModified() {
         assertEquals("admin", defaultConfiguration.getLastModifiedBy());
         assertNotNull(defaultConfiguration.getLastModifiedDate());
         assertEquals(EXPECTED_DATE_VALUE, getDateString(defaultConfiguration.getLastModifiedDate()));
     }
 
-    @Disabled //@todo when https://wcm-io.atlassian.net/browse/WTES-51 is fixed and consumed
+    @Disabled(value="@todo remove when https://wcm-io.atlassian.net/browse/WTES-51 is fixed and consumed")
     @Test
-    public void testLastPublished() {
+    void testLastPublished() {
         assertNotNull(defaultConfiguration.getLastPublishedDate());
         assertEquals(EXPECTED_DATE_VALUE, getDateString(defaultConfiguration.getLastPublishedDate()));
     }
@@ -76,19 +76,19 @@ public class ConfigurationImplTest extends AbstractModelTest {
     }
 
     @Test
-    public void testQuickActions() throws Exception {
+    void testQuickActions() throws Exception {
         assertEquals(DEFAULT_QUICK_ACTIONS, defaultConfiguration.getQuickactionsRels());
         assertTrue(getConfiguration(WHATEVER_PAGE).getQuickactionsRels().isEmpty());
     }
 
     @Test
-    public void testHasChildren() throws Exception {
+    void testHasChildren() throws Exception {
         assertTrue(getConfiguration(".").hasChildren());
         assertFalse(getConfiguration(CLOUD_CONF_NOTPAGE).hasChildren());
     }
 
     @Test
-    public void testGetTitle() throws Exception{
+    void testGetTitle() throws Exception{
         assertEquals("Cloud Configuration",
             defaultConfiguration.getTitle(),
             "title should be Cloud Configuration");

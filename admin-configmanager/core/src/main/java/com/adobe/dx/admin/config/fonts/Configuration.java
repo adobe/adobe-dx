@@ -34,11 +34,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Configuration {
 
-    List DEFAULT_QUICK_ACTIONS = Arrays.asList("cq-confadmin-actions-properties-activator",
-        "cq-confadmin-actions-publish-activator",
-        "cq-confadmin-actions-unpublish-activator",
-        "cq-confadmin-actions-delete-activator");
-
     /**
      * Returns the title of the item.
      * 

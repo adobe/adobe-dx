@@ -21,6 +21,7 @@ import java.util.Map;
 import com.adobe.dx.admin.config.fonts.Settings;
 import com.adobe.dx.admin.config.fonts.SettingsProvider;
 import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageEvent;
 import com.day.cq.wcm.api.PageManager;
 
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -38,13 +39,11 @@ import org.slf4j.LoggerFactory;
 public class SettingsProviderImpl implements SettingsProvider {
     private static final Logger LOG = LoggerFactory.getLogger(SettingsProviderImpl.class);
 
-    private static String CONF_CONTAINER_BUCKET_NAME = "settings";
+    private static final String CONF_CONTAINER_BUCKET_NAME = "settings";
 
-    public static String CLOUDCONFIG_PARENT = "cloudconfigs";
+    private static final String CLOUDCONFIG_PARENT = "cloudconfigs/";
 
-    static final String SERVICE_USER = "repository-reader-service";
-
-    static final String CONFIG_HEADER_SUFFIX = "/cloudconfig-header/cloudconfig-header";
+    private static final String SERVICE_USER = "repository-reader-service";
 
     @Reference
     private ResourceResolverFactory resolverFactory;
@@ -54,11 +53,13 @@ public class SettingsProviderImpl implements SettingsProvider {
 
     @Override
     public Settings getSettings(SlingHttpServletRequest request, String configName) {
-        String configPath = CLOUDCONFIG_PARENT  + "/" + configName;
+        String configPath = CLOUDCONFIG_PARENT + configName;
         Map<String, Object> serviceMap = Collections.singletonMap(ResourceResolverFactory.SUBSERVICE, SERVICE_USER);
         try (ResourceResolver configResolver = resolverFactory.getServiceResourceResolver(serviceMap)) {
             LOG.trace("Obtaining ResourceResolver with service user [{}]", SERVICE_USER);
-            Resource environmentResource = getEnvironmentResource(configResolver, request, configPath);
+            PageManager pageManager = request.getResourceResolver().adaptTo(PageManager.class);
+            Page currentPage = pageManager.getContainingPage(request.getResource());
+            Resource environmentResource = getEnvironmentResource(pageManager, currentPage, configPath);
             if (environmentResource != null) {
                 return environmentResource.adaptTo(Settings.class);
             }
@@ -68,26 +69,18 @@ public class SettingsProviderImpl implements SettingsProvider {
         return null;
     }
 
-    private Resource getEnvironmentResource(ResourceResolver resolver, SlingHttpServletRequest request, String configPath) throws LoginException {
-        PageManager pageMgr = resolver.adaptTo(PageManager.class);
-        Page page = pageMgr != null ? pageMgr.getContainingPage(request.getResource()) : null;
-        if (page != null && page.hasContent()) {
-            LOG.trace("Resolving context-aware configuration for resource [{}]", page.getContentResource().getPath());
-            Resource configResource = configResourceResolver.getResource(
-                    page.getContentResource(),
-                    CONF_CONTAINER_BUCKET_NAME,
-                    configPath);
-            if (configResource != null) {
-                Page configPage = pageMgr.getContainingPage(configResource);
-                if (configPage != null) {
-                    return configPage.hasContent() ? configPage.getContentResource() : null;
-                }
-            } else {
-                LOG.debug("No configuration found.");
-            }
+    private Resource getEnvironmentResource(PageManager pageManager, Page currentPage, String configPath) {
+        Page configPage = null;
+        LOG.trace("Resolving context-aware configuration for resource [{}]", currentPage.getContentResource().getPath());
+        Resource configResource = configResourceResolver.getResource(
+                currentPage.getContentResource(),
+                CONF_CONTAINER_BUCKET_NAME,
+                configPath);
+        if (configResource != null) {
+            configPage = pageManager.getContainingPage(configResource);
         } else {
-            LOG.debug("Resource [{}] is not adaptable to Page or has no content", request != null ? request.getResource() : null);
+            LOG.debug("No configuration found.");
         }
-        return null;
+        return configPage != null && configPage.hasContent() ? configPage.getContentResource() : null;
     }
 }

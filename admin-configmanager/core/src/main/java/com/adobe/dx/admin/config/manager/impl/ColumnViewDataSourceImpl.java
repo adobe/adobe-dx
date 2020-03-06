@@ -16,6 +16,7 @@
 package com.adobe.dx.admin.config.manager.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.adobe.dx.admin.config.manager.ColumnViewDataSource;
@@ -41,14 +42,8 @@ public class ColumnViewDataSourceImpl implements ColumnViewDataSource {
     @SlingObject(injectionStrategy = InjectionStrategy.REQUIRED)
     private ResourceResolver resourceResolver;
 
-    @PostConstruct
-    private void init() {
-
-    }
-
     @Override
     public List<ColumnViewItem> getItems() {
-        List<ColumnViewItem> children = new ArrayList<>();
         Resource conf = resourceResolver.getResource(CONF_ROOT);
         if (conf != null) {
             ColumnViewItem item = conf.adaptTo(ColumnViewItem.class);
@@ -56,7 +51,7 @@ public class ColumnViewDataSourceImpl implements ColumnViewDataSource {
                 return item.getChildren();
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 
 }

@@ -24,9 +24,4 @@ public final class Constants {
     }
 
     public static final String CONF_ROOT = "/conf";
-
-    public static final Collection<String> IGNORED_NODES = Arrays.asList("jcr:content", "rep:policy", "workflow", "granite");
-
-    public static final Collection<String> FOLDER_TYPES = Arrays.asList("nt:folder", "sling:Folder", "sling:OrderedFolder");
-
 }
