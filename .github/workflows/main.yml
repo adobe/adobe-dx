@@ -19,12 +19,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: sonarsource/sonarcloud-github-action@master
+    - name: build
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    - name: build 
       run: |
         echo start maven build...
-        mvn -s settings.xml
-
+          mvn -s settings.xml -U clean verify sonar:sonar -Psonar -Pjacoco-report
