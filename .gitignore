@@ -9,6 +9,12 @@ pids
 *.pid
 *.seed
 
+# dist files
+**/dist/
+
+# Dependency directory
+node_modules
+
 .DS_Store
 node/
 **/target
@@ -23,5 +29,5 @@ node/
 .settings/
 .project
 .classpath
-
+.history
 .repo
