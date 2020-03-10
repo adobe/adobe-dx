@@ -13,8 +13,7 @@ you are expected to uphold this code. Please report unacceptable behavior to
 ## Contribution Stack
 
 Adobe DX is built and used on top of [AEM core components](https://github.com/adobe/aem-core-wcm-components), built on top of 
-AEM, built on top of [Apache Sling](https://sling.apache.org). Please take time considering where should sit your 
-contribution.
+AEM, built on top of [Apache Sling](https://sling.apache.org). Please take time considering where your contribution should sit.
 
 ## Have A Question?
 
