@@ -10,6 +10,11 @@ This project adheres to the Adobe [code of conduct](../CODE_OF_CONDUCT.md). By p
 you are expected to uphold this code. Please report unacceptable behavior to
 [Grp-opensourceoffice@adobe.com](mailto:Grp-opensourceoffice@adobe.com).
 
+## Contribution Stack
+
+Adobe DX is built and used on top of [AEM core components](https://github.com/adobe/aem-core-wcm-components), built on top of 
+AEM, built on top of [Apache Sling](https://sling.apache.org). Please take time considering where your contribution should sit.
+
 ## Have A Question?
 
 Start by filing an issue. The existing committers on this project work to reach
