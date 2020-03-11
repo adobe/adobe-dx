@@ -4,7 +4,8 @@
   "description": "Adobe fonts",
   "main": "index.js",
   "scripts": {
-    "aemsync": "aemsync -w jcr_root",
+    "aemlibs": "webpack --watch --progress",
+    "aemsync": "aemsync -w src/main/content/jcr_root",
     "build-production": "webpack --mode=production",
     "test": "jest 2>&1",
     "test-coverage": "./node_modules/.bin/jest --coverage 2>&1",
