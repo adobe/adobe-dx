@@ -38,7 +38,7 @@ public class ConfigurationImplTest extends AbstractModelTest {
     private static final String CLOUD_CONF =  "settings/cloudconfigs/some";
     private static final String CLOUD_CONF_NOTPAGE = "settings/cloudconfigs/some/notPage";
     private static final String WHATEVER_PAGE = "whatever/page";
-    private static final String EXPECTED_DATE_VALUE = "20180215";
+    private static final String EXPECTED_DATE_VALUE = "20180214";
     private static final String SDF = "yyyyMMdd";
 
     Configuration defaultConfiguration;
