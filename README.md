@@ -18,6 +18,10 @@ command at the root of the project.
 
 Contributions are welcomed! Read the [Contributing Guide](./.github/CONTRIBUTING.md) for more information.
 
+### Discussion
+
+For ongoing discussions related to adobe-dx, see [the adobe-dx-dev page](https://github.com/orgs/adobe/teams/adobe-dx-devs).
+
 ### Licensing
 
 This project is licensed under the Apache V2 License. See [LICENSE](LICENSE) for more information.
