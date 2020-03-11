@@ -21,8 +21,8 @@
           "jcr:title": "Cloud Configuration",
           "projectId": "foo",
           "cq:lastModifiedBy": "admin",
-          "cq:lastModified": "Wed Feb 14 2018 19:23:26 GMT-0500",
-          "cq:lastReplicated": "Wed Feb 14 2018 19:23:26 GMT-0500",
+          "cq:lastModified": "Wed Feb 14 2018 19:23:26 GMT+0100",
+          "cq:lastReplicated": "Wed Feb 14 2018 19:23:26 GMT+0100",
           "cq:lastReplicatedBy": "admin",
           "cq:lastReplicationAction": "Activate",
           "cq:template": "/some/cloud/config"
