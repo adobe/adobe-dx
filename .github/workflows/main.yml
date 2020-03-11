@@ -22,7 +22,7 @@ jobs:
       - name: maven clean install
         run: |
           echo start simple maven build
-          mvn -s settings.xml
+          mvn --no-transfer-progress -s settings.xml
   sonar:
     name: Test - SonarCloud Scan
     runs-on: ubuntu-latest
@@ -34,4 +34,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo start maven sonar analysis...
-          mvn -s settings.xml -U clean verify sonar:sonar -Psonar -Pjacoco-report -Dsonar.login=${{  secrets.SONAR_TOKEN  }}
+          mvn --no-transfer-progress -s settings.xml -U clean verify sonar:sonar -Psonar -Pjacoco-report -Dsonar.login=${{  secrets.SONAR_TOKEN  }}

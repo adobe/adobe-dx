@@ -13,6 +13,13 @@ pids
 node/
 **/target
 
+# js
+node_modules/
+**/dist/**
+
+# VSCode history plugin
+.history
+
 **.idea
 .vscode
 .metadata
