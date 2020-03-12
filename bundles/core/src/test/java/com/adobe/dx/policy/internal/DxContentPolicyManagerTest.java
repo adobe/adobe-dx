@@ -32,27 +32,54 @@ import org.junit.jupiter.api.Test;
 
 class DxContentPolicyManagerTest extends AbstractTest {
 
-    ContentPolicy mockContentPolicy(String path) {
+    void mockAddContentPolicy(Bindings bindings) {
+        final String POLICY_PATH = "/blah";
+        context.build().resource(POLICY_PATH, "k1", "v12", "k2", "v22");
         ContentPolicy policy = mock(ContentPolicy.class);
         when(policy.getProperties())
-            .thenReturn(context.resourceResolver().getResource(path).getValueMap());
-        return policy;
+            .thenReturn(context.resourceResolver().getResource(POLICY_PATH).getValueMap());
+        bindings.put(NAME_CURRENT_CONTENT_POLICY, policy);
+    }
+
+    void mockAddResource(Bindings bindings) {
+        context.build().resource(CONTENT_ROOT, "k1", "v11").commit();
+        bindings.put(SlingBindings.RESOURCE,  context.resourceResolver().getResource(CONTENT_ROOT));
     }
 
     @Test
     void addBindings() {
         Bindings bindings = new SimpleBindings();
-        final String POLICY_PATH = "/blah";
-        context.build().resource(POLICY_PATH, "k1", "v12", "k2", "v22");
-        context.build().resource(CONTENT_ROOT, "k1", "v11").commit();
-        bindings.put(SlingBindings.RESOURCE,  context.resourceResolver().getResource(CONTENT_ROOT));
-        bindings.put(NAME_CURRENT_CONTENT_POLICY, mockContentPolicy(POLICY_PATH));
+        mockAddContentPolicy(bindings);
+        mockAddResource(bindings);
+        ValueMap vm = computeVM(bindings);
+        assertEquals(2, vm.size(), "there should be 2 items in that VM");
+        assertEquals("v11", vm.get("k1", String.class), "first one comes from comp resource");
+        assertEquals("v22", vm.get("k2", String.class), "second one comes from policy resource");
+    }
+
+    ValueMap computeVM(Bindings bindings) {
         DxContentPolicyManager mgr = new DxContentPolicyManager();
         mgr.addBindings(bindings);
         ValueMap vm = (ValueMap)bindings.get("dxPolicy");
         assertNotNull(vm);
-        assertEquals(2, vm.size(), "there should be 2 items in that VM");
+        return vm;
+    }
+
+    @Test
+    void addBindingsNoContentPolicy() {
+        Bindings bindings = new SimpleBindings();
+        mockAddResource(bindings);
+        ValueMap vm = computeVM(bindings);
+        assertEquals(1, vm.size(), "there should be 1 items in that VM");
         assertEquals("v11", vm.get("k1", String.class), "first one comes from comp resource");
-        assertEquals("v22", vm.get("k2", String.class), "second one comes from policy resource");
+    }
+
+    @Test
+    void addBindingsNoResource() {
+        Bindings bindings = new SimpleBindings();
+        mockAddContentPolicy(bindings);
+        DxContentPolicyManager mgr = new DxContentPolicyManager();
+        mgr.addBindings(bindings);
+        assertNull(bindings.get("dxPolicy"));
     }
 }

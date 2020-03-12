@@ -25,6 +25,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.scripting.SlingBindings;
 import org.apache.sling.api.wrappers.CompositeValueMap;
 import org.apache.sling.scripting.api.BindingsValuesProvider;
+import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 
@@ -43,13 +44,19 @@ public class DxContentPolicyManager implements BindingsValuesProvider {
     private static final String KEY = "dxPolicy";
 
     @Override
-    public void addBindings(Bindings bindings) {
+    public void addBindings(@NotNull Bindings bindings) {
         if (!bindings.containsKey(KEY)) {
             Resource resource = bindings.containsKey(SlingBindings.RESOURCE)
                 ? (Resource) bindings.get(SlingBindings.RESOURCE) : null;
-            ContentPolicy policy = bindings.containsKey(NAME_CURRENT_CONTENT_POLICY)
-                ? (ContentPolicy) bindings.get(NAME_CURRENT_CONTENT_POLICY) : null;
-            bindings.put(KEY, new CompositeValueMap(resource.getValueMap(), policy.getProperties()));
+            if (resource != null) {
+                ContentPolicy policy = bindings.containsKey(NAME_CURRENT_CONTENT_POLICY)
+                    ? (ContentPolicy) bindings.get(NAME_CURRENT_CONTENT_POLICY) : null;
+                if (policy != null) {
+                    bindings.put(KEY, new CompositeValueMap(resource.getValueMap(), policy.getProperties()));
+                } else {
+                    bindings.put(KEY, resource.getValueMap());
+                }
+            }
         }
     }
 }
