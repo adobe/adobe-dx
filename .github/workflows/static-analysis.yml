@@ -8,18 +8,21 @@
 #OF ANY KIND, either express or implied. See the License for the specific language
 #governing permissions and limitations under the License.
 
-name: Build
+name: Static analysis
 
-on: [push, pull_request]
+on: push
 
 jobs:
 
-  test:
-    name: Test - Units & Integrations
+  sonar:
+    name: Test - SonarCloud Scan
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: maven clean install
-        run: |
-          echo start simple maven build
-          mvn --no-transfer-progress -s settings.xml
+    - uses: actions/checkout@v2
+    - name: sonar
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo start maven sonar analysis...
+          mvn --no-transfer-progress -s settings.xml -U clean verify sonar:sonar -Psonar -Pjacoco-report -Dsonar.login=${{  secrets.SONAR_TOKEN  }}
