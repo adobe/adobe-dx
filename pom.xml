@@ -45,8 +45,9 @@
                 <module>parent</module>
                 <module>bundles/testing</module>
                 <module>bundles/core</module>
-		        <module>admin-configmanager</module>
-                <module>all</module>
+		        <module>apps/admin</module>
+                <module>apps/structure</module>
+                <module>apps/all</module>
             </modules>
         </profile>
     </profiles>

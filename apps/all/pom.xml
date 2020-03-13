@@ -25,7 +25,7 @@
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
         <version>0-SNAPSHOT</version>
-        <relativePath>../parent/pom.xml</relativePath>
+        <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
     <!-- ====================================================================== -->
@@ -47,15 +47,19 @@
                 <extensions>true</extensions>
                 <configuration>
                     <group>com.adobe.dx</group>
-                    <name>dx.admin.configmanager</name>
-                    <filters>
-                        <filter><root>/apps/dx/config"</root></filter>
-                    </filters>
+                    <name>dx.all</name>
                     <embeddeds>
                         <embedded>
                             <groupId>com.adobe.dx</groupId>
-                            <artifactId>dx.admin.configmanager</artifactId>
-                            <target>/apps/dx/install</target>
+                            <artifactId>dx.admin</artifactId>
+                            <target>/apps/dx-packages/application/install</target>
+                            <filter>true</filter>
+                        </embedded>
+                        <embedded>
+                            <groupId>com.adobe.dx</groupId>
+                            <artifactId>dx.structure</artifactId>
+                            <target>/apps/dx-packages/application/install</target>
+                            <filter>true</filter>
                         </embedded>
                     </embeddeds>
                 </configuration>
@@ -69,7 +73,13 @@
     <dependencies>
         <dependency>
             <groupId>com.adobe.dx</groupId>
-            <artifactId>dx.admin.configmanager</artifactId>
+            <artifactId>dx.admin</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.dx</groupId>
+            <artifactId>dx.structure</artifactId>
             <version>0.1-SNAPSHOT</version>
             <type>zip</type>
         </dependency>

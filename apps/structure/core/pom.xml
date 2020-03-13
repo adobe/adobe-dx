@@ -19,13 +19,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.adobe.dx</groupId>
-        <artifactId>admin.configmanager.reactor</artifactId>
+        <artifactId>structure.reactor</artifactId>
         <version>0.1-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
-    <artifactId>admin.configmanager.core</artifactId>
+    <artifactId>structure.core</artifactId>
     <name>${module.name} - Core bundle</name>
-    <description>Core bundle for config manager</description>
+    <description>Core bundle for structure components</description>
     <build>
         <plugins>
             <plugin>
