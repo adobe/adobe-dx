@@ -23,10 +23,10 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <properties>
-        <module.name>${project.prefix} - Admin - Config manager</module.name>
+        <module.name>${project.prefix} - Admin</module.name>
     </properties>
     <name>${module.name}</name>
-    <artifactId>admin.configmanager.reactor</artifactId>
+    <artifactId>admin.reactor</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
