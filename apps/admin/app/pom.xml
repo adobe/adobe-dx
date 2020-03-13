@@ -49,7 +49,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <group>com.adobe.dx</group>
-                    <name>admin.configmanager.ui.apps</name>
+                    <name>admin.ui.apps</name>
                     <filters>
                         <filter><root>/apps/cq/core/content/nav/tools/cloudservices/configManager</root></filter>
                         <filter><root>/apps/dx/adobe-fonts</root></filter>
@@ -58,7 +58,7 @@
                     <embeddeds>
                         <embedded>
                             <groupId>com.adobe.dx</groupId>
-                            <artifactId>admin.configmanager.core</artifactId>
+                            <artifactId>admin.core</artifactId>
                             <target>/apps/dx/install</target>
                         </embedded>
                     </embeddeds>
@@ -128,7 +128,7 @@
     <dependencies>
         <dependency>
             <groupId>com.adobe.dx</groupId>
-            <artifactId>admin.configmanager.core</artifactId>
+            <artifactId>admin.core</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
