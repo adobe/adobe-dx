@@ -12,7 +12,11 @@ DX is a set of modules that can be used separately, you can build them all using
 ```mvn```
 
 command at the root of the project.
-`all` package contains all modules.  
+`all` package contains all modules. 
+
+if you want your build to be directly installed to your local aem instance, just add `install-all` maven profile
+
+```mvn -Pinstall-all``` 
 
 ### Contributing
 
