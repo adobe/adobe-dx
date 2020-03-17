@@ -13,13 +13,14 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.dx.policy.internal;
+package com.adobe.dx.bindings.internal;
 
 import static com.day.cq.wcm.scripting.WCMBindingsConstants.NAME_CURRENT_CONTENT_POLICY;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.adobe.dx.bindings.internal.DxBindingsValueProvider;
 import com.adobe.dx.testing.AbstractTest;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 
@@ -30,7 +31,7 @@ import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.api.scripting.SlingBindings;
 import org.junit.jupiter.api.Test;
 
-class DxContentPolicyManagerTest extends AbstractTest {
+class DxBindingsValueProviderTest extends AbstractTest {
 
     void mockAddContentPolicy(Bindings bindings) {
         final String POLICY_PATH = "/blah";
@@ -58,7 +59,7 @@ class DxContentPolicyManagerTest extends AbstractTest {
     }
 
     ValueMap computeVM(Bindings bindings) {
-        DxContentPolicyManager mgr = new DxContentPolicyManager();
+        DxBindingsValueProvider mgr = new DxBindingsValueProvider();
         mgr.addBindings(bindings);
         ValueMap vm = (ValueMap)bindings.get("dxPolicy");
         assertNotNull(vm);
@@ -78,7 +79,7 @@ class DxContentPolicyManagerTest extends AbstractTest {
     void addBindingsNoResource() {
         Bindings bindings = new SimpleBindings();
         mockAddContentPolicy(bindings);
-        DxContentPolicyManager mgr = new DxContentPolicyManager();
+        DxBindingsValueProvider mgr = new DxBindingsValueProvider();
         mgr.addBindings(bindings);
         assertNull(bindings.get("dxPolicy"));
     }
