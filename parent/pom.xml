@@ -255,6 +255,8 @@
                             <exclude>**/.github/**</exclude>
                             <!-- Ignore babelrc -->
                             <exclude>.babelrc</exclude>
+                            <!-- Ignore js test and coverage reports -->
+                            <exclude>**/js_reports/**</exclude>
                             <!-- Ignore mockito extensions config -->
                             <exclude>**/test/resources/mockito-extensions/*</exclude>
                         </excludes>

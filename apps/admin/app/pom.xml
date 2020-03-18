@@ -126,7 +126,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>test-coverage</arguments>
+                            <arguments>run test-coverage</arguments>
                         </configuration>
                     </execution>
                 </executions>
