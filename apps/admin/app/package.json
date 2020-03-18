@@ -7,7 +7,7 @@
     "aemsync": "aemsync -w src/main/content/jcr_root",
     "build-production": "NODE_ENV=production webpack --mode=production",
     "test": "jest 2>&1",
-    "test-coverage": "./node_modules/.bin/jest --coverage 2>&1",
+    "test-coverage": "./node_modules/.bin/jest --coverage --coverage-reporters=lcov 2>&1",
     "test-watch": "./node_modules/.bin/jest --watch --colors",
     "watch": "webpack --mode=production --watch --progress"
   },

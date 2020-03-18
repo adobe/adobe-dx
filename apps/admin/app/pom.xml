@@ -121,12 +121,12 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>npm test</id>
+                        <id>npm test and coverage</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>test</arguments>
+                            <arguments>test-coverage</arguments>
                         </configuration>
                     </execution>
                 </executions>
