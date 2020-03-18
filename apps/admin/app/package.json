@@ -7,7 +7,7 @@
     "aemsync": "aemsync -w src/main/content/jcr_root",
     "build-production": "NODE_ENV=production webpack --mode=production",
     "test": "jest 2>&1",
-    "test-coverage": "./node_modules/.bin/jest --coverage 2>&1",
+    "test-coverage": "./node_modules/.bin/jest --coverage --coverage-reporters=lcov 2>&1",
     "test-watch": "./node_modules/.bin/jest --watch --colors",
     "watch": "webpack --mode=production --watch --progress"
   },
@@ -40,9 +40,9 @@
   },
   "dependencies": {
     "@adobe/spectrum-css": "2.9.0",
+    "@babel/runtime": "^7.8.7",
     "@react/collection-view": "file:react-collection-view-4.1.5.tgz",
-    "@react/react-spectrum": "file:react-react-spectrum-2.25.0.tgz",
-    "@babel/runtime": "^7.8.7"
+    "@react/react-spectrum": "file:react-react-spectrum-2.25.0.tgz"
   },
   "resolutions": {
     "@react/collection-view": "file:react-collection-view-4.1.5.tgz"
@@ -54,6 +54,7 @@
       "!**/dist/**",
       "!.history/**"
     ],
+    "coverageDirectory": "js_reports/coverage",
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/.jestconfig/__mocks__/styleMock.js"
     },

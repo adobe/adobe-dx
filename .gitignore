@@ -22,6 +22,7 @@ node/
 # js
 node_modules/
 **/dist/**
+**/js_reports/**
 
 # VSCode history plugin
 .history
