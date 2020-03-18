@@ -17,6 +17,7 @@ package com.adobe.dx.bindings.internal;
 
 import static com.day.cq.wcm.scripting.WCMBindingsConstants.NAME_CURRENT_CONTENT_POLICY;
 
+import com.adobe.dx.responsive.ResponsiveService;
 import com.adobe.dx.responsive.internal.ResponsiveProperties;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 
@@ -30,6 +31,7 @@ import org.apache.sling.scripting.api.BindingsValuesProvider;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 @Component(service = BindingsValuesProvider.class,
     property = {
@@ -47,7 +49,8 @@ public class DxBindingsValueProvider implements BindingsValuesProvider {
 
     private static final String RESP_PROPS_KEY = "respProperties";
 
-    public static final String[] BREAKPOINTS = new String[] {"Mobile", "Tablet", "Desktop"};
+    @Reference
+    ResponsiveService responsiveService;
 
     @Override
     public void addBindings(@NotNull Bindings bindings) {
@@ -60,7 +63,7 @@ public class DxBindingsValueProvider implements BindingsValuesProvider {
                 ValueMap dxPolicy = policy != null ? new CompositeValueMap(resource.getValueMap(), policy.getProperties()) :
                     resource.getValueMap();
                 bindings.put(POLICY_KEY, dxPolicy);
-                bindings.put(RESP_PROPS_KEY, new ResponsiveProperties(BREAKPOINTS, dxPolicy));
+                bindings.put(RESP_PROPS_KEY, new ResponsiveProperties(responsiveService.getBreakpoints(), dxPolicy));
             }
         }
     }

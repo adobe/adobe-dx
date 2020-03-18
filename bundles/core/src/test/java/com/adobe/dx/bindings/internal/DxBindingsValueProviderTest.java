@@ -20,7 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.adobe.dx.bindings.internal.DxBindingsValueProvider;
+import com.adobe.dx.responsive.ResponsiveService;
+import com.adobe.dx.responsive.internal.ResponsiveServiceImpl;
 import com.adobe.dx.testing.AbstractTest;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 
@@ -32,7 +33,7 @@ import org.apache.sling.api.scripting.SlingBindings;
 import org.junit.jupiter.api.Test;
 
 class DxBindingsValueProviderTest extends AbstractTest {
-
+    
     void mockAddContentPolicy(Bindings bindings) {
         final String POLICY_PATH = "/blah";
         context.build().resource(POLICY_PATH, "k1", "v12", "k2", "v22");
@@ -47,6 +48,13 @@ class DxBindingsValueProviderTest extends AbstractTest {
         bindings.put(SlingBindings.RESOURCE,  context.resourceResolver().getResource(CONTENT_ROOT));
     }
 
+    DxBindingsValueProvider getProvider() {
+        context.registerInjectActivateService(new ResponsiveServiceImpl());
+        DxBindingsValueProvider mgr = new DxBindingsValueProvider();
+        mgr.responsiveService = context.getService(ResponsiveService.class);
+        return mgr;
+    }
+
     @Test
     void addBindings() {
         Bindings bindings = new SimpleBindings();
@@ -59,7 +67,7 @@ class DxBindingsValueProviderTest extends AbstractTest {
     }
 
     ValueMap computeVM(Bindings bindings) {
-        DxBindingsValueProvider mgr = new DxBindingsValueProvider();
+        DxBindingsValueProvider mgr = getProvider();
         mgr.addBindings(bindings);
         ValueMap vm = (ValueMap)bindings.get("dxPolicy");
         assertNotNull(vm);
@@ -79,8 +87,7 @@ class DxBindingsValueProviderTest extends AbstractTest {
     void addBindingsNoResource() {
         Bindings bindings = new SimpleBindings();
         mockAddContentPolicy(bindings);
-        DxBindingsValueProvider mgr = new DxBindingsValueProvider();
-        mgr.addBindings(bindings);
+        getProvider().addBindings(bindings);
         assertNull(bindings.get("dxPolicy"));
     }
 }

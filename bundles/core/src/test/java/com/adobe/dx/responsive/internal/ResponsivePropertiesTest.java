@@ -15,13 +15,12 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.responsive.internal;
 
-import static com.adobe.dx.bindings.internal.DxBindingsValueProvider.BREAKPOINTS;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.adobe.dx.testing.AbstractTest;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.resource.Resource;
@@ -30,33 +29,43 @@ import org.junit.jupiter.api.Test;
 
 class ResponsivePropertiesTest extends AbstractTest {
 
-    Object getProperty(final String[] breakpoints, String key, Object...entries) {
+    String[] BREAKPOINTS = new String[] {"Mobile", "Tablet", "Desktop"};
+
+    LinkedHashMap<String,String> getProperty(final String[] breakpoints, String key, Object...entries) {
         String path = "/content/" + StringUtils.join(Arrays.asList(entries), "/");
         context.build().resource(path, entries).commit();
         Resource resource = context.resourceResolver().getResource(path);
         ResponsiveProperties responsiveProperties = new ResponsiveProperties(breakpoints, resource.getValueMap());
-        return responsiveProperties.get(key);
+        return (LinkedHashMap<String,String>)responsiveProperties.get(key);
+    }
+
+    void assertLinkedHashMapEqual(String message, LinkedHashMap<String,String> result, String... properties) {
+        LinkedHashMap<String,String> expected = new LinkedHashMap<>();
+        for (int i = 0; i < properties.length; i += 2) {
+            expected.put(properties[i], properties[i+1]);
+        }
+        assertEquals(expected, result, message);
     }
 
     @Test
     void get() {
-        assertEquals(12,
+        assertLinkedHashMapEqual("three widths are provided",
             getProperty(BREAKPOINTS, "width", "widthTablet", 34,"widthMobile", 12, "widthDesktop", 43),
-            "width should be mobile's");
-        assertEquals(34,
+            "mobile", "12", "tablet", "34", "desktop", "43");
+        assertLinkedHashMapEqual("no mobile",
             getProperty(BREAKPOINTS, "width", "widthTablet", 34, "widthDesktop", 43),
-            "width should be tablet's");
-        assertEquals(43,
+            "mobile", null, "tablet", "34", "desktop", "43");
+        assertLinkedHashMapEqual("only desktop",
             getProperty(BREAKPOINTS, "width", "widthDesktop", 43),
-            "width should be desktop's");
-        assertEquals(true,
+            "mobile", null, "tablet", null, "desktop", "43");
+        assertLinkedHashMapEqual("should work with boolean too...",
             getProperty(BREAKPOINTS, "inherit", "inheritMobile", true, "inheritDesktop", false),
-            "should work with boolean too...");
-        assertEquals("bar",
-            getProperty(BREAKPOINTS, "foo", "fooTablet", "bar", "fooDesktop", "blah"),
-            "...and strings");
+            "mobile", "true", "tablet", null, "desktop", "false");
         assertNull(getProperty(BREAKPOINTS, "height", "blah", 34,"foo", 12),
             "no value should be null");
+        assertNull(getProperty(BREAKPOINTS, "height", "blah", 34,"foo", 12,"heightDesktop", ""),
+            "blank value should be null");
+        assertNull(new ResponsiveProperties(BREAKPOINTS, ValueMap.EMPTY).get(null));
     }
 
     @Test

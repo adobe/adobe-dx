@@ -17,9 +17,11 @@
 package com.adobe.dx.responsive.internal;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -41,11 +43,16 @@ public class ResponsiveProperties implements Map<String, Object> {
     @Override
     public Object get(Object key) {
         if (key != null) {
+            boolean empty = true;
+            LinkedHashMap<String,String> breakpointValues = new LinkedHashMap<>();
             for (String breakpoint : breakpoints) {
                 String respKey = key + breakpoint;
-                if (properties.containsKey(respKey)) {
-                    return properties.get(respKey);
-                }
+                String value = properties.get(respKey, String.class);
+                empty &= StringUtils.isBlank(value);
+                breakpointValues.put(breakpoint.toLowerCase(), value);
+            }
+            if (!empty) {
+                return breakpointValues;
             }
         }
         return null;
