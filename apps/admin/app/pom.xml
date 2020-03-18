@@ -91,6 +91,17 @@
                             <goal>install-node-and-npm</goal>
                         </goals>
                     </execution>
+                    <!-- collection-view must be installed explicitly otherwise npm
+                         tries to download from registry.npmjs.org -->
+                    <execution>
+                        <id>npm install collection-view</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install react-collection-view-4.1.5.tgz</arguments>
+                        </configuration>
+                    </execution>
                     <execution>
                         <id>npm install</id>
                         <goals>
