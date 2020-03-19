@@ -48,6 +48,10 @@
                 <artifactId>filevault-package-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
+                    <packageType>application</packageType>
+                    <properties>
+                        <cloudManagerTarget>none</cloudManagerTarget>
+                    </properties>
                     <group>com.adobe.dx</group>
                     <name>admin.apps</name>
                     <filters>
@@ -73,8 +77,6 @@
                 <groupId>org.apache.sling</groupId>
                 <artifactId>htl-maven-plugin</artifactId>
             </plugin>
-            <!-- Disable js building until Issue #26 is resolved -->
-            <!--
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
@@ -89,6 +91,17 @@
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
+                    </execution>
+                    <!-- collection-view must be installed explicitly otherwise npm
+                         tries to download from registry.npmjs.org -->
+                    <execution>
+                        <id>npm install collection-view</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install react-collection-view-4.1.5.tgz</arguments>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>npm install</id>
@@ -109,17 +122,16 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>npm test</id>
+                        <id>npm test and coverage</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>test</arguments>
+                            <arguments>run test-coverage</arguments>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            -->
         </plugins>
     </build>
 
