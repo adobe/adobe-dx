@@ -4,13 +4,12 @@
   "description": "Adobe fonts",
   "main": "index.js",
   "scripts": {
-    "aemlibs": "webpack --watch --progress",
     "aemsync": "aemsync -w src/main/content/jcr_root",
-    "build-production": "webpack --mode=production",
+    "build-production": "NODE_ENV=production webpack --mode=production",
     "test": "jest 2>&1",
-    "test-coverage": "./node_modules/.bin/jest --coverage 2>&1",
+    "test-coverage": "./node_modules/.bin/jest --coverage --coverage-reporters=lcov 2>&1",
     "test-watch": "./node_modules/.bin/jest --watch --colors",
-    "watch": "webpack --mode=development --watch --progress"
+    "watch": "webpack --mode=production --watch --progress"
   },
   "author": "",
   "license": "Apache-2.0",
@@ -28,12 +27,14 @@
     "css-loader": "^3.4.2",
     "ignore-loader": "^0.1.2",
     "jest": "^25.1.0",
+    "jest-sonar-reporter": "^2.0.0",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "style-loader": "^1.1.3",
     "terser-webpack-plugin": "^2.3.5",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11"
@@ -41,7 +42,11 @@
   "dependencies": {
     "@adobe/spectrum-css": "2.9.0",
     "@babel/runtime": "^7.8.7",
-    "@react/react-spectrum": "^2.28.0"
+    "@react/collection-view": "file:react-collection-view-4.1.5.tgz",
+    "@react/react-spectrum": "file:react-react-spectrum-2.25.0.tgz"
+  },
+  "resolutions": {
+    "@react/collection-view": "file:react-collection-view-4.1.5.tgz"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -50,6 +55,7 @@
       "!**/dist/**",
       "!.history/**"
     ],
+    "coverageDirectory": "js_reports/coverage",
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/.jestconfig/__mocks__/styleMock.js"
     },
@@ -59,6 +65,11 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "<rootDir>/.history/"
-    ]
+    ],
+    "testResultsProcessor": "jest-sonar-reporter"
+  },
+  "jestSonar": {
+    "reportPath": "js_reports",
+    "reportFile": "test-reporter.xml"
   }
 }
