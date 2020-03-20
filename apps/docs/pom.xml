@@ -22,9 +22,9 @@
     <!-- ====================================================================== -->
     <parent>
         <groupId>com.adobe.dx</groupId>
-        <artifactId>structure.reactor</artifactId>
-        <version>0.1-SNAPSHOT</version>
-        <relativePath>..</relativePath>
+        <artifactId>parent</artifactId>
+        <version>0-SNAPSHOT</version>
+        <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
     <!-- ====================================================================== -->
