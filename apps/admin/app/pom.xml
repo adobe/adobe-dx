@@ -62,7 +62,7 @@
                     <embeddeds>
                         <embedded>
                             <groupId>com.adobe.dx</groupId>
-                            <artifactId>admin.core</artifactId>
+                            <artifactId>com.adobe.dx.admin.core</artifactId>
                             <target>/apps/dx/install</target>
                             <filter>true</filter>
                         </embedded>
@@ -141,8 +141,8 @@
     <dependencies>
         <dependency>
             <groupId>com.adobe.dx</groupId>
-            <artifactId>admin.core</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <artifactId>com.adobe.dx.admin.core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>

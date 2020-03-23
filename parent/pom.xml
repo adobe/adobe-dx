@@ -716,6 +716,12 @@ ${bundle.additional.properties}
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+                <groupId>com.adobe.dx</groupId>
+                <artifactId>com.adobe.dx.testing</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

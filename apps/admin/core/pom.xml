@@ -90,9 +90,7 @@
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>
-            <artifactId>testing</artifactId>
-            <version>0-SNAPSHOT</version>
-            <scope>test</scope>
+            <artifactId>com.adobe.dx.testing</artifactId>
         </dependency>
     </dependencies>
 </project>
