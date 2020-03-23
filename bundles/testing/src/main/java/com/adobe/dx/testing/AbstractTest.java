@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.testing;
 
+import org.apache.sling.api.resource.ValueMap;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.apache.sling.testing.mock.caconfig.ContextPlugins.CACONFIG;
@@ -33,4 +34,7 @@ public class AbstractTest {
         .plugin(CACONFIG)
         .build();
 
+    protected ValueMap getVM(String path) {
+        return context.resourceResolver().getResource(path).getValueMap();
+    }
 }

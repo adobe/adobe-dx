@@ -20,10 +20,10 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>admin.reactor</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.0.1-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
-    <artifactId>admin.core</artifactId>
+    <artifactId>com.adobe.dx.admin.core</artifactId>
     <name>${module.name} - Core bundle</name>
     <description>Core bundle for admin utilities</description>
     <build>

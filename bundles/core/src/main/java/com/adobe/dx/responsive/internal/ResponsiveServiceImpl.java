@@ -25,13 +25,8 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
-@Component(
-    immediate = true,
-    configurationPolicy = ConfigurationPolicy.REQUIRE
-)
-@Designate(
-    ocd= ResponsiveServiceImpl.Configuration.class
-)
+@Component(configurationPolicy = ConfigurationPolicy.REQUIRE)
+@Designate(ocd= ResponsiveServiceImpl.Configuration.class)
 public class ResponsiveServiceImpl implements ResponsiveService {
 
     Configuration configuration;
@@ -50,15 +45,9 @@ public class ResponsiveServiceImpl implements ResponsiveService {
     @ObjectClassDefinition(name = "Adobe DX Responsive Settings")
     public @interface Configuration {
 
-        /**
-         * Site Locale Key.
-         *
-         * @return unique key that identifies this config.
-         */
         @AttributeDefinition(
-            name = "Site Locale Key",
-            description = "A unique key that identifies this config. The key is also used as a "
-                + "placeholder key."
+            name = "Breakpoints",
+            description = "ordered list of breakpoints"
         )
         @SuppressWarnings("squid:S00100")
         String[] breakpoints() default {"Mobile", "Tablet", "Desktop"};
