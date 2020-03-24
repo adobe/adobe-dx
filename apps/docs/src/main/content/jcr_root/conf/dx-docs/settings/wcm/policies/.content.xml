@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
+    jcr:mixinTypes="[cq:ReplicationStatus,rep:AccessControllable]"
+    jcr:primaryType="cq:Page">
+    <wcm jcr:primaryType="nt:unstructured">
+        <foundation jcr:primaryType="nt:unstructured">
+            <components jcr:primaryType="nt:unstructured">
+                <responsivegrid jcr:primaryType="nt:unstructured">
+                    <dx-structure
+                        jcr:description="Policy for templates to allow structure components"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="DX Structure"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="[group:DX]"
+                        policyResourceType="wcm/foundation/components/responsivegrid">
+                        <cq:authoring jcr:primaryType="nt:unstructured">
+                            <assetToComponentMapping jcr:primaryType="nt:unstructured">
+                                <image
+                                    jcr:primaryType="nt:unstructured"
+                                    assetGroup="media"
+                                    assetMimetype="image/*"
+                                    droptarget="image"
+                                    resourceType="dx-docs/components/content/image"
+                                    type="Images"/>
+                                <fragment
+                                    jcr:primaryType="nt:unstructured"
+                                    assetGroup="media"
+                                    assetMimetype="text/html"
+                                    droptarget="fragment"
+                                    resourceType="dam/cfm/components/contentfragment"
+                                    type="Content Fragment"/>
+                            </assetToComponentMapping>
+                        </cq:authoring>
+                        <jcr:content
+                            jcr:mixinTypes="[cq:ReplicationStatus]"
+                            jcr:primaryType="nt:unstructured"
+                            mergeList="{Boolean}true"/>
+                    </dx-structure>
+                    <dx-root
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="DX Root"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="[group:DXDOCS.content]">
+                        <jcr:content
+                            jcr:mixinTypes="[cq:ReplicationStatus]"
+                            jcr:primaryType="nt:unstructured"
+                            mergeList="{Boolean}true"/>
+                    </dx-root>
+                </responsivegrid>
+            </components>
+        </foundation>
+    </wcm>
+    <dx jcr:primaryType="nt:unstructured">
+        <components jcr:primaryType="nt:unstructured">
+            <structure jcr:primaryType="nt:unstructured">
+                <page jcr:primaryType="nt:unstructured">
+                    <dx-design
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="DX Page Design"
+                        sling:resourceType="wcm/core/components/policy/policy">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                    </dx-design>
+                </page>
+            </structure>
+        </components>
+    </dx>
+</jcr:root>

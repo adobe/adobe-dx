@@ -674,6 +674,12 @@ ${bundle.additional.properties}
                 <scope>compile</scope>
             </dependency>
             <dependency>
+                <groupId>com.adobe.cq</groupId>
+                <artifactId>core.wcm.components.all</artifactId>
+                <version>2.8.0</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
                 <groupId>com.adobe.dx</groupId>
                 <artifactId>repository-structure</artifactId>
                 <version>0-SNAPSHOT</version>
