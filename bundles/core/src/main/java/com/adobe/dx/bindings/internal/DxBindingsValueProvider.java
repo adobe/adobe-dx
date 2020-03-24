@@ -31,6 +31,7 @@ import org.apache.sling.scripting.api.BindingsValuesProvider;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 @Component(service = BindingsValuesProvider.class,
@@ -38,7 +39,8 @@ import org.osgi.service.component.annotations.Reference;
         Constants.SERVICE_RANKING + ":Integer=1500",
         "javax.script.name=sightly",
         "javax.script.name=sling-models"
-    }
+    },
+    configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 /**
  * provides DX bindings

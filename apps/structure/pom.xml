@@ -27,7 +27,7 @@
     </properties>
     <name>${module.name}</name>
     <artifactId>structure.reactor</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>core</module>

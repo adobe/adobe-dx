@@ -25,6 +25,7 @@
         <aem.publish.host>localhost</aem.publish.host>
         <aem.publish.port>4503</aem.publish.port>
         <aem.contextPath />
+        <sling.url>http://${aem.host}:${aem.port}${aem.contextPath}</sling.url>
         <aem.java.version>8</aem.java.version>
         <bnd.version>4.2.0</bnd.version>
         <bundle.additional.properties></bundle.additional.properties>
@@ -226,6 +227,8 @@
                             <exclude>**/.vltignore</exclude>
                             <!-- Ignore .vlt files -->
                             <exclude>**/.vlt</exclude>
+                            <!-- Ignore .config files -->
+                            <exclude>**/*.config</exclude>
                             <!-- Ignore .svg files -->
                             <exclude>**/*.svg</exclude>
                             <!-- Exclude all JSON files -->
@@ -276,6 +279,16 @@
                     <version>1.2.0-1.4.0</version>
                     <configuration>
                         <failOnWarnings>true</failOnWarnings>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.sling</groupId>
+                    <artifactId>sling-maven-plugin</artifactId>
+                    <version>2.4.0</version>
+                    <configuration>
+                        <slingUrl>${sling.url}/system/console</slingUrl>
+                        <user>${sling.user}</user>
+                        <password>${sling.password}</password>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -427,7 +440,7 @@ ${bundle.additional.properties}
                     <artifactId>content-package-maven-plugin</artifactId>
                     <version>1.0.2</version>
                     <configuration>
-                        <targetURL>http://${aem.host}:${aem.port}${aem.contextPath}/crx/packmgr/service.jsp</targetURL>
+                        <targetURL>${sling.url}/crx/packmgr/service.jsp</targetURL>
                         <failOnError>true</failOnError>
                         <verbose>true</verbose>
                         <userId>${vault.user}</userId>
@@ -702,6 +715,12 @@ ${bundle.additional.properties}
                         <artifactId>commons-lang3</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.adobe.dx</groupId>
+                <artifactId>com.adobe.dx.testing</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
