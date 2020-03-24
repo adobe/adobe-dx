@@ -4,6 +4,6 @@
     <jcr:content
         cq:templateType="/conf/dx-docs/settings/wcm/template-types/base-page"
         jcr:primaryType="cq:PageContent"
-        jcr:title="Full Width Page"
+        jcr:title="DX Docs content page"
         status="enabled"/>
 </jcr:root>

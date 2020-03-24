@@ -4,6 +4,6 @@
     <jcr:content
         jcr:primaryType="cq:PageContent"
         jcr:title="DX Documentation"
-        cq:allowedTemplates="[/conf/dx-docs/settings/wcm/templates/full-width]"
-        sling:resourceType="core/wcm/components/page/v2/page"/>
+        cq:allowedTemplates="[/conf/dx-docs/settings/wcm/templates/content-page-template]"
+        sling:resourceType="dx-docs/components/structure/page"/>
 </jcr:root>

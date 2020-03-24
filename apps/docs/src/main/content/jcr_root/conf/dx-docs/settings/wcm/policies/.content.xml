@@ -20,7 +20,7 @@
                                     assetGroup="media"
                                     assetMimetype="image/*"
                                     droptarget="image"
-                                    resourceType="core/wcm/components/image/v2/image"
+                                    resourceType="dx-docs/components/content/image"
                                     type="Images"/>
                                 <fragment
                                     jcr:primaryType="nt:unstructured"
@@ -40,7 +40,7 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="DX Root"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        components="[group:DX]">
+                        components="[group:DXDOCS.content]">
                         <jcr:content
                             jcr:mixinTypes="[cq:ReplicationStatus]"
                             jcr:primaryType="nt:unstructured"

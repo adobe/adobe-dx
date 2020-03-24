@@ -55,8 +55,11 @@
                     <group>com.adobe.dx</group>
                     <name>dx.docs</name>
                     <filters>
+                        <filter><root>/apps/dx-docs</root></filter>
                         <filter><root>/conf/dx-docs</root></filter>
-                        <filter><root>/content/dx-docs</root></filter>
+                        <filter><root>/content/dx-docs/jcr:content</root></filter>
+                        <filter><root>/content/dx-docs/us/jcr:content</root></filter>
+                        <filter><root>/content/dx-docs/us/en/jcr:content</root></filter>
                     </filters>
                 </configuration>
             </plugin>
@@ -97,8 +100,9 @@
     <dependencies>
         <dependency>
             <groupId>com.adobe.dx</groupId>
-            <artifactId>structure.core</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <artifactId>dx.all</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>zip</type>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>

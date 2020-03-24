@@ -34,6 +34,7 @@
     <artifactId>dx.all</artifactId>
     <packaging>content-package</packaging>
     <name>${project.prefix} - All</name>
+    <version>0.0.1-SNAPSHOT</version>
     <description>All content packages for dx</description>
 
     <!-- ====================================================================== -->
@@ -48,7 +49,6 @@
                 <configuration>
                     <requiresRoot>false</requiresRoot>
                     <filters>
-                        <filter><root>/apps/dx/configs</root></filter>
                         <filter><root>/apps/dx/install</root></filter>
                     </filters>
                     <group>com.adobe.dx</group>

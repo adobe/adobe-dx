@@ -5,7 +5,7 @@
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
         cq:template="/conf/dx-docs/settings/wcm/templates/full-width"
         jcr:primaryType="cq:PageContent"
-        sling:resourceType="core/wcm/components/page/v2/page">
+        sling:resourceType="dx-docs/components/structure/page">
         <root
             jcr:primaryType="nt:unstructured"
             sling:resourceType="wcm/foundation/components/responsivegrid">
@@ -13,7 +13,7 @@
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="wcm/foundation/components/responsivegrid"
                 editable="{Boolean}true">
-                <cq:responsive jcr:primaryType="nt:unstructured"/>
+                <cq:responsive jcr:primaryType="nt:unstructured"></cq:responsive>
             </content>
         </root>
         <cq:responsive jcr:primaryType="nt:unstructured">
