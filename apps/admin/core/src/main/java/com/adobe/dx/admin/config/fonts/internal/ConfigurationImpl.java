@@ -13,7 +13,7 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.dx.admin.config.fonts.impl;
+package com.adobe.dx.admin.config.fonts.internal;
 
 import java.util.Arrays;
 import java.util.Calendar;
