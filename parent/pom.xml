@@ -564,6 +564,37 @@ ${bundle.additional.properties}
                                 </configuration>
                             </execution>
                             <execution>
+                                <id>check-coverage</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <dataFile>${project.build.directory}/jacoco-merged.exec</dataFile>
+                                    <rules>
+                                        <rule>
+                                            <element>BUNDLE</element>
+                                            <limits>
+                                                <limit>
+                                                    <counter>INSTRUCTION</counter>
+                                                    <value>COVEREDRATIO</value>
+                                                    <minimum>0.80</minimum>
+                                                </limit>
+                                            </limits>
+                                        </rule>
+                                        <rule>
+                                            <element>CLASS</element>
+                                            <limits>
+                                                <limit>
+                                                    <counter>INSTRUCTION</counter>
+                                                    <value>COVEREDRATIO</value>
+                                                    <minimum>0.80</minimum>
+                                                </limit>
+                                            </limits>
+                                        </rule>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>report-merged</id>
                                 <phase>verify</phase>
                                 <goals>
