@@ -19,7 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.adobe.dx.admin.config.manager.ColumnViewDataSource;
 import com.adobe.dx.admin.config.manager.ColumnViewItem;
-import com.adobe.dx.testing.AbstractModelTest;
+import com.adobe.dx.admin.config.manager.internal.ColumnViewDataSourceImpl;
+import com.adobe.dx.testing.AbstractRequestModelTest;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ColumnViewDataSourceImplTest extends AbstractModelTest {
+class ColumnViewDataSourceImplTest extends AbstractRequestModelTest {
     @BeforeEach
     private void setup() {
         context.load().json("/mocks/admin.configmanager/configuration-tree.json", CONF_ROOT);

@@ -1,0 +1,56 @@
+{
+  "jcr:primaryType": "sling:Folder",
+  "dx": {
+    "sling:configRef": "/conf/dx",
+    "jcr:primaryType": "sling:OrderedFolder",
+    "settings": {
+      "jcr:primaryType": "sling:Folder",
+      "wcm": {
+        "jcr:primaryType": "cq:Page",
+        "policies": {
+          "jcr:primaryType": "nt:unstructured",
+          "wcm": {
+            "jcr:primaryType": "nt:unstructured",
+            "foundation": {
+              "jcr:primaryType": "nt:unstructured",
+              "components": {
+                "jcr:primaryType": "nt:unstructured"
+              }
+            }
+          }
+        }
+      }
+    },
+    "cq:styleguide": {
+      "jcr:primaryType": "sling:Folder",
+      "colors": {
+        "jcr:primaryType": "nt:unstructured",
+        "red": {
+          "jcr:primaryType": "nt:unstructured",
+          "text": "Red",
+          "value": "#ff0000"
+        }
+      }
+    }
+  },
+  "global": {
+    "jcr:primaryType": "cq:Page",
+    "cq:styleguide": {
+      "jcr:primaryType": "sling:Folder",
+      "colors": {
+        "jcr:primaryType": "nt:unstructured",
+        "red": {
+          "jcr:primaryType": "nt:unstructured",
+          "text": "Red",
+          "value": "#ff0000"
+        }
+      },
+      "components": {
+        "button": {
+            "jcr:primaryType": "nt:unstructured",
+            "resourceTypePath": "dx/components/content/cta"
+        }
+      }
+    }
+  }
+}
