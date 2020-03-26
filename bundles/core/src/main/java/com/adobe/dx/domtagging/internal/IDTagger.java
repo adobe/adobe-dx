@@ -88,11 +88,17 @@ public class IDTagger implements Preprocessor {
             try (ResourceResolver resourceResolver =
                      resourceResolverFactory.getServiceResourceResolver(Collections.singletonMap(SUBSERVICE, SERVICE_NAME))) {
                 Resource currentResource = resourceResolver.getResource(replicationAction.getPath());
-                Page currentPage = currentResource.adaptTo(Page.class);
-                if (currentPage != null) {
-                    //we just tag page resources
-                    tagPage(currentPage);
+                if (currentResource == null) {
+                    LOG.debug("replication action made on a non existing or not readable resource {}, abort", replicationAction.getPath());
+                    return;
                 }
+                Page currentPage = currentResource.adaptTo(Page.class);
+                if (currentPage == null) {
+                    LOG.debug("replication action made on something else than a page, abort {}", currentResource.getPath());
+                    return;
+                }
+                //we just tag page resources
+                tagPage(currentPage);
                 resourceResolver.commit();
             } catch (LoginException | PersistenceException e) {
                 LOG.error("Issues with current user or content, will not tag that resource", e);
