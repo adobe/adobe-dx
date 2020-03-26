@@ -23,6 +23,7 @@ import com.day.cq.replication.ReplicationActionType;
 import com.day.cq.replication.ReplicationException;
 import com.day.cq.replication.ReplicationOptions;
 import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,10 +31,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.AbstractResourceVisitor;
 import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.ModifiableValueMap;
@@ -42,6 +45,9 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.servlets.post.Modification;
+import org.apache.sling.servlets.post.ModificationType;
+import org.apache.sling.servlets.post.SlingPostProcessor;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -55,20 +61,43 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * will tag every untagged component with an id that is meant to be unique and to stick to it
+ * will tag every untagged component with an id that is meant to be unique and to stick to it:
+ *
+ * <ol>
+ *     <li><code>dx_id</code> that are the "almost" unique first 8 chars of paths + date's SHA-1</li>
+ *     <li><code>dx_pageId</code> that are the "almost" unique first 8 chars of page path SHA-1</li>
+ * </ol>
+ *
+ * the tag consists in checking page hash, then if it's absent or inconsistent with current page,
+ * write a new one, together with dx_id
+ *
+ * that operation happens at several times:
+ * <ul>
+ *     <li>each time a post is made to the component, including the first time</li>
+ *     <li>each time the containing page is replicated (this addition is to catch special cases when
+ *     component is copied / live copied without POST request)</li>
+ * </ul>
  */
 @Component(configurationPolicy = ConfigurationPolicy.REQUIRE)
 @Designate(ocd = IDTagger.Configuration.class)
-public class IDTagger implements Preprocessor {
+public class IDTagger implements Preprocessor, SlingPostProcessor {
     private final Logger LOG = LoggerFactory.getLogger(IDTagger.class);
+
+    /**
+     * page id (obtained from path)
+     */
     static final String PN_PAGEHASH = "dx_pageId";
+
+    /**
+     * component id (obtained from path + time salt)
+     */
     static final String PN_COMPID = "dx_id";
 
-    final short ID_SIZE = 8;
+    static final short ID_SIZE = 8;
 
     static final String SERVICE_NAME = "content-writer";
 
-    List<Pattern> acceptedTypes;
+    Function<Resource, Boolean> resourceFilter;
 
     @Reference
     ResourceResolverFactory resourceResolverFactory;
@@ -76,10 +105,24 @@ public class IDTagger implements Preprocessor {
     @Activate
     @Modified
     public void activate(Configuration configuration) {
-        acceptedTypes = new ArrayList<>();
+        List<Pattern> acceptedTypes = new ArrayList<>();
         for (String regexp : configuration.acceptedTypes()) {
             acceptedTypes.add(Pattern.compile(regexp));
         }
+        resourceFilter = getFilter(acceptedTypes);
+    }
+
+    Function<Resource, Boolean> getFilter(List<Pattern> acceptedTypes) {
+        return r -> {
+            if (StringUtils.isNotBlank(r.getResourceType())) {
+                for (Pattern pattern: acceptedTypes) {
+                    if (pattern.matcher(r.getResourceType()).matches()) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
     }
 
     @Override
@@ -109,7 +152,7 @@ public class IDTagger implements Preprocessor {
 
     void tagPage(Page currentPage) {
         String pageHash = getUniqueId(currentPage.getPath(), false);
-        for (Iterator<Resource> componentIterator = new ComponentIterator(acceptedTypes, currentPage.getContentResource());
+        for (Iterator<Resource> componentIterator = new ComponentIterator(resourceFilter, currentPage.getContentResource());
              componentIterator.hasNext();) {
             Resource component = componentIterator.next();
             if (!isResourceTagValid(pageHash, component)) {
@@ -164,29 +207,46 @@ public class IDTagger implements Preprocessor {
         return sha1.substring(0, ID_SIZE);
     }
 
+    @Override
+    public void process(SlingHttpServletRequest slingHttpServletRequest, List<Modification> list) throws Exception {
+        for (Modification modification : list) {
+            LOG.trace("{}", modification);
+            if (ModificationType.CREATE.equals(modification.getType())) {
+                String path = modification.getSource();
+                ResourceResolver resolver = slingHttpServletRequest.getResourceResolver();
+                Resource resource = resolver.getResource(path);
+                if (resourceFilter.apply(resource)) {
+                    PageManager pageManager = resolver.adaptTo(PageManager.class);
+                    Page currentPage = pageManager.getContainingPage(resource);
+                    if (currentPage != null) {
+                        String pageHash = getUniqueId(currentPage.getPath(), false);
+                        if (!isResourceTagValid(pageHash, resource)) {
+                            tagResource(pageHash, resource);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * lists all resource in a resource tree that have resource type corresponding to passed patterns
      */
     static class ComponentIterator extends AbstractResourceVisitor implements Iterator<Resource> {
 
-        Collection<Pattern> acceptedTypes;
+        Function<Resource, Boolean> rFilter;
         List<Resource> internalList = new ArrayList<>();
         Iterator<Resource> internalIT;
 
-        public ComponentIterator(Collection<Pattern> acceptedTypes, Resource root) {
-            this.acceptedTypes = acceptedTypes;
+        public ComponentIterator(Function<Resource, Boolean> filter, Resource root) {
+            rFilter = filter;
             accept(root);
         }
 
         @Override
         protected void visit(@NotNull Resource resource) {
-            if (StringUtils.isNotBlank(resource.getResourceType())) {
-                for (Pattern pattern: acceptedTypes) {
-                    if (pattern.matcher(resource.getResourceType()).matches()) {
-                        internalList.add(resource);
-                        break;
-                    }
-                }
+            if (rFilter.apply(resource)) {
+                internalList.add(resource);
             }
         }
 
