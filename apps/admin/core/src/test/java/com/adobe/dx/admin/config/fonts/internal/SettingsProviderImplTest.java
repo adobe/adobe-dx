@@ -13,7 +13,7 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.dx.admin.config.fonts.impl;
+package com.adobe.dx.admin.config.fonts.internal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -34,7 +34,7 @@ class SettingsProviderImplTest extends AbstractTest {
     private void setup() {
         context.load().json("/mocks/admin.adobefonts/configuration-tree.json", CONF_ROOT);
         context.load().json("/mocks/admin.adobefonts/content-tree.json", CONTENT_ROOT);
-        context.addModelsForPackage("com.adobe.dx.admin.config.fonts.impl");
+        context.addModelsForPackage(SettingsProviderImpl.class.getPackage().getName());
         context.currentResource(CONTENT_ROOT + "/us/en");
         provider = new SettingsProviderImpl();
         context.registerInjectActivateService(provider);

@@ -18,7 +18,7 @@ package com.adobe.dx.testing;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.factory.ModelFactory;
 
-public class AbstractModelTest extends AbstractTest {
+public class AbstractRequestModelTest extends AbstractTest {
 
     protected <T> T getModel(final Class<T> type) throws IllegalAccessException,
         InstantiationException {

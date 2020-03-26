@@ -13,22 +13,22 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.dx.admin.config.fonts.impl;
+package com.adobe.dx.admin.config.fonts.internal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.adobe.dx.admin.config.fonts.Tag;
-import com.adobe.dx.testing.AbstractModelTest;
+import com.adobe.dx.testing.AbstractRequestModelTest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TagImplTest extends AbstractModelTest {
+class TagImplTest extends AbstractRequestModelTest {
     @BeforeEach
     private void setup() {
         context.load().json("/mocks/admin.adobefonts/configuration-tree.json", CONF_ROOT);
         context.load().json("/mocks/admin.adobefonts/content-tree.json", CONTENT_ROOT);
-        context.addModelsForPackage("com.adobe.dx.admin.config.fonts.impl");
+        context.addModelsForPackage(TagImpl.class.getPackage().getName());
         context.registerInjectActivateService(new SettingsProviderImpl());
         context.currentResource(CONTENT_ROOT + "/us/en");
     }

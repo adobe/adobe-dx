@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2019 Adobe
+ ~ Copyright 2020 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -13,9 +13,9 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.dx.admin.config.fonts.impl;
+package com.adobe.dx.admin.config.fonts.internal;
 
-import static com.adobe.dx.admin.config.fonts.impl.ConfigurationImpl.DEFAULT_QUICK_ACTIONS;
+import static com.adobe.dx.admin.config.fonts.internal.ConfigurationImpl.DEFAULT_QUICK_ACTIONS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,9 +31,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import com.adobe.dx.testing.AbstractModelTest;
+import com.adobe.dx.testing.AbstractRequestModelTest;
 
-public class ConfigurationImplTest extends AbstractModelTest {
+public class ConfigurationImplTest extends AbstractRequestModelTest {
 
     private static final String CLOUD_CONF =  "settings/cloudconfigs/some";
     private static final String CLOUD_CONF_NOTPAGE = "settings/cloudconfigs/some/notPage";
@@ -44,7 +44,7 @@ public class ConfigurationImplTest extends AbstractModelTest {
     Configuration defaultConfiguration;
 
     private Configuration getConfiguration(String path) throws Exception {
-        context.addModelsForPackage("com.adobe.dx.admin.config.fonts.impl");
+        context.addModelsForPackage(ConfigurationImpl.class.getPackage().getName());
         return getModel(Configuration.class, CONF_ROOT + "/" + path);
     }
 
