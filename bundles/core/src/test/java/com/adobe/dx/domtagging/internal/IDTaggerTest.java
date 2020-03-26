@@ -28,6 +28,7 @@ import com.day.cq.replication.ReplicationActionType;
 import com.day.cq.replication.ReplicationException;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,8 @@ import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.servlets.post.Modification;
+import org.apache.sling.servlets.post.ModificationType;
 import org.junit.jupiter.api.Test;
 
 class IDTaggerTest extends AbstractTest {
@@ -52,10 +55,11 @@ class IDTaggerTest extends AbstractTest {
 
     @Test
     public void testComponentIterator() {
+        IDTagger tagger = new IDTagger();
         context.load().json("/mocks/domtagging.internal/page-tree.json", CONTENT_ROOT);
         Pattern dx = Pattern.compile("some/dx/.*");
         Pattern other = Pattern.compile("some/other/.*");
-        IDTagger.ComponentIterator iterator = new IDTagger.ComponentIterator(Arrays.asList(dx, other),
+        IDTagger.ComponentIterator iterator = new IDTagger.ComponentIterator(tagger.getFilter(Arrays.asList(dx, other)),
             context.resourceResolver().getResource(CONTENT_ROOT + "/jcr:content"));
         List<String> result = (List<String>) IteratorUtils.toList(iterator).stream()
             .map(r -> ((Resource)r).getPath())
@@ -63,13 +67,17 @@ class IDTaggerTest extends AbstractTest {
         assertEquals(expected, result, "Configured resource types (and only them) should have been grabbed");
     }
 
+    void assertTagged(String path) {
+        ValueMap comp  = getVM(path);
+        assertNotNull(comp.get(PN_PAGEHASH, String.class), "there should be a page hash for " + path);
+        assertNotNull(comp.get(PN_COMPID, String.class), "there should be a component hash for " + path);
+    }
+
     @Test
     public void testFirstTagging() throws Exception {
         firstTag();
         for (String path : expected) {
-            ValueMap comp  = getVM(path);
-            assertNotNull(comp.get(PN_PAGEHASH, String.class), "there should be a page hash for " + path);
-            assertNotNull(comp.get(PN_COMPID, String.class), "there should be a component hash for " + path);
+            assertTagged(path);
         }
     }
 
@@ -102,6 +110,17 @@ class IDTaggerTest extends AbstractTest {
         String newHash = comp.get(PN_COMPID, String.class);
         assertFalse(oldPageHash.equals(pageHash), "page hash should have been updated");
         assertFalse(oldHash.equals(newHash), "comp hash should have been updated");
+    }
+
+    @Test
+    public void testCreation() throws Exception {
+        String path = CONTENT_ROOT + REL_ROOT;
+        IDTagger tagger = firstTag();
+        Modification modification = mock(Modification.class);
+        when(modification.getType()).thenReturn(ModificationType.CREATE);
+        when(modification.getSource()).thenReturn(path);
+        tagger.process(context.request(), Collections.singletonList(modification));
+        assertTagged(path);
     }
 
     @Test
