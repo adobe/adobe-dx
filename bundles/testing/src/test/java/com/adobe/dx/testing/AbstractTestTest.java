@@ -15,30 +15,34 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.testing;
 
+import static com.adobe.dx.testing.AbstractTest.buildContext;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.apache.sling.api.resource.ValueMap;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.apache.sling.testing.mock.caconfig.ContextPlugins.CACONFIG;
-
 import io.wcm.testing.mock.aem.junit5.AemContext;
-import io.wcm.testing.mock.aem.junit5.AemContextBuilder;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 @ExtendWith(AemContextExtension.class)
-public class AbstractTest {
+class AbstractTestTest {
 
-    protected final static String CONTENT_ROOT = "/content/foo";
-    protected final static String CONF_ROOT = "/conf/foo";
+    AemContext context = buildContext();
+    AbstractTest test;
 
-    protected AemContext context = buildContext();
-
-    protected static AemContext buildContext() {
-        return new AemContextBuilder()
-            .plugin(CACONFIG)
-            .build();
+    @BeforeEach
+    public void setup() {
+        test = new AbstractRequestModelTest();
+        test.context = context;
     }
 
-    protected ValueMap getVM(String path) {
-        return context.resourceResolver().getResource(path).getValueMap();
+    @Test
+    public void test() {
+        context.build().resource(AbstractTest.CONTENT_ROOT, "foo", "bar", "blah", 2).commit();
+        ValueMap properties = test.getVM(AbstractTest.CONTENT_ROOT);
+        assertEquals("bar", properties.get("foo"));
+        assertEquals(2, properties.get("blah"));
     }
 }

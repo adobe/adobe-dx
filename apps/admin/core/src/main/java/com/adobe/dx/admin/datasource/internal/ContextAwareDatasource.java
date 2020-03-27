@@ -14,7 +14,7 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-package com.adobe.dx.admin.datasource;
+package com.adobe.dx.admin.datasource.internal;
 
 import com.adobe.granite.ui.components.Config;
 import com.adobe.granite.ui.components.ds.DataSource;
@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.PostConstruct;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -86,7 +88,7 @@ public class ContextAwareDatasource {
 
         final Config cfg = new Config(componentResource.getChild(Config.DATASOURCE));
 
-        String confName = cfg.get(PN_CONF_NAME, String.class);
+        String confName = cfg.get(PN_CONF_NAME, StringUtils.EMPTY);
         String bucketName = cfg.get(PN_BUCKET_NAME, DEFAULT_BUCKET_NAME);
 
         Resource contentResource = getContentResource();
@@ -95,11 +97,9 @@ public class ContextAwareDatasource {
             Collection<Resource> configResources =
                 configurationResolver.getResourceCollection(contentResource, bucketName, confName);
 
-            if (configResources != null) {
-                List<Resource> resourceList = new ArrayList<Resource>(configResources);
-                DataSource dataSource = new SimpleDataSource(resourceList.iterator());
-                request.setAttribute(DataSource.class.getName(), dataSource);
-            }
+            List<Resource> resourceList = new ArrayList<>(configResources);
+            DataSource dataSource = new SimpleDataSource(resourceList.iterator());
+            request.setAttribute(DataSource.class.getName(), dataSource);
         }
     }
 

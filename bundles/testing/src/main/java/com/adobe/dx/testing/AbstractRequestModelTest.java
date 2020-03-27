@@ -20,18 +20,16 @@ import org.apache.sling.models.factory.ModelFactory;
 
 public class AbstractRequestModelTest extends AbstractTest {
 
-    protected <T> T getModel(final Class<T> type) throws IllegalAccessException,
-        InstantiationException {
+    protected <T> T getModel(final Class<T> type) throws ReflectiveOperationException {
         Resource resource = context.currentResource();
         if (resource != null) {
             context.addModelsForClasses(type);
             return context.getService(ModelFactory.class).createModel(context.request(), type);
         }
-        return type.newInstance();
+        return type.getDeclaredConstructor().newInstance();
     }
 
-    protected <ModelType> ModelType getModel(final Class<ModelType> type, String path) throws IllegalAccessException,
-        InstantiationException {
+    protected <ModelType> ModelType getModel(final Class<ModelType> type, String path) throws ReflectiveOperationException {
         context.currentResource(path);
         return getModel(type);
     }

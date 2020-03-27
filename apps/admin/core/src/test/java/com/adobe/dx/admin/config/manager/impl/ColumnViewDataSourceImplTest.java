@@ -37,7 +37,7 @@ class ColumnViewDataSourceImplTest extends AbstractRequestModelTest {
     }
 
     @Test
-    public void testBrowsing() throws InstantiationException, IllegalAccessException {
+    public void testBrowsing() throws ReflectiveOperationException {
         ColumnViewDataSource ds = getModel(ColumnViewDataSource.class);
         List<ColumnViewItem> firstChildren = ds.getItems();
         assertNotNull(firstChildren);

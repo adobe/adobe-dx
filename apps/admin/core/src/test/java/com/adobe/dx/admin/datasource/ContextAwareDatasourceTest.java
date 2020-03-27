@@ -16,6 +16,7 @@
 
 package com.adobe.dx.admin.datasource;
 
+import com.adobe.dx.admin.datasource.internal.ContextAwareDatasource;
 import com.adobe.dx.testing.AbstractTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

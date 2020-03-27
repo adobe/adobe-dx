@@ -19,6 +19,7 @@ import static com.adobe.dx.admin.config.fonts.internal.ConfigurationImpl.DEFAULT
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.adobe.dx.admin.config.fonts.Configuration;
@@ -42,6 +43,7 @@ public class ConfigurationImplTest extends AbstractRequestModelTest {
     private static final String SDF = "yyyyMMdd";
 
     Configuration defaultConfiguration;
+    Configuration notPageConfiguration;
 
     private Configuration getConfiguration(String path) throws Exception {
         context.addModelsForPackage(ConfigurationImpl.class.getPackage().getName());
@@ -52,13 +54,15 @@ public class ConfigurationImplTest extends AbstractRequestModelTest {
     private void setup() throws Exception {
         context.load().json("/mocks/admin.adobefonts/configuration-tree.json", CONF_ROOT);
         defaultConfiguration = getConfiguration(CLOUD_CONF);
+        notPageConfiguration = getConfiguration(CLOUD_CONF_NOTPAGE);
     }
 
     @Test
-    void testLastModified() {
+    void testLastModified() throws Exception {
         assertEquals("admin", defaultConfiguration.getLastModifiedBy());
         assertNotNull(defaultConfiguration.getLastModifiedDate());
         assertEquals(EXPECTED_DATE_VALUE, getDateString(defaultConfiguration.getLastModifiedDate()));
+        assertNull(notPageConfiguration.getLastModifiedDate());
     }
 
     @Disabled(value="@todo remove when https://wcm-io.atlassian.net/browse/WTES-51 is fixed and consumed")
@@ -84,7 +88,7 @@ public class ConfigurationImplTest extends AbstractRequestModelTest {
     @Test
     void testHasChildren() throws Exception {
         assertTrue(getConfiguration(".").hasChildren());
-        assertFalse(getConfiguration(CLOUD_CONF_NOTPAGE).hasChildren());
+        assertFalse(notPageConfiguration.hasChildren());
     }
 
     @Test
@@ -92,8 +96,7 @@ public class ConfigurationImplTest extends AbstractRequestModelTest {
         assertEquals("Cloud Configuration",
             defaultConfiguration.getTitle(),
             "title should be Cloud Configuration");
-        assertEquals("notPage",
-            getConfiguration(CLOUD_CONF_NOTPAGE).getTitle(),
+        assertEquals("notPage", notPageConfiguration.getTitle(),
             "title should be page node name in case no title is there");
     }
 

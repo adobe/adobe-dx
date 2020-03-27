@@ -34,7 +34,7 @@ class TagImplTest extends AbstractRequestModelTest {
     }
 
     @Test
-    public void basicTest() throws InstantiationException, IllegalAccessException {
+    public void basicTest() throws ReflectiveOperationException {
         Tag tag = getModel(Tag.class);
         assertNotNull(tag);
         assertEquals("foo", tag.getEmbedType());
