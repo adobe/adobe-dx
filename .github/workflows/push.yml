@@ -8,7 +8,7 @@
 #OF ANY KIND, either express or implied. See the License for the specific language
 #governing permissions and limitations under the License.
 
-name: Static analysis
+name: CI/CD
 
 on: push
 
@@ -30,6 +30,7 @@ jobs:
       run: |
         echo start maven sonar analysis...
           mvn -B --no-transfer-progress -s settings.xml -U clean verify sonar:sonar -Psonar -Pjacoco-report -Dsonar.login=${{  secrets.SONAR_TOKEN  }}
+
   snapshot:
     name: Publish - GitHub Packages
     runs-on: ubuntu-latest
@@ -41,6 +42,6 @@ jobs:
         with:
           java-version: '11'
       - name: Publish artifact on GitHub Packages
-        run: mvn -B clean deploy -DskipTests
+        run: mvn -B --no-transfer-progress -s settings.xml -U clean deploy -DskipTests
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
