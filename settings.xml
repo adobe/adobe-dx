@@ -41,6 +41,11 @@
                         <enabled>false</enabled>
                     </snapshots>
                 </repository>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub Adobe Apache Maven Packages</name>
+                    <url>https://maven.pkg.github.com/adobe/adobe-dx</url>
+                </repository>
             </repositories>
 
             <pluginRepositories>
@@ -58,5 +63,5 @@
                 </pluginRepository>
             </pluginRepositories>
         </profile>
-	</profiles>	
+	</profiles>
 </settings>
