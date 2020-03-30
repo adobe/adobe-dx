@@ -30,18 +30,3 @@ jobs:
       run: |
         echo start maven sonar analysis...
           mvn -B --no-transfer-progress -s settings.xml -U clean verify sonar:sonar -Psonar -Pjacoco-report -Dsonar.login=${{  secrets.SONAR_TOKEN  }}
-
-  snapshot:
-    name: Publish - GitHub Packages
-    runs-on: ubuntu-latest
-    needs: [sonar]
-    steps:
-      - uses: actions/checkout@v1
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: '11'
-      - name: Publish artifact on GitHub Packages
-        run: mvn -B --no-transfer-progress -s settings.xml -U clean deploy -DskipTests
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
