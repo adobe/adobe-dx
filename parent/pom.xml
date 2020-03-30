@@ -15,7 +15,7 @@
 
     <groupId>com.adobe.dx</groupId>
     <artifactId>parent</artifactId>
-    <version>1</version>
+    <version>1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -61,7 +61,7 @@
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
         <url>https://github.com/adobe/adobe-dx</url>
-        <tag>parent-1</tag>
+        <tag>adobe.dx.reactor.0-SNAPSHOT</tag>
     </scm>
 
     <distributionManagement>
@@ -726,7 +726,7 @@ ${bundle.additional.properties}
             <dependency>
                 <groupId>com.adobe.dx</groupId>
                 <artifactId>repository-structure</artifactId>
-                <version>1</version>
+                <version>1-SNAPSHOT</version>
                 <type>zip</type>
             </dependency>
             <!-- Testing dependencies -->
