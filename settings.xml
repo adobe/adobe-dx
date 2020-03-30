@@ -64,4 +64,11 @@
             </pluginRepositories>
         </profile>
 	</profiles>
+    <servers>
+        <server>
+            <id>github</id>
+            <username>releng</username>
+            <password>${env.GITHUB_TOKEN}</password>
+        </server>
+    </servers>
 </settings>

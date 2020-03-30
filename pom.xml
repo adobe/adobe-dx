@@ -19,7 +19,7 @@
         <version>0-SNAPSHOT</version>
         <relativePath>parent/pom.xml</relativePath>
     </parent>    
-    <artifactId>reactor</artifactId>
+    <artifactId>com.adobe.dx.reactor</artifactId>
     <packaging>pom</packaging>
 
     <name>Adobe DX - Reactor</name>
