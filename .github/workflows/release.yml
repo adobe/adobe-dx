@@ -28,13 +28,14 @@ jobs:
           java-package: jdk
       - name: extract-versions
         run: |
-          echo extract release informations from version name $GITHUB_REF...
-          echo ::set-env VERSION=${GITHUB_REF##*-}
-          export PROJECT=`echo ${GITHUB_REF%-*} |tr _ /`
-          echo ::set-env PROJECT=$PROJECT/pom.xml
+          echo extract release informations from version name ${GITHUB_REF}...
+          export TAG=${GITHUB_REF%/*}
+          echo ::set-env VERSION=${TAG##*-}
+          export PROJECT=`echo ${TAG%-*} |tr _ /`
+          echo ::set-env PROJECT=${PROJECT}/pom.xml
       - name: test-exists
-        run: (test -f $PROJECT && echo Project $PROJECT exists! Going on...) || (echo $PROJECT does not exist, aborting && exit 1)
+        run: (test -f ${PROJECT} && echo Project ${PROJECT} exists! Going on...) || (echo ${PROJECT} does not exist, aborting && exit 1)
       - name: release-prepare
-        run: mvn -f $PROJECT --batch-mode release:prepare -Dtag=$GITHUB_REF release:perform -DreleaseVersion=$VERSION
+        run: mvn -f ${PROJECT} --batch-mode release:prepare release:perform -DreleaseVersion=${VERSION}
       - name: release-perform
-        run: mvn -f $PROJECT --batch-mode release:perform
+        run: mvn -f ${PROJECT} --batch-mode release:perform
