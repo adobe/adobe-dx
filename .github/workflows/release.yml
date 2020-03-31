@@ -29,13 +29,23 @@ jobs:
       - name: extract-versions
         run: |
           echo extract release informations from version name ${GITHUB_REF}...
-          export TAG=${GITHUB_REF%/*}
+          export TAG=${GITHUB_REF##*/}
           echo ::set-env VERSION=${TAG##*-}
           export PROJECT=`echo ${TAG%-*} |tr _ /`
           echo ::set-env PROJECT=${PROJECT}/pom.xml
       - name: test-exists
-        run: (test -f ${PROJECT} && echo Project ${PROJECT} exists! Going on...) || (echo ${PROJECT} does not exist, aborting && exit 1)
+        env:
+          PROJECT: ${{ env.PROJECT }}
+        run: |
+          echo testing existing of ${PROJECT}
+          (test -f ${PROJECT} && echo Project ${PROJECT} exists! Going on...) || (echo ${PROJECT} does not exist, aborting && exit 1)
       - name: release-prepare
+        env:
+          PROJECT: ${{ env.PROJECT }}
+          VERSION: ${{ env.VERSION }}
         run: mvn -f ${PROJECT} --batch-mode release:prepare release:perform -DreleaseVersion=${VERSION}
       - name: release-perform
+        env:
+          PROJECT: ${{ env.PROJECT }}
+          VERSION: ${{ env.VERSION }}
         run: mvn -f ${PROJECT} --batch-mode release:perform
