@@ -23,7 +23,7 @@ jobs:
     - id: log
       run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
     - if: "contains(steps.log.outputs.message, '@releng')"
-      run: echo "exiting...this is a CI commit" && exit 0
+      run: echo "exiting...this is a CI commit" && exit 1
     - uses: actions/setup-java@v1
       with:
         java-version: '11'
