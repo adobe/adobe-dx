@@ -12,11 +12,12 @@ name: Release
 
 on:
   release:
-    types: [prereleased]
+    types: [published]
 
 jobs:
 
-  release:
+  release-assets:
+    if: "github.event.release.prerelease"
     name: Generates release assets
     runs-on: ubuntu-latest
     steps:
