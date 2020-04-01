@@ -35,9 +35,9 @@ jobs:
           export PROJECT=`echo "${TAG%-*}" |tr "_" "/"`
           echo ::set-env name=PROJECT::"${PROJECT}/pom.xml"
       - name: Setup git
-          run: |
-            git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
-            git config --global user.name "$GITHUB_ACTOR"
+        run: |
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config --global user.name "$GITHUB_ACTOR"
       - name: release-prepare
         env:
           PROJECT: ${{ env.PROJECT }}
