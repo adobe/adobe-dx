@@ -26,7 +26,7 @@ jobs:
         with:
           java-version: '11'
           java-package: jdk
-      - name: extract-versions
+      - name: extract-infos
         run: |
           echo extract release informations from version name ${GITHUB_REF}...
           export TAG=${GITHUB_REF##*/}
@@ -34,12 +34,10 @@ jobs:
           echo ::set-env name=VERSION::"${TAG##*-}"
           export PROJECT=`echo "${TAG%-*}" |tr "_" "/"`
           echo ::set-env name=PROJECT::"${PROJECT}/pom.xml"
-      - name: test-exists
-        env:
-          PROJECT: ${{ env.PROJECT }}
-        run: |
-          echo testing existing of ${PROJECT}
-          ((test -f '${PROJECT}' && echo Project ${PROJECT} exists! Going on...) || (echo ${PROJECT} does not exist, aborting));
+      - name: Setup git
+          run: |
+            git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+            git config --global user.name "$GITHUB_ACTOR"
       - name: release-prepare
         env:
           PROJECT: ${{ env.PROJECT }}
