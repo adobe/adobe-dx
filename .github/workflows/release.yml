@@ -22,6 +22,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: master
+      - name: setup git user
+        run: |
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config --global user.name "$GITHUB_ACTOR"
       - uses: actions/setup-java@v1
         with:
           java-version: '11'
@@ -34,10 +40,6 @@ jobs:
           echo ::set-env name=VERSION::"${TAG##*-}"
           export PROJECT=`echo "${TAG%-*}" |tr "_" "/"`
           echo ::set-env name=PROJECT::"${PROJECT}/pom.xml"
-      - name: Setup git
-        run: |
-          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git config --global user.name "$GITHUB_ACTOR"
       - name: release-prepare
         env:
           PROJECT: ${{ env.PROJECT }}
