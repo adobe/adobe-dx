@@ -21,7 +21,7 @@
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
         <version>0-SNAPSHOT</version>
-        <relativePath>../../parent</relativePath>
+        <relativePath>../../parent/dx-parent</relativePath>
     </parent>
     <artifactId>com.adobe.dx.testing</artifactId>
     <name>${project.prefix} - Testing</name>

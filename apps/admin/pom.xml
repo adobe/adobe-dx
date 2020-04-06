@@ -20,7 +20,7 @@
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
         <version>0-SNAPSHOT</version>
-        <relativePath>../../parent/pom.xml</relativePath>
+        <relativePath>../../parent/dx-parent</relativePath>
     </parent>
     <properties>
         <module.name>${project.prefix} - Admin</module.name>
