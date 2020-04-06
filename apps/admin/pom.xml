@@ -24,6 +24,7 @@
     </parent>
     <properties>
         <module.name>${project.prefix} - Admin</module.name>
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
     <name>${module.name}</name>
     <artifactId>admin.reactor</artifactId>

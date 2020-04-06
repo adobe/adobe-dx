@@ -35,6 +35,7 @@
         <java.version>8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.deploy.skip>false</maven.deploy.skip>
         <node.version>v10.13.0</node.version>
         <npm.version>6.4.1</npm.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -152,6 +153,14 @@
                         <releaseProfiles>release</releaseProfiles>
                         <projectVersionPolicyId>OddEvenVersionPolicy</projectVersionPolicyId>
                         <useReleaseProfile>false</useReleaseProfile>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                    <configuration>
+                        <skip>${maven.deploy.skip}</skip>
                     </configuration>
                 </plugin>
                 <plugin>
