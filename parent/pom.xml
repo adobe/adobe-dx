@@ -61,8 +61,8 @@
     <scm>
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
-        <url>https://github.com/adobe/adobe-dx</url>
-        <tag>adobe.dx.reactor.0-SNAPSHOT</tag>
+        <url>https://github.com/adobe/adobe-dx/parent/tree/master</url>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>

@@ -34,6 +34,13 @@
         Any roots in the Code packages of this project should have their parent enumerated in the Filters list below.
     </description>
 
+    <scm>
+        <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
+        <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
+        <url>https://github.com/adobe/adobe-dx/parent/respository-structure/tree/master</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <build>
         <plugins>
             <plugin>
