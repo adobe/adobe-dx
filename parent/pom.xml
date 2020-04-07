@@ -32,7 +32,16 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.prefix>Adobe DX</project.prefix>
         <maven.deploy.skip>false</maven.deploy.skip>
+        <repositoryId>github</repositoryId>
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>github-dx</id>
+            <name>GitHub Adobe DX Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/adobe/adobe-dx</url>
+        </repository>
+    </distributionManagement>
 
     <scm>
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>

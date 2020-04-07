@@ -41,11 +41,6 @@
                         <enabled>false</enabled>
                     </snapshots>
                 </repository>
-                <repository>
-                    <id>github</id>
-                    <name>GitHub Adobe Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/adobe/adobe-dx</url>
-                </repository>
             </repositories>
 
             <pluginRepositories>
@@ -64,11 +59,4 @@
             </pluginRepositories>
         </profile>
 	</profiles>
-    <servers>
-        <server>
-            <id>github</id>
-            <username>releng</username>
-            <password>${env.GITHUB_TOKEN}</password>
-        </server>
-    </servers>
 </settings>

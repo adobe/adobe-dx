@@ -69,14 +69,6 @@
         </license>
     </licenses>
 
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Adobe DX Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/adobe/adobe-dx</url>
-        </repository>
-    </distributionManagement>
-
     <!-- ======================================================================= -->
     <!-- R E P O R T I N G                                                       -->
     <!-- ======================================================================= -->
