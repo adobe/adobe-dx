@@ -29,18 +29,30 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.prefix>Adobe DX</project.prefix>
         <maven.deploy.skip>false</maven.deploy.skip>
-        <repositoryId>github</repositoryId>
+        <repositoryId>github-dx</repositoryId>
     </properties>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <distributionManagement>
         <repository>
-            <id>github-dx</id>
+            <id>${repositoryId}</id>
             <name>GitHub Adobe DX Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/adobe/adobe-dx</url>
         </repository>
+        <snapshotRepository>
+            <id>${repositoryId}</id>
+            <name>GitHub Adobe DX Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/adobe/adobe-dx</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <scm>

@@ -48,9 +48,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <node.version>v10.13.0</node.version>
         <npm.version>6.4.1</npm.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <project.prefix>Adobe DX</project.prefix>
         <sling.user>admin</sling.user>
         <sling.password>admin</sling.password>
         <slf4j.version>1.7.6</slf4j.version>
@@ -60,14 +58,6 @@
     </properties>
 
     <name>${project.prefix} - DX Parent</name>
-
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
 
     <!-- ======================================================================= -->
     <!-- R E P O R T I N G                                                       -->
