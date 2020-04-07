@@ -224,15 +224,6 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>1.6</version>
-                    <configuration>
-                        <gpgArguments>
-                            <arg>--digest-algo=SHA512</arg>
-                        </gpgArguments>
-                    </configuration>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.sling</groupId>
                     <artifactId>htl-maven-plugin</artifactId>
                     <version>1.2.0-1.4.0</version>
