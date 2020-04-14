@@ -14,10 +14,8 @@
  *  limitations under the License.
  */
 import React from 'react';
-
-import getCsrf from '../utils/csrf';
-
 import Dialog from '@react/react-spectrum/Dialog';
+import getCsrf from '../utils/csrf';
 
 const SLING_TREE_SUFFIX = '.1.json';
 
@@ -29,8 +27,8 @@ export default class ConfigDialog extends React.Component {
             this.mode = 'new';
             this.state = {
                 view: window.dx.configManager.configs[props.configKey],
-                config: {}
-            }
+                config: {},
+            };
         }
 
         // Edit Config - Determine what kind of config to edit
@@ -43,9 +41,12 @@ export default class ConfigDialog extends React.Component {
 
     setupEditConfig = async () => {
         const configPath = `${this.props.item.path}${SLING_TREE_SUFFIX}`;
-        const configTree = await fetch(configPath).then(res => {
+        const configTree = await fetch(configPath)
+            .then((res) => {
                 return res.json();
-            }).catch(err => {
+            })
+            .catch((err) => {
+                // eslint-disable-next-line no-console
                 console.log('Error: ', err);
             });
         if (this.props.item.isPage) {
@@ -54,11 +55,12 @@ export default class ConfigDialog extends React.Component {
                 this.setState({ view: window.dx.configManager.configs[configKey] });
                 const config = {
                     name: this.props.item.name,
-                    data: configTree };
+                    data: configTree,
+                };
                 this.setState({ config });
             }
         }
-    }
+    };
 
     getSaveUrl = () => {
         let url = this.props.item.path;
@@ -66,7 +68,7 @@ export default class ConfigDialog extends React.Component {
             url += '/';
         }
         return url;
-    }
+    };
 
     dialogConfirm = async () => {
         const formData = new FormData();
@@ -90,25 +92,25 @@ export default class ConfigDialog extends React.Component {
             method: 'POST',
             credentials: 'same-origin',
             headers: { 'CSRF-Token': csrf.token },
-            body: formData
+            body: formData,
         });
         this.props.onDialogClose(true, true);
-    }
+    };
 
     dialogCancel = () => {
         this.props.onDialogClose(false);
-    }
+    };
 
     onChange = (config) => {
         this.setState({ config });
-    }
+    };
 
     getConfig = () => {
         if (this.state.view) {
             return this.state.view.app;
         }
         return null;
-    }
+    };
 
     empty = () => {
         return null;
@@ -116,7 +118,7 @@ export default class ConfigDialog extends React.Component {
 
     getLabel = () => {
         return this.mode === 'new' ? 'Create' : 'Save';
-    }
+    };
 
     render() {
         const Config = !this.state.config ? this.empty : this.getConfig();
@@ -129,7 +131,8 @@ export default class ConfigDialog extends React.Component {
                 title={this.state.view ? this.state.view.label : ''}
                 mode="fullscreen"
                 confirmLabel={label}
-                cancelLabel="Cancel">
+                cancelLabel="Cancel"
+            >
                 <Config mode={this.mode} setConfig={this.onChange} config={this.state.config} />
             </Dialog>
         );

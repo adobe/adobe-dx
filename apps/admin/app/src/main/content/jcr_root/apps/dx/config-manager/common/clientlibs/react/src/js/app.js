@@ -19,13 +19,13 @@ import ReactDOM from 'react-dom';
 import ConfigManager from './ConfigManager';
 import AdobeFontsConfig from './AdobeFontsConfig';
 
-window.dx = { configManager: { configs: { } } };
+window.dx = { configManager: { configs: {} } };
 
 // Consumer Code
 window.dx.configManager.configs['adobe-fonts'] = {
     label: 'Adobe Fonts',
-    app: AdobeFontsConfig
-}
+    app: AdobeFontsConfig,
+};
 
 const admin = document.getElementById('dx-ContentFrame');
 
@@ -35,4 +35,3 @@ if (admin) {
     };
     ReactDOM.render(<ConfigManager {...props} />, admin);
 }
-
