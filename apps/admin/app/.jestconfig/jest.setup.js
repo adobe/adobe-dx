@@ -14,8 +14,19 @@
  *  limitations under the License.
  */
 
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
+
+// Hide React Warnings for Spectrum Components
+const originalWarn = console.warn.bind(console.warn);
+
+beforeAll(() => {
+    console.warn = (msg) => !msg.toString().includes('react') && originalWarn(msg);
+});
+
+afterAll(() => {
+    console.warn = originalWarn;
+});

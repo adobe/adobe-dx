@@ -1,13 +1,13 @@
 {
     "extends": [
         "airbnb",
-        "plugin:prettier/recommended",
+        "plugin:jest/recommended",
+        "prettier",
         "prettier/standard",
-        "prettier/react",
-        "plugin:jest/recommended"
+        "prettier/react"
     ],
     "parser": "babel-eslint",
-    "plugins": ["prettier", "jest"],
+    "plugins": ["jest"],
     "ignorePatterns": ["webpack.config.js", "node_modules/"],
     "env": {
         "browser": true,
@@ -45,7 +45,6 @@
         ],
         "no-nested-ternary": "off",
         "no-param-reassign": ["error", { "props": false }],
-        "prettier/prettier": ["error"],
         "react/destructuring-assignment": "off",
         "react/jsx-filename-extension": "off",
         "react/jsx-indent-props": ["error", 4],
