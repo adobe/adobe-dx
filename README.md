@@ -3,7 +3,7 @@
 
 ### Description 
 
-A toolkit for AEM to help build exceptional digital experiences, on top of on top of [AEM core components](https://github.com/adobe/aem-core-wcm-components)
+A toolkit for AEM to help build exceptional digital experiences, on top of [AEM core components](https://github.com/adobe/aem-core-wcm-components)
 
 #### building DX modules
 
