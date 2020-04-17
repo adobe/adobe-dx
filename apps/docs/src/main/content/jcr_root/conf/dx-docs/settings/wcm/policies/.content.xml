@@ -11,7 +11,7 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="DX Structure"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        components="[group:DXDOCS.content]"
+                        components="[group:DXDOCS.content,group:DX]"
                         policyResourceType="wcm/foundation/components/responsivegrid">
                         <cq:authoring jcr:primaryType="nt:unstructured">
                             <assetToComponentMapping jcr:primaryType="nt:unstructured">

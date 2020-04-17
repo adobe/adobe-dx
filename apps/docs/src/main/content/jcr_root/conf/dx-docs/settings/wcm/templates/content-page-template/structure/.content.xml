@@ -3,7 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:template="/conf/dx-docs/settings/wcm/templates/full-width"
+        cq:template="/conf/dx-docs/settings/wcm/templates/content-page-template"
         jcr:primaryType="cq:PageContent"
         sling:resourceType="dx-docs/components/structure/page">
         <root

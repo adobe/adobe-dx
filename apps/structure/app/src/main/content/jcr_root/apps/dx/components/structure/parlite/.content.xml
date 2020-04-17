@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     cq:isContainer="{Boolean}true"
     jcr:description="Include components in a paragraph light that does *not* do columns"
-    jcr:title="Paragraph - HTL"/>
+    jcr:title="Parlite - HTL"/>

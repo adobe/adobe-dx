@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2020 Adobe
+ ~ Copyright 2019 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -13,24 +13,7 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-package com.adobe.dx.structure.flex;
-
-import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
-import org.apache.sling.models.annotations.DefaultInjectionStrategy;
-
-@Model(adaptables = { SlingHttpServletRequest.class,
-        Resource.class }, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
-public class FlexModel {
-
-    @SlingObject
-    protected Resource resource;
-
-    public String getHello() {
-        return "Hello";
-    }
-
-}
+ @Version("0.0.1")
+ package com.adobe.dx.structure.flex;
+ 
+ import org.osgi.annotation.versioning.Version;
