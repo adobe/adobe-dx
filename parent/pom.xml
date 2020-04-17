@@ -213,9 +213,8 @@
                             <scmCommentPrefix>@releng [maven-scm] :</scmCommentPrefix>
                             <preparationGoals>clean install</preparationGoals>
                             <goals>deploy</goals>
-                            <releaseProfiles>release</releaseProfiles>
+                            <useReleaseProfile>false</useReleaseProfile>
                             <projectVersionPolicyId>OddEvenVersionPolicy</projectVersionPolicyId>
-                            <releaseProfiles>dx-release</releaseProfiles>
                         </configuration>
                     </plugin>
                 </plugins>
