@@ -62,6 +62,7 @@
                             <groupId>com.adobe.dx</groupId>
                             <artifactId>com.adobe.dx.structure.core</artifactId>
                             <target>/apps/dx/install</target>
+                            <filter>true</filter>
                         </embedded>
                     </embeddeds>
                 </configuration>
