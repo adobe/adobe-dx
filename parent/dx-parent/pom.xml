@@ -45,7 +45,6 @@
         <java.version>8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven.deploy.skip>false</maven.deploy.skip>
         <node.version>v10.13.0</node.version>
         <npm.version>6.4.1</npm.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
