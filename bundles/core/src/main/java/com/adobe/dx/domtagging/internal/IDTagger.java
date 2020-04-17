@@ -93,6 +93,8 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
      */
     static final String PN_COMPID = "dx_id";
 
+    static final String ID_PREFIX = "d";
+
     static final short ID_SIZE = 8;
 
     static final String SERVICE_NAME = "content-writer";
@@ -204,7 +206,7 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
             source += Calendar.getInstance().toString();
         }
         String sha1 = DigestUtils.sha1Hex(source);
-        return sha1.substring(0, ID_SIZE);
+        return ID_PREFIX + sha1.substring(0, ID_SIZE);
     }
 
     @Override
