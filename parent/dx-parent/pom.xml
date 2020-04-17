@@ -19,13 +19,13 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent-reactor</artifactId>
-        <version>2</version>
+        <version>3-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
 
     <groupId>com.adobe.dx</groupId>
     <artifactId>parent</artifactId>
-    <version>2</version>
+    <version>3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -560,7 +560,7 @@ ${bundle.additional.properties}
             <dependency>
                 <groupId>com.adobe.dx</groupId>
                 <artifactId>repository-structure</artifactId>
-                <version>2</version>
+                <version>3-SNAPSHOT</version>
                 <type>zip</type>
             </dependency>
             <!-- Testing dependencies -->
