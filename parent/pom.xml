@@ -215,7 +215,7 @@
                             <goals>deploy</goals>
                             <releaseProfiles>release</releaseProfiles>
                             <projectVersionPolicyId>OddEvenVersionPolicy</projectVersionPolicyId>
-                            <useReleaseProfile>false</useReleaseProfile>
+                            <releaseProfiles>dx-release</releaseProfiles>
                         </configuration>
                     </plugin>
                 </plugins>
