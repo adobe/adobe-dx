@@ -19,7 +19,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>2</version>
+        <version>3-SNAPSHOT</version>
         <relativePath>../dx-parent</relativePath>
     </parent>
 
@@ -37,8 +37,8 @@
     <scm>
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
-        <url>https://github.com/adobe/adobe-dx/parent/respository-structure/tree/master</url>
-        <tag>parent-2</tag>
+        <url>https://github.com/adobe/adobe-dx/parent/tree/master</url>
+        <tag>HEAD</tag>
     </scm>
 
     <build>
