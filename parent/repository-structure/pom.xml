@@ -19,7 +19,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>3-SNAPSHOT</version>
+        <version>0-SNAPSHOT</version>
         <relativePath>../dx-parent</relativePath>
     </parent>
 
@@ -41,7 +41,7 @@
     <scm>
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
-        <url>https://github.com/adobe/adobe-dx/parent/tree/master</url>
+        <url>https://github.com/adobe/adobe-dx/parent/respository-structure/tree/master</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -68,7 +68,7 @@
                         <!-- Immutable context-aware configurations -->
                         <filter><root>/apps/settings</root></filter>
                     </filters>
-                    <repositoryStructurePackages combine.self="override" />
+                    <repositoryStructurePackages combine.self="override"/>
                 </configuration>
             </plugin>
         </plugins>
