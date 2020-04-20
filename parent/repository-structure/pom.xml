@@ -20,7 +20,7 @@
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
         <version>5-SNAPSHOT</version>
-        <relativePath>../dx-parent</relativePath>
+        <relativePath>../main</relativePath>
     </parent>
 
     <!-- ====================================================================== -->
