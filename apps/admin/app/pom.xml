@@ -57,6 +57,7 @@
                     <filters>
                         <filter><root>/apps/cq/core/content/nav/tools/cloudservices/configManager</root></filter>
                         <filter><root>/apps/dx/adobe-fonts</root></filter>
+                        <filter><root>/apps/dx/admin</root></filter>
                         <filter><root>/apps/dx/config-manager</root></filter>
                     </filters>
                     <embeddeds>
