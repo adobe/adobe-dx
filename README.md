@@ -7,6 +7,8 @@ A toolkit for AEM to help build exceptional digital experiences, on top of [AEM 
 
 #### building DX modules
 
+first ensure you have both `github-dx` maven repository setup ([server and repository as in this settings.xml file](./settings.xml))
+
 DX is a set of modules that can be used separately, you can build them all using
  
 ```mvn```
@@ -21,6 +23,10 @@ if you want your build to be directly installed to your local aem instance, just
 ### Contributing
 
 Contributions are welcomed! Read the [Contributing Guide](./.github/CONTRIBUTING.md) for more information.
+
+### Releasing
+
+For authorized people willing to release a module, look at [Release guide](./.github/RELEASING.md) for more information.
 
 ### Discussion
 
