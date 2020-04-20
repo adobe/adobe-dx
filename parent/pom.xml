@@ -10,8 +10,7 @@
 	OF ANY KIND, either express or implied. See the License for the specific language
 	governing permissions and limitations under the License.
 -->
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <!-- the ASF parent is used to trigger the right release profile -->
@@ -24,7 +23,7 @@
 
     <groupId>com.adobe.dx</groupId>
     <artifactId>parent-reactor</artifactId>
-    <version>0-SNAPSHOT</version>
+    <version>7-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -66,7 +65,7 @@
 
     <modules>
         <module>repository-structure</module>
-        <module>dx-parent</module>
+        <module>main</module>
     </modules>
 
     <!-- ======================================================================= -->
@@ -174,24 +173,25 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>animal-sniffer-maven-plugin</artifactId>
+                        <version>1.18</version>
+                        <configuration>
+                            <signature>
+                                <groupId>org.codehaus.mojo.signature</groupId>
+                                <artifactId>java18</artifactId>
+                                <version>1.0</version>
+                            </signature>
+                        </configuration>
+                    </plugin>
+                    <plugin>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>1.6</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <configuration>
-                                    <gpgArguments>
-                                        <arg>--pinentry-mode</arg>
-                                        <arg>loopback</arg>
-                                        <arg>--digest-algo=SHA512</arg>
-                                    </gpgArguments>
-                                </configuration>
-                            </execution>
-                        </executions>
+                        <configuration>
+                            <gpgArguments>
+                                <arg>--digest-algo=SHA512</arg>
+                            </gpgArguments>
+                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -201,21 +201,20 @@
                             <dependency>
                                 <groupId>org.apache.maven.release</groupId>
                                 <artifactId>maven-release-oddeven-policy</artifactId>
-                                <version>2.5.1</version>
+                                <version>3.0.0-M1</version>
                             </dependency>
                             <dependency>
-                                <groupId>org.apache.maven.scm</groupId>
-                                <artifactId>maven-scm-provider-gitexe</artifactId>
-                                <version>1.9.1</version>
+                                <groupId>org.eclipse.aether</groupId>
+                                <artifactId>aether-util</artifactId>
+                                <version>1.0.0.v20140518</version>
                             </dependency>
                         </dependencies>
                         <configuration>
                             <scmCommentPrefix>@releng [maven-scm] :</scmCommentPrefix>
                             <preparationGoals>clean install</preparationGoals>
                             <goals>deploy</goals>
-                            <releaseProfiles>release</releaseProfiles>
-                            <projectVersionPolicyId>OddEvenVersionPolicy</projectVersionPolicyId>
                             <useReleaseProfile>false</useReleaseProfile>
+                            <projectVersionPolicyId>OddEvenVersionPolicy</projectVersionPolicyId>
                         </configuration>
                     </plugin>
                 </plugins>

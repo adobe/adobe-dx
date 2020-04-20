@@ -21,7 +21,7 @@
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
         <version>0-SNAPSHOT</version>
-        <relativePath>../../parent/dx-parent</relativePath>
+        <relativePath>../../parent/main</relativePath>
     </parent>
     <artifactId>com.adobe.dx.core</artifactId>
     <name>${project.prefix} - Core</name>

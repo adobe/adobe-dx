@@ -17,7 +17,7 @@
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
         <version>0-SNAPSHOT</version>
-        <relativePath>parent/dx-parent/pom.xml</relativePath>
+        <relativePath>parent/main/pom.xml</relativePath>
     </parent>
     <artifactId>reactor</artifactId>
     <packaging>pom</packaging>
