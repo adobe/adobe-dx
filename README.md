@@ -22,6 +22,10 @@ if you want your build to be directly installed to your local aem instance, just
 
 Contributions are welcomed! Read the [Contributing Guide](./.github/CONTRIBUTING.md) for more information.
 
+### Releasing
+
+For authorized people willing to release a module, look at [Release guide](./.github/RELEASING.md) for more information.
+
 ### Discussion
 
 For ongoing discussions related to adobe-dx, see [the adobe-dx-dev page](https://github.com/orgs/adobe/teams/adobe-dx-devs).

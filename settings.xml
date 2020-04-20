@@ -24,6 +24,18 @@
 
             <repositories>
                 <repository>
+                    <id>github-dx</id>
+                    <name>GitHub Adobe DX Apache Maven Packages</name>
+                    <url>https://maven.pkg.github.com/adobe/adobe-dx</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
                     <id>adobe-public-releases</id>
                     <name>Adobe Public Repository</name>
                     <url>https://repo.adobe.com/nexus/content/groups/public</url>
