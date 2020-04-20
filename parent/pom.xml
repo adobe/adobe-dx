@@ -65,7 +65,7 @@
 
     <modules>
         <module>repository-structure</module>
-        <module>dx-parent</module>
+        <module>main</module>
     </modules>
 
     <!-- ======================================================================= -->
@@ -173,24 +173,25 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>animal-sniffer-maven-plugin</artifactId>
+                        <version>1.18</version>
+                        <configuration>
+                            <signature>
+                                <groupId>org.codehaus.mojo.signature</groupId>
+                                <artifactId>java18</artifactId>
+                                <version>1.0</version>
+                            </signature>
+                        </configuration>
+                    </plugin>
+                    <plugin>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>1.6</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <configuration>
-                                    <gpgArguments>
-                                        <arg>--pinentry-mode</arg>
-                                        <arg>loopback</arg>
-                                        <arg>--digest-algo=SHA512</arg>
-                                    </gpgArguments>
-                                </configuration>
-                            </execution>
-                        </executions>
+                        <configuration>
+                            <gpgArguments>
+                                <arg>--digest-algo=SHA512</arg>
+                            </gpgArguments>
+                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
