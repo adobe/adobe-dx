@@ -20,7 +20,7 @@
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
         <version>6</version>
-        <relativePath>../../parent/main/pom.xml</relativePath>
+        <relativePath>../../parent/main</relativePath>
     </parent>
     <properties>
         <module.name>${project.prefix} - Structure Components</module.name>
