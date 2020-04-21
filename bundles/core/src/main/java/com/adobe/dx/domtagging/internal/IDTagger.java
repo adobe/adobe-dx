@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.domtagging.internal;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.sling.api.resource.ResourceResolverFactory.SUBSERVICE;
 
 import com.day.cq.replication.Preprocessor;
@@ -105,14 +106,18 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
     @Activate
     @Modified
     public void activate(Configuration configuration) {
-        List<Pattern> acceptedTypes = new ArrayList<>();
+        Collection<Pattern> acceptedTypes = new ArrayList<>();
         for (String regexp : configuration.acceptedTypes()) {
             acceptedTypes.add(Pattern.compile(regexp));
         }
         resourceFilter = getFilter(acceptedTypes);
     }
 
-    Function<Resource, Boolean> getFilter(List<Pattern> acceptedTypes) {
+    /**
+     * @param acceptedTypes list of patterns of accepted types for the id
+     * @return filter that use the list
+     */
+    Function<Resource, Boolean> getFilter(Collection<Pattern> acceptedTypes) {
         return r -> {
             if (StringUtils.isNotBlank(r.getResourceType())) {
                 for (Pattern pattern: acceptedTypes) {
@@ -128,9 +133,9 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
     @Override
     public void preprocess(ReplicationAction replicationAction, ReplicationOptions replicationOptions) throws ReplicationException {
         if (ReplicationActionType.ACTIVATE.equals(replicationAction.getType())) {
-            try (ResourceResolver resourceResolver =
+            try (ResourceResolver resolver =
                      resourceResolverFactory.getServiceResourceResolver(Collections.singletonMap(SUBSERVICE, SERVICE_NAME))) {
-                Resource currentResource = resourceResolver.getResource(replicationAction.getPath());
+                Resource currentResource = resolver.getResource(replicationAction.getPath());
                 if (currentResource == null) {
                     LOG.debug("replication action made on a non existing or not readable resource {}, abort", replicationAction.getPath());
                     return;
@@ -142,12 +147,11 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
                 }
                 //we just tag page resources
                 tagPage(currentPage);
-                resourceResolver.commit();
+                resolver.commit();
             } catch (LoginException | PersistenceException e) {
                 LOG.error("Issues with current user or content, will not tag that resource", e);
             }
         }
-        String path = replicationAction.getPath();
     }
 
     void tagPage(Page currentPage) {
@@ -155,8 +159,8 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
         for (Iterator<Resource> componentIterator = new ComponentIterator(resourceFilter, currentPage.getContentResource());
              componentIterator.hasNext();) {
             Resource component = componentIterator.next();
-            if (!isResourceTagValid(pageHash, component)) {
-                tagResource(pageHash, component);
+            if (!isResourceTagValid(component, pageHash)) {
+                tagResource(component, pageHash);
             }
         }
     }
@@ -165,11 +169,11 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
      * Assuming this resource is "taggable", this method will tell us it is validly tagged
      * that is it has a tag, and current page id tag (not time salted) is still ok.
      *
-     * @param currentPageHash  hash from page whom we are browsing the content from
      * @param resource resource we want to check
-     * @return
+     * @param currentPageHash  hash from page whom we are browsing the content from
+     * @return validity flag
      */
-    boolean isResourceTagValid(@NotNull String currentPageHash, @NotNull Resource resource) {
+    boolean isResourceTagValid(@NotNull Resource resource, @NotNull String currentPageHash) {
         ValueMap map = resource.getValueMap();
         if (map.containsKey(PN_PAGEHASH) && map.containsKey(PN_COMPID)) {
             return currentPageHash.equals(map.get(PN_PAGEHASH, String.class));
@@ -178,16 +182,47 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
     }
 
     /**
+     * Tags, if needed and configured, a resource with page & component id
+     *
+     * @param resolver current resource resolver
+     * @param path resource path
+     */
+    void tagResource(ResourceResolver resolver, String path) {
+        Resource resource = resolver.getResource(path);
+        if (resourceFilter.apply(resource)) {
+            PageManager pageManager = resolver.adaptTo(PageManager.class);
+            Page currentPage = pageManager.getContainingPage(resource);
+            if (currentPage != null) {
+                String pageHash = getUniqueId(currentPage.getPath(), false);
+                if (!isResourceTagValid(resource, pageHash)) {
+                    tagResource(resource, pageHash);
+                }
+            }
+        }
+    }
+
+    /**
      * Tags a given resource with both current page id, and component id
      *
-     * @param currentPageHash hash from page whom we are browsing the content from
      * @param resource resource we want to tag
+     * @param currentPageHash hash from page whom we are browsing the content from
      */
-    void tagResource(String currentPageHash, Resource resource) {
+    void tagResource(Resource resource, String currentPageHash) {
+        tagResource(resource, currentPageHash, getUniqueId(resource.getPath(), true));
+    }
+
+    /**
+     * Tags a given resource with both current page id, and provided component id
+     *
+     * @param resource
+     * @param currentPageHash
+     * @param compHash
+     */
+    void tagResource(Resource resource, String currentPageHash, String compHash) {
         ModifiableValueMap map = resource.adaptTo(ModifiableValueMap.class);
         if (map != null) {
             map.put(PN_PAGEHASH, currentPageHash);
-            map.put(PN_COMPID, getUniqueId(resource.getPath(), true));
+            map.put(PN_COMPID, compHash);
         }
     }
 
@@ -208,23 +243,17 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
     }
 
     @Override
-    public void process(SlingHttpServletRequest slingHttpServletRequest, List<Modification> list) throws Exception {
+    public void process(SlingHttpServletRequest request, List<Modification> list) throws Exception {
         for (Modification modification : list) {
             LOG.trace("{}", modification);
+            ResourceResolver resolver = request.getResourceResolver();
             if (ModificationType.CREATE.equals(modification.getType())) {
-                String path = modification.getSource();
-                ResourceResolver resolver = slingHttpServletRequest.getResourceResolver();
-                Resource resource = resolver.getResource(path);
-                if (resourceFilter.apply(resource)) {
-                    PageManager pageManager = resolver.adaptTo(PageManager.class);
-                    Page currentPage = pageManager.getContainingPage(resource);
-                    if (currentPage != null) {
-                        String pageHash = getUniqueId(currentPage.getPath(), false);
-                        if (!isResourceTagValid(pageHash, resource)) {
-                            tagResource(pageHash, resource);
-                        }
-                    }
-                }
+                tagResource(resolver, modification.getSource());
+            } else if (ModificationType.COPY.equals(modification.getType())) {
+                Resource resource = resolver.getResource(modification.getDestination());
+                //removing old tags
+                tagResource(resource, EMPTY, EMPTY);
+                tagResource(resolver, modification.getDestination());
             }
         }
     }
@@ -235,7 +264,7 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
     static class ComponentIterator extends AbstractResourceVisitor implements Iterator<Resource> {
 
         Function<Resource, Boolean> rFilter;
-        List<Resource> internalList = new ArrayList<>();
+        Collection<Resource> internalList = new ArrayList<>();
         Iterator<Resource> internalIT;
 
         public ComponentIterator(Function<Resource, Boolean> filter, Resource root) {
