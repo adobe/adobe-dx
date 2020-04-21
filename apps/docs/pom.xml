@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>6</version>
+        <version>7-SNAPSHOT</version>
         <relativePath>../../parent/main</relativePath>
     </parent>
 

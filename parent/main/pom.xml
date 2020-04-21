@@ -33,9 +33,9 @@
         <aem.port>4502</aem.port>
         <aem.publish.host>localhost</aem.publish.host>
         <aem.publish.port>4503</aem.publish.port>
+        <aem.version>6.4.8</aem.version>
         <aem.contextPath />
         <sling.url>http://${aem.host}:${aem.port}${aem.contextPath}</sling.url>
-        <aem.java.version>11</aem.java.version>
         <bnd.version>4.2.0</bnd.version>
         <bundle.additional.properties />
         <frontend-maven-plugin.version>1.7.6</frontend-maven-plugin.version>
@@ -71,7 +71,7 @@
                     <stylesheet>maven</stylesheet>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <links>
-                        <link>https://docs.oracle.com/javase/${aem.java.version}/docs/api/</link>
+                        <link>https://docs.oracle.com/javase/${java.version}/docs/api/</link>
                         <link>https://docs.oracle.com/javaee/7/api/</link>
                         <link>https://docs.adobe.com/docs/en/spec/jsr170/javadocs/jcr-2.0/</link>
                         <link>https://sling.apache.org/apidocs/sling9/</link>
@@ -222,7 +222,7 @@ ${bundle.additional.properties}
                         <stylesheet>maven</stylesheet>
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <links>
-                            <link>https://docs.oracle.com/javase/${aem.java.version}/docs/api/</link>
+                            <link>https://docs.oracle.com/javase/${java.version}/docs/api/</link>
                             <link>https://docs.oracle.com/javaee/7/api/</link>
                             <link>https://docs.adobe.com/docs/en/spec/jsr170/javadocs/jcr-2.0/</link>
                             <link>https://sling.apache.org/apidocs/sling9/</link>
@@ -281,30 +281,6 @@ ${bundle.additional.properties}
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>3.0.0-M2</version>
-                    <executions>
-                        <execution>
-                            <id>enforce-maven</id>
-                            <goals>
-                                <goal>enforce</goal>
-                            </goals>
-                            <configuration>
-                                <rules>
-                                    <requireMavenVersion>
-                                        <version>[3.3.1,)</version>
-                                    </requireMavenVersion>
-                                    <requireJavaVersion>
-                                        <message>Project must be compiled with Java ${aem.java.version} or higher</message>
-                                        <version>1.${aem.java.version}</version>
-                                    </requireJavaVersion>
-                                </rules>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
                     <groupId>com.day.jcr.vault</groupId>
                     <artifactId>content-package-maven-plugin</artifactId>
                     <version>1.0.2</version>
@@ -323,6 +299,26 @@ ${bundle.additional.properties}
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M2</version>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[3.3.1,)</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <message>Project must be compiled with Java ${java.version} or higher</message>
+                                    <version>1.${java.version}</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
