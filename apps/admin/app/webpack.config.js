@@ -1,4 +1,4 @@
-    /*
+/*
  *  Copyright 2019 Adobe
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,35 +24,55 @@ const stats = require('./webpack.config/stats');
 const projectName = 'dx';
 const project = `./src/main/content/jcr_root/apps/${projectName}/config-manager/common/clientlibs`;
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+if (isProduction) {
+    console.log('Production Build');
+}
+
+const rules = [
+    {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        options: {
+            failOnError: true,
+        },
+    },
+    {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+            loader: 'babel-loader',
+        },
+    },
+    {
+        test: /\.(css|less)$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+    },
+];
+
+if (!isProduction) {
+    rules.push({
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+            loader: 'prettier-loader',
+        },
+    });
+}
+
 module.exports = {
     entry: {
-        react: [
-            `${project}/react/src/js/app.js`,
-            `${project}/react/src/less/app.less`,
-        ],
+        react: [`${project}/react/src/js/app.js`, `${project}/react/src/less/app.less`],
     },
     output: {
         path: `${__dirname}/src/main/content/jcr_root/apps/${projectName}/config-manager/common/clientlibs`,
         filename: '[name]/dist/js/app.min.js',
     },
     module: {
-        rules: [
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            },
-            {
-                test: /\.(css|less)$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'less-loader',
-                ],
-            },
-        ],
+        rules,
     },
     optimization: {
         minimize: true,
@@ -65,7 +85,7 @@ module.exports = {
             'process.env.THEME_LIGHT': 'true',
             'process.env.THEME_LIGHTEST': 'true',
             'process.env.THEME_DARK': 'false',
-            'process.env.THEME_DARKEST': 'false'
+            'process.env.THEME_DARKEST': 'false',
         }),
         new MiniCssExtractPlugin({ filename: '[name]/dist/css/app.min.css' }),
         new OptimizeCSSAssetsPlugin({}),

@@ -37,13 +37,14 @@ export default class ConfigDataSource extends ColumnViewDataSource {
     }
 
     async getTree() {
-        const response = await (await (
-            fetch(`${this.dataSourcePath}.model.json`).then(res => {
+        const response = await await fetch(`${this.dataSourcePath}.model.json`)
+            .then((res) => {
                 return res.json();
-            }).catch(err => {
-                console.log('Error: ', err);
             })
-        ));
+            .catch((err) => {
+                // eslint-disable-next-line no-console
+                console.log('Error: ', err);
+            });
         return response.items;
     }
 }

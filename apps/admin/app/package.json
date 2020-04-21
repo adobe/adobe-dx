@@ -6,9 +6,10 @@
   "scripts": {
     "aemsync": "aemsync -w src/main/content/jcr_root",
     "build-production": "NODE_ENV=production webpack --mode=production",
-    "test": "jest 2>&1",
-    "test-coverage": "./node_modules/.bin/jest --coverage --coverage-reporters=lcov 2>&1",
-    "test-watch": "./node_modules/.bin/jest --watch --colors",
+    "pretty": "prettier --write \"src/**/*.{js,jsx}\"",
+    "test": "jest --config jest.config.js 2>&1",
+    "test-coverage": "jest --coverage --config jest.config.js --coverage-reporters=lcov 2>&1",
+    "test-watch": "jest --config jest.config.js --watch --colors",
     "watch": "webpack --mode=production --watch --progress"
   },
   "author": "",
@@ -20,20 +21,36 @@
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
     "@babel/runtime-corejs3": "^7.8.7",
-    "@testing-library/jest-dom": "^5.1.1",
-    "@testing-library/react": "^9.5.0",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.2",
     "aemsync": "^4.0.0",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-loader": "^4.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "husky": "^4.2.5",
     "ignore-loader": "^0.1.2",
-    "jest": "^25.1.0",
+    "jest": "^25.3.0",
+    "jest-runner-eslint": "^0.7.6",
     "jest-sonar-reporter": "^2.0.0",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
+    "prettier": "^2.0.4",
+    "prettier-loader": "^3.3.0",
+    "pretty-quick": "^2.0.1",
     "style-loader": "^1.1.3",
     "terser-webpack-plugin": "^2.3.5",
     "webpack": "^4.42.0",
@@ -43,33 +60,25 @@
     "@adobe/spectrum-css": "2.9.0",
     "@babel/runtime": "^7.8.7",
     "@react/collection-view": "file:react-collection-view-4.1.5.tgz",
-    "@react/react-spectrum": "file:react-react-spectrum-2.25.0.tgz"
+    "@react/react-spectrum": "file:react-react-spectrum-2.25.0.tgz",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
   },
   "resolutions": {
     "@react/collection-view": "file:react-collection-view-4.1.5.tgz"
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!**/node_modules/**",
-      "!**/dist/**",
-      "!.history/**"
-    ],
-    "coverageDirectory": "js_reports/coverage",
-    "moduleNameMapper": {
-      "\\.(css|less)$": "<rootDir>/.jestconfig/__mocks__/styleMock.js"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/.jestconfig/jest.setup.js"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "<rootDir>/.history/"
-    ],
-    "testResultsProcessor": "jest-sonar-reporter"
+  "jest-runner-eslint": {
+    "cliOptions": {
+      "fix": true
+    }
   },
   "jestSonar": {
     "reportPath": "js_reports",
     "reportFile": "test-reporter.xml"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged --pattern \"**/*.*(js|jsx)\""
+    }
   }
 }

@@ -27,11 +27,16 @@ const Dialog = (props) => {
         return null;
     };
 
-    const DialogType = props.dialogType === 'folder' ? FolderDialog
-                     : props.dialogType === 'delete' ? DeleteDialog
-                     : props.dialogType === 'config' ? ConfigDialog
-                     : props.dialogType === 'edit' ? ConfigDialog
-                     : empty;
+    const DialogType =
+        props.dialogType === 'folder'
+            ? FolderDialog
+            : props.dialogType === 'delete'
+            ? DeleteDialog
+            : props.dialogType === 'config'
+            ? ConfigDialog
+            : props.dialogType === 'edit'
+            ? ConfigDialog
+            : empty;
 
     return (
         <Provider theme="light">
@@ -39,6 +44,6 @@ const Dialog = (props) => {
             <DialogType {...props} />
         </Provider>
     );
-}
+};
 
 export default Dialog;
