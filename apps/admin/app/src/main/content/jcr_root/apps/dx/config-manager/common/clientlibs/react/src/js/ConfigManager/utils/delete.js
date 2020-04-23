@@ -22,12 +22,12 @@ async function deleteResource(path) {
 
     const csrf = await getCsrf();
 
-    return await (fetch(path, {
+    return fetch(path, {
         method: 'POST',
         credentials: 'same-origin',
         headers: { 'CSRF-Token': csrf.token },
-        body: formData
-    }));
+        body: formData,
+    });
 }
 
 export default deleteResource;

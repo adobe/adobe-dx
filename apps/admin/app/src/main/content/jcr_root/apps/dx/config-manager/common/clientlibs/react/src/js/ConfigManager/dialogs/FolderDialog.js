@@ -16,20 +16,28 @@
 
 import React from 'react';
 
+import Dialog from '@react/react-spectrum/Dialog';
 import getCsrf from '../utils/csrf';
 
-import Dialog from '@react/react-spectrum/Dialog';
 import CreateFolder from './CreateFolder';
 
 export default class CreateFolderDialog extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             name: '',
-            title: ''
+            title: '',
         };
         this.dialogConfirm = this.dialogConfirm.bind(this);
     }
+
+    dialogCancel = () => {
+        this.props.onDialogClose(false);
+    };
+
+    handleFolderChange = (change) => {
+        this.setState(change);
+    };
 
     async dialogConfirm() {
         const formData = new FormData();
@@ -44,22 +52,14 @@ export default class CreateFolderDialog extends React.Component {
         }
         const csrf = await getCsrf();
         await fetch(`${this.props.item.path}/`, {
-            method: 'POST', 
+            method: 'POST',
             credentials: 'same-origin',
             headers: { 'CSRF-Token': csrf.token },
-            body: formData
+            body: formData,
         });
         this.props.onDialogClose(true);
     }
 
-    dialogCancel = () => {
-        this.props.onDialogClose(false);
-    }
-
-    handleFolderChange = (change) => {
-        this.setState(change);
-    }
-    
     render() {
         return (
             <Dialog
@@ -68,11 +68,13 @@ export default class CreateFolderDialog extends React.Component {
                 onCancel={this.dialogCancel}
                 cancelLabel="Cancel"
                 confirmLabel="Create"
-                title="Create folder">
+                title="Create folder"
+            >
                 <CreateFolder
                     name={this.state.name}
                     title={this.state.title}
-                    onChange={this.handleFolderChange} />
+                    onChange={this.handleFolderChange}
+                />
             </Dialog>
         );
     }

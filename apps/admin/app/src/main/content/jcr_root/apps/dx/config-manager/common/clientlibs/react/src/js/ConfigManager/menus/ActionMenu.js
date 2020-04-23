@@ -37,20 +37,26 @@ const actionMenu = (props) => {
                 <ButtonGroup
                     value={props.fixedActionBar.primary}
                     aria-label="PrimaryButtons"
-                    onChange={(value) => props.openDialog(value, undefined)}>
+                    onChange={(value) => props.openDialog(value, undefined)}
+                >
                     <Button label="Edit" value="edit" icon={<Edit />} />
                     <Button label="Delete" value="delete" icon={<Delete />} />
                 </ButtonGroup>
                 <ButtonGroup
                     value={props.fixedActionBar.secondary}
                     aria-label="SecondaryButtons"
-                    onChange={props.toggleActionBar}>
-                    <Button label="Close" value="close" icon={<Close />}
-                            className="spectrum-ActionButton--alignLeft" />
+                    onChange={props.toggleActionBar}
+                >
+                    <Button
+                        label="Close"
+                        value="close"
+                        icon={<Close />}
+                        className="spectrum-ActionButton--alignLeft"
+                    />
                 </ButtonGroup>
             </Provider>
         </div>
     );
-}
+};
 
 export default actionMenu;

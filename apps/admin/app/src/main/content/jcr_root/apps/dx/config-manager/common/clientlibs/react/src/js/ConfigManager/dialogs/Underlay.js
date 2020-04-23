@@ -21,6 +21,6 @@ const underlay = (props) => {
     const classNames = ['spectrum-Underlay'];
     if (open) classNames.push('is-open');
     return <div className={classNames.join(' ')} />;
-}
+};
 
 export default underlay;

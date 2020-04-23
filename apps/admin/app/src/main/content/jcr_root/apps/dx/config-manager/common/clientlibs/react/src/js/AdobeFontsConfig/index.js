@@ -29,18 +29,18 @@ const DEFAULT_STATE = {
             'jcr:primaryType': 'nt:unstructured',
             'sling:resourceType': 'dx/config-manager/adobe-fonts',
             'jcr:title': 'Adobe Fonts',
-            'projectId': '',
-            'embedType': 'linkTag',
-            'configKey': 'adobe-fonts',
-            'tagComponentHeader': 'dx/adobe-fonts/header'
-        }
+            projectId: '',
+            embedType: 'linkTag',
+            configKey: 'adobe-fonts',
+            tagComponentHeader: 'dx/adobe-fonts/header',
+        },
     },
-    replace: true
+    replace: true,
 };
 const EMBED_OPTIONS = [
     { label: 'Link Tag', value: 'linkTag' },
     { label: 'Style Tag', value: 'styleTag' },
-    { label: 'Script Tag', value: 'scriptTag' }
+    { label: 'Script Tag', value: 'scriptTag' },
 ];
 
 export default class AdobeFonts extends React.Component {
@@ -61,14 +61,14 @@ export default class AdobeFonts extends React.Component {
 
     setConfig = () => {
         this.props.setConfig(this.state);
-    }
+    };
 
     onNameChange = (value) => {
         this.setState({ name: value }, this.setConfig);
-    }
+    };
 
     onContentChange = (value, e) => {
-        const data = this.state.data;
+        const { data } = this.state;
         data[JCR_CONTENT][e.target.name] = value;
 
         if (e.target.name === 'jcr:title') {
@@ -76,30 +76,33 @@ export default class AdobeFonts extends React.Component {
         }
 
         this.setState({ data }, this.setConfig);
-    }
+    };
 
     onSelectChange = (value, name) => {
-        const data = this.state.data;
+        const { data } = this.state;
         data[JCR_CONTENT][name] = value;
         this.setState({ data }, this.setConfig);
-    }
+    };
 
     onSelectOpen = (e) => {
         this.setState({ currentSelectValue: e.target });
-    }
+    };
 
     getNameFieldItem = () => {
         if (this.props.mode === 'create') {
-            return (<FormItem label="Name">
-                        <Textfield
-                            name="name"
-                            value={this.state.cleanName}
-                            placeholder="name"
-                            onChange={this.onNameChange} />
-                    </FormItem>);
+            return (
+                <FormItem label="Name">
+                    <Textfield
+                        name="name"
+                        value={this.state.cleanName}
+                        placeholder="name"
+                        onChange={this.onNameChange}
+                    />
+                </FormItem>
+            );
         }
         return null;
-    }
+    };
 
     render() {
         const NameFieldItem = this.getNameFieldItem;
@@ -112,21 +115,24 @@ export default class AdobeFonts extends React.Component {
                         name="jcr:title"
                         value={this.state.data[JCR_CONTENT]['jcr:title']}
                         placeholder="Title"
-                        onChange={this.onContentChange} />
+                        onChange={this.onContentChange}
+                    />
                 </FormItem>
                 <FormItem label="Project ID">
                     <Textfield
                         name="projectId"
                         value={this.state.data[JCR_CONTENT].projectId}
                         placeholder="Project ID"
-                        onChange={this.onContentChange} />
+                        onChange={this.onContentChange}
+                    />
                 </FormItem>
                 <FormItem label="Embed">
                     <Select
                         name="embedType"
                         defaultValue={this.state.data[JCR_CONTENT].embedType}
                         onChange={(value) => this.onSelectChange(value, 'embedType')}
-                        options={EMBED_OPTIONS} />
+                        options={EMBED_OPTIONS}
+                    />
                 </FormItem>
             </Form>
         );

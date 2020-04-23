@@ -38,11 +38,11 @@ const DeleteDialog = (props) => {
             onConfirm={dialogConfirm}
             confirmLabel="Delete"
             onCancel={dialogCancel}
-            cancelLabel="Cancel">
+            cancelLabel="Cancel"
+        >
             {props.item ? props.item.path : ''}
         </Dialog>
     );
-
 };
 
 export default DeleteDialog;

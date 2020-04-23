@@ -47,10 +47,11 @@ import org.junit.jupiter.api.Test;
 class IDTaggerTest extends AbstractTest {
 
     private static final String REL_ROOT = "/jcr:content/root";
+    private static final String IMAGE_PATH = CONTENT_ROOT + REL_ROOT + "/children/image";
 
     List<String> expected = Arrays.asList(
         CONTENT_ROOT + REL_ROOT,
-        CONTENT_ROOT + REL_ROOT + "/children/image",
+        IMAGE_PATH,
         CONTENT_ROOT + REL_ROOT + "/children/unwantedContainer/image");
 
     @Test
@@ -112,15 +113,39 @@ class IDTaggerTest extends AbstractTest {
         assertFalse(oldHash.equals(newHash), "comp hash should have been updated");
     }
 
-    @Test
-    public void testCreation() throws Exception {
-        String path = CONTENT_ROOT + REL_ROOT;
-        IDTagger tagger = firstTag();
+    void mockCreationPost(IDTagger tagger, String path) throws Exception {
         Modification modification = mock(Modification.class);
         when(modification.getType()).thenReturn(ModificationType.CREATE);
         when(modification.getSource()).thenReturn(path);
         tagger.process(context.request(), Collections.singletonList(modification));
+    }
+
+    @Test
+    public void testCreation() throws Exception {
+        String path = CONTENT_ROOT + REL_ROOT;
+        IDTagger tagger = firstTag();
+        mockCreationPost(tagger, path);
+        for (String expectedTag : expected) {
+            assertTagged(expectedTag);
+        }
+    }
+
+
+    @Test
+    public void testCopy() throws Exception {
+        String path = IMAGE_PATH + "copy";
+        IDTagger tagger = firstTag();
+        mockCreationPost(tagger, CONTENT_ROOT + REL_ROOT);
+        ValueMap vm = context.resourceResolver().getResource(IMAGE_PATH).getValueMap();
+        String oldId = vm.get(PN_COMPID, String.class);
+        context.build().resource(path, vm);
+        Modification modification = mock(Modification.class);
+        when(modification.getType()).thenReturn(ModificationType.COPY);
+        when(modification.getDestination()).thenReturn(path);
+        tagger.process(context.request(), Collections.singletonList(modification));
         assertTagged(path);
+        String newId = context.resourceResolver().getResource(path).getValueMap().get(PN_COMPID, String.class);
+        assertNotEquals(oldId, newId, "a new id should have been created");
     }
 
     @Test
