@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>6</version>
+        <version>7-SNAPSHOT</version>
         <relativePath>../../parent/main</relativePath>
     </parent>
     <artifactId>com.adobe.dx.core</artifactId>
@@ -56,7 +56,7 @@
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>uber-jar</artifactId>
-            <version>6.5.0</version>
+            <version>${aem.version}</version>
             <classifier>apis</classifier>
             <scope>provided</scope>
         </dependency>
