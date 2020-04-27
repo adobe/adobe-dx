@@ -19,7 +19,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>7-SNAPSHOT</version>
+        <version>8</version>
         <relativePath>../../parent/main</relativePath>
     </parent>
     <properties>
