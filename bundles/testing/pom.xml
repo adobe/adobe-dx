@@ -24,14 +24,14 @@
     </parent>
     <artifactId>com.adobe.dx.testing</artifactId>
     <name>${project.prefix} - Testing</name>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <description>Testing utilities for dx project</description>
 
     <scm>
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
         <url>https://github.com/adobe/adobe-dx/bundles/testing/tree/master</url>
-        <tag>com.adobe.dx.testing-0.0.2</tag>
+        <tag>HEAD</tag>
     </scm>
     
     <build>
