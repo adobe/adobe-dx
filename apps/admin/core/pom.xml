@@ -25,6 +25,9 @@
     <artifactId>com.adobe.dx.admin.core</artifactId>
     <name>${module.name} - Core bundle</name>
     <description>Core bundle for admin utilities</description>
+    <properties>
+        <maven.deploy.skip>false</maven.deploy.skip>
+    </properties>
     <build>
         <plugins>
             <plugin>
