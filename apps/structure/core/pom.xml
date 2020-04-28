@@ -23,6 +23,9 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
+    <properties>
+        <maven.deploy.skip>false</maven.deploy.skip>
+    </properties>
     <artifactId>com.adobe.dx.structure.core</artifactId>
     <name>${module.name} - Core bundle</name>
     <description>Core bundle for structure components</description>
