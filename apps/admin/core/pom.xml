@@ -118,6 +118,7 @@ Bundle-DocURL:
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>com.adobe.dx.testing</artifactId>
+            <version>0.0.2</version>
         </dependency>
         <dependency>
             <groupId>javax.annotation</groupId>

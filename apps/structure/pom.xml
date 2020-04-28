@@ -26,6 +26,14 @@
         <module.name>${project.prefix} - Structure Components</module.name>
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
+
+    <scm>
+        <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
+        <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
+        <url>https://github.com/adobe/adobe-dx/apps/structure/tree/master</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <name>${module.name}</name>
     <artifactId>structure.reactor</artifactId>
     <version>0.0.1-SNAPSHOT</version>

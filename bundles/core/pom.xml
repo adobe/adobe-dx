@@ -27,6 +27,14 @@
     <name>${project.prefix} - Core</name>
     <version>0.0.1-SNAPSHOT</version>
     <description>Core classes for dx projects</description>
+
+    <scm>
+        <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
+        <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
+        <url>https://github.com/adobe/adobe-dx/bundles/core/tree/master</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <build>
         <plugins>
             <plugin>
@@ -104,6 +112,7 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>com.adobe.dx.testing</artifactId>
+            <version>0.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
