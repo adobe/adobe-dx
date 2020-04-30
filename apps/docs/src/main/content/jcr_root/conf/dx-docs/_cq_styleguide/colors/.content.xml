@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured">
+    <spectrumGrey50
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Grey 50"
+        value="#FFFFFF"/>
+    <spectrumGrey75
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Grey 75"
+        value="#FBFBFB"/>
+    <spectrumGrey100
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Grey 100"
+        value="#F5F5F5"/>
+    <spectrumGrey200
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Grey 200"
+        value="#EAEAEA"/>
+    <spectrumGrey300
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Grey 300"
+        value="#E1E1E1"/>
+    <spectrumGrey400
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Grey 400"
+        value="#CACACA"/>
+    <spectrumGrey500
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Grey 500"
+        value="#B3B3B3"/>
+    <spectrumGrey600
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Grey 600"
+        value="#8E8E8E"/>
+    <spectrumGrey700
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Grey 700"
+        value="#707070"/>
+    <spectrumGrey800
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Grey 800"
+        value="#4B4B4B"/>
+    <spectrumGrey900
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Grey 900"
+        value="#2C2C2C"/>
+    <black
+        jcr:primaryType="nt:unstructured"
+        text="Black"
+        value="#000000"/>
+    <spectrumCelery400
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Celery 400"
+        value="#44B556"/>
+    <spectrumChartreuse400
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Chartreuse 400"
+        value="#85D044"/>
+    <spectrumYellow400
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Yellow 400"
+        value="#DFBF00"/>
+    <spectrumMagenta400
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Magenta 400"
+        value="#D83790"/>
+    <spectrumFuchsia400
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Fuchsia 400"
+        value="#C038CC"/>
+    <spectrumPurple400
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Purple 400"
+        value="#9256D9"/>
+    <spectrumIndigo400
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Indigo 400"
+        value="#6767EC"/>
+    <spectrumBlue400
+        jcr:primaryType="nt:unstructured"
+        text="Spectrum Blue 400"
+        value="#2680EB"/>
+</jcr:root>

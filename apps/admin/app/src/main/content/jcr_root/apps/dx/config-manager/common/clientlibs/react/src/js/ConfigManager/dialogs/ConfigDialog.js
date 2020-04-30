@@ -48,23 +48,28 @@ export default class ConfigDialog extends React.Component {
             }).catch(err => {
                 console.log('Error: ', err);
             });
+        let { configKey } = configTree;
         if (this.props.item.isPage) {
-            const { configKey } = configTree['jcr:content'];
-            if (configKey) {
-                this.setState({ view: window.dx.configManager.configs[configKey] });
-                const config = {
-                    name: this.props.item.name,
-                    data: configTree };
-                this.setState({ config });
-            }
+            configKey = configTree['jcr:content'].configKey;
+        }
+        // If we have a config key, we know what view to set
+        if (configKey) {
+            this.setState({ view: window.dx.configManager.configs[configKey] });
+            const config = {
+                name: this.props.item.name,
+                data: configTree };
+            this.setState({ config });
         }
     }
 
     getSaveUrl = () => {
         let url = this.props.item.path;
         if (this.mode === 'new') {
-            url += '/';
+            return url += '/';
         }
+        // Remove the name from the path as this is set via ":name"
+        const idx = url.lastIndexOf('/');
+        url = url.slice(0, idx);
         return url;
     }
 
@@ -73,14 +78,11 @@ export default class ConfigDialog extends React.Component {
         formData.append(':operation', 'import');
         formData.append(':contentType', 'json');
 
-        if (this.mode === 'new') {
-            formData.append(':name', this.state.config.name);
-        }
-
         if (this.mode === 'edit' || this.state.config.replace) {
             formData.append(':replace', true);
         }
 
+        formData.append(':name', this.state.config.name);
         formData.append(':content', JSON.stringify(this.state.config.data));
 
         const csrf = await getCsrf();

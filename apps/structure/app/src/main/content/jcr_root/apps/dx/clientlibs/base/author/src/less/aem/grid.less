@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'AdobeSpectrumIcons24';
+    src: url('/etc.clientlibs/clientlibs/granite/coralui3/resources/coralui-component-icon/AdobeSpectrumIcons24.woff2') format('woff2');
+}
+
+@media (min-width: 1200px) {
+    .aem-Grid {
+        .generate-hidden-grid(default);
+    }
+}
+
+@media (max-width: 599px) {
+    .aem-Grid {
+        .generate-hidden-grid(phone);
+        .generate-additional-hidden-grid(phone, default);
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1199px) {
+    .aem-Grid {
+        .generate-hidden-grid(tablet);
+        .generate-additional-hidden-grid(tablet, default);
+    }
+}
+
+.hidden-overlay-style {
+    display: block;
+    position: relative;
+    border: 0.125rem dotted rgba(0, 0, 0, 1);
+    background-color: rgba(255, 255, 255, 0.6);
+    opacity: 0.5;
+
+    &:after {
+        font-family: AdobeSpectrumIcons24, Helvetica, sans-serif;
+        content: '\f3ec';
+        position: absolute;
+        padding: 2px 2px 2px 4px;
+        font-size: 0.8rem;
+        line-height: 0.8rem;
+        font-weight: 400;
+        letter-spacing: 0.08rem;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        top: 0;
+        left: 0;
+    }
+}
+
+.generate-hidden-grid(@breakPoint) {
+    > .aem-GridColumn.aem-GridColumn--@{breakPoint}--hide.cq-Editable-dom {
+        .hidden-overlay-style;
+    }
+}
+
+.generate-additional-hidden-grid(@breakPoint, @default) {
+    > .aem-GridColumn.aem-GridColumn--@{default}--hide:not(.aem-GridColumn--@{breakPoint}--none):not(.aem-GridColumn--@{breakPoint}--hide).cq-Editable-dom {
+        .hidden-overlay-style;
+    }
+}
+

@@ -1,0 +1,13 @@
+{
+  "jcr:primaryType": "nt:unstructured",
+  "flex_empty": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "dx/components/structure/flex"
+  },
+  "flex_id": {
+    "jcr:primaryType": "nt:unstructured",
+    "dx_id": "c3fa17f4",
+    "page_id": "5aff75cf",
+    "sling:resourceType": "dx/components/structure/flex"
+  }
+}

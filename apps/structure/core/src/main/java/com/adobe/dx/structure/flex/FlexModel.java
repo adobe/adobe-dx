@@ -18,19 +18,45 @@ package com.adobe.dx.structure.flex;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
+import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 
 @Model(adaptables = { SlingHttpServletRequest.class,
         Resource.class }, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class FlexModel {
 
+    @Self
+    private SlingHttpServletRequest request;
+
     @SlingObject
     protected Resource resource;
 
+    @OSGiService
+    private ConfigurationResourceResolver configurationResolver;
+
+    @ValueMapValue
+    private String gradient;
+
     public String getHello() {
         return "Hello";
+    }
+
+    public String getGradient() {
+        if (gradient != null) {
+            Resource gradientConfigs = configurationResolver.getResource(resource, "cq:styleguide", "gradients");
+            Resource gradientConfig = gradientConfigs.getChild(gradient);
+            if (gradientConfig != null) {
+                return gradientConfig.getValueMap().get("startColor", String.class);
+            }
+        }
+        return null;
     }
 
 }

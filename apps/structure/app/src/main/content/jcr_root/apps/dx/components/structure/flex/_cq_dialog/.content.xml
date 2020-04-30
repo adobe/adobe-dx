@@ -11,21 +11,18 @@
     helpPath="https://github.com/adobe/adobe-dx/wiki/Flex-Container">
     <content
         jcr:primaryType="nt:unstructured"
+        granite:class="dexter-Dialog dexter-Dialog--flexContainer"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
             <tabs
                 jcr:primaryType="nt:unstructured"
+                maximized="{Boolean}true"
                 sling:resourceType="granite/ui/components/coral/foundation/tabs">
                 <items jcr:primaryType="nt:unstructured">
-                    <general
+                    <mobile
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="General"
-                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                        margin="{Boolean}false">
-                        <items jcr:primaryType="nt:unstructured">
-
-                        </items>
-                    </general>
+                        path="dx/components/structure/flex/cq:dialog_mobile"
+                        sling:resourceType="granite/ui/components/coral/foundation/include"/>
                 </items>
             </tabs>
         </items>

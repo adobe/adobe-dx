@@ -4,7 +4,6 @@
     <jcr:content
         cq:template="/conf/dx-docs/settings/wcm/templates/content-page-template"
         jcr:primaryType="cq:PageContent"
-        disableGeoRouting="{Boolean}true"
         sling:resourceType="dx-docs/components/structure/page">
         <root
             jcr:primaryType="nt:unstructured"

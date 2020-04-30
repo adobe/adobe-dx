@@ -1,0 +1,97 @@
+/*
+ *  Editor.less
+ *
+ *  Primarily used for working around authoring UI quirks.
+ */
+.aem-AuthorLayer-Preview {
+    .cq-Editable-dom--container,
+    .aem-GridColumn.cq-Editable-dom--container {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .dexter-Author_ComponentId {
+        display: none;
+    }
+
+    .hide_In-Preview {
+        display: none;
+    }
+}
+
+/* Pad our structure components to make them easier to select */
+.aem-AuthorLayer-Edit,
+.aem-AuthorLayer-structure,
+.aem-AuthorLayer-initial {
+    &[dir = "rtl"] .carousel_slide {
+        right: unset;
+    }
+
+    body {
+        padding: 0 0.5rem;
+    }
+
+    .dexter-Author-Padding {
+        padding: 0.5rem;
+        position: relative;
+    }
+
+    .dexter-Author_ComponentId {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 30;
+        padding: 0 4px 1px 3px;
+        font-size: 0.6rem;
+        line-height: 1.1rem;
+        font-weight: 300;
+        letter-spacing: 0.08rem;
+        background-color: #2583d8;
+        color: #fff;
+    }
+
+    @media (min-width: 650px) {
+        body {
+            padding: 0 0.75rem;
+        }
+
+        .dexter-Author-Padding {
+            padding: 0.8rem;
+        }
+    }
+
+    /* Pad below GlobalNav SubNav  */
+    .dexterHeader--aemEditorPadding {
+        height: 5rem;
+    }
+
+    /* Remove Spacing Bellow Root Parsys */
+    .root > .aem-Grid > .newpar {
+        display: none;
+    }
+}
+
+.xf-web-container {
+    .root > .aem-Grid > .newpar {
+        display: block;
+    }
+
+    div.image {
+        margin-bottom: 0;
+    }
+}
+
+/* Forcibly remove spacing around layout container to make structure easier to select */
+.cq-Editable-dom--container,
+.aem-GridColumn.cq-Editable-dom--container {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.cq-Editable-dom.cq-Editable-dom--container .new {
+    margin: 0 !important;
+}
+
+.dexter-Author-Hide {
+    display: none;
+}

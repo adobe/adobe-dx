@@ -1,4 +1,4 @@
-    /*
+/*
  *  Copyright 2019 Adobe
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,6 +26,12 @@ const project = `./src/main/content/jcr_root/apps/${projectName}/config-manager/
 
 module.exports = {
     entry: {
+        registry: [
+            `${project}/registry/src/js/app.js`,
+        ],
+        configs: [
+            `${project}/configs/src/js/app.js`,
+        ],
         react: [
             `${project}/react/src/js/app.js`,
             `${project}/react/src/less/app.less`,
@@ -54,10 +60,7 @@ module.exports = {
             },
         ],
     },
-    optimization: {
-        minimize: true,
-        minimizer: [new TerserPlugin()],
-    },
+    devtool: 'eval-cheap-module-source-map',
     plugins: [
         new webpack.DefinePlugin({
             'process.env.SCALE_MEDIUM': 'true',
