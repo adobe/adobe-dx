@@ -113,7 +113,7 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>dx.admin</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.6-SNAPSHOT</version>
             <type>zip</type>
         </dependency>
         <dependency>
@@ -125,7 +125,7 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>com.adobe.dx.core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>
