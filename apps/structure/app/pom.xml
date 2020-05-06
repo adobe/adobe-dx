@@ -30,7 +30,7 @@
     <!-- ====================================================================== -->
     <!-- P R O J E C T  D E S C R I P T I O N                                   -->
     <!-- ====================================================================== -->
-    <artifactId>dx.structure</artifactId>
+    <artifactId>structure</artifactId>
     <packaging>content-package</packaging>
     <name>${module.name} - App package</name>
 
