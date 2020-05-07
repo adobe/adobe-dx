@@ -4,7 +4,7 @@
   "description": "Adobe fonts",
   "main": "index.js",
   "scripts": {
-    "aemsync": "aemsync -w src/main/content/jcr_root",
+    "aemsync": "aemsync -w jcr_root",
     "build-production": "NODE_ENV=production webpack --mode=production",
     "pretty": "prettier --write \"src/**/*.{js,jsx}\"",
     "test": "jest --config jest.config.js 2>&1",
