@@ -30,7 +30,7 @@
     <!-- ====================================================================== -->
     <!-- P R O J E C T  D E S C R I P T I O N                                   -->
     <!-- ====================================================================== -->
-    <artifactId>dx.docs</artifactId>
+    <artifactId>docs</artifactId>
     <packaging>content-package</packaging>
     <name>${project.prefix} - Documentation package</name>
     <version>0.0.1-SNAPSHOT</version>

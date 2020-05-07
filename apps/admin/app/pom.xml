@@ -57,7 +57,7 @@
                         <cloudManagerTarget>none</cloudManagerTarget>
                     </properties>
                     <group>com.adobe.dx</group>
-                    <name>admin.apps</name>
+                    <name>dx.admin.apps</name>
                     <filters>
                         <filter><root>/apps/cq/core/content/nav/tools/cloudservices/configManager</root></filter>
                         <filter><root>/apps/dx/adobe-fonts</root></filter>
