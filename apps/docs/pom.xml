@@ -39,7 +39,7 @@
     <!-- B U I L D   D E F I N I T I O N                                        -->
     <!-- ====================================================================== -->
     <build>
-        <sourceDirectory>src/main/content/jcr_root</sourceDirectory>
+        <sourceDirectory>jcr_root</sourceDirectory>
         <plugins>
             <!-- ====================================================================== -->
             <!-- V A U L T   P A C K A G E   P L U G I N S                              -->

@@ -22,7 +22,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const stats = require('./webpack.config/stats');
 
 const projectName = 'dx';
-const project = `./src/main/content/jcr_root/apps/${projectName}/config-manager/common/clientlibs`;
+const project = `./jcr_root/apps/${projectName}/config-manager/common/clientlibs`;
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -68,7 +68,7 @@ module.exports = {
         react: [`${project}/react/src/js/app.js`, `${project}/react/src/less/app.less`],
     },
     output: {
-        path: `${__dirname}/src/main/content/jcr_root/apps/${projectName}/config-manager/common/clientlibs`,
+        path: `${__dirname}/jcr_root/apps/${projectName}/config-manager/common/clientlibs`,
         filename: '[name]/dist/js/app.min.js',
     },
     module: {

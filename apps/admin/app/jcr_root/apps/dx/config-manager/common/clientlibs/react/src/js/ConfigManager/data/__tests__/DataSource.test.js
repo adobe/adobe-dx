@@ -16,9 +16,11 @@
 
 import DataSource from '../DataSource';
 
-window.fetch = jest.fn().mockImplementation((path) => Promise.resolve({
-    json: () => Promise.resolve({'items': ['one', 'two']}),
-}));
+window.fetch = jest.fn().mockImplementation((path) =>
+    Promise.resolve({
+        json: () => Promise.resolve({ items: ['one', 'two'] }),
+    })
+);
 
 describe('Datasource', () => {
     afterEach(() => {
@@ -71,19 +73,22 @@ describe('Datasource', () => {
 
     test('getTree should output console error when fetch fails', async () => {
         global.console = { log: jest.fn() };
-        window.fetch = jest.fn().mockImplementation((path) => new Promise((resolve, reject) => {
-            reject('fetch error');
-        }));
+        window.fetch = jest.fn().mockImplementation(
+            (path) =>
+                new Promise((resolve, reject) => {
+                    reject('fetch error');
+                })
+        );
 
         const cds = new DataSource('path/to/datasource');
         try {
             const items = await cds.getTree();
         } catch (e) {
-            expect(e.toString()).toBe('TypeError: Cannot read property \'items\' of undefined');
+            expect(e.toString()).toBe("TypeError: Cannot read property 'items' of undefined");
         }
         expect(window.fetch).toHaveBeenCalledTimes(1);
         expect(window.fetch).toHaveBeenCalledWith('path/to/datasource.model.json');
         expect(global.console.log).toHaveBeenCalledTimes(1);
-        expect(global.console.log.mock.calls[0]).toEqual(['Error: ','fetch error']);
+        expect(global.console.log.mock.calls[0]).toEqual(['Error: ', 'fetch error']);
     });
 });
