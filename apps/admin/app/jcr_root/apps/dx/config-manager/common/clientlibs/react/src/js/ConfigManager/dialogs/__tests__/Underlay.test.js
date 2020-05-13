@@ -27,7 +27,7 @@ describe('Underlay dialog', () => {
     });
 
     test('should return div with spectrum-Underlay and is-open classes if open prop is defined', () => {
-        const underlay = render(<Underlay open/>);
+        const underlay = render(<Underlay open />);
         const underlayDiv = document.querySelector('.spectrum-Underlay');
         expect(underlayDiv).not.toBeNull();
         expect(underlayDiv).toHaveClass('is-open');

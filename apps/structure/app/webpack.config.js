@@ -1,4 +1,4 @@
-    /*
+/*
  *  Copyright 2019 Adobe
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,61 +14,57 @@
  *  limitations under the License.
  */
 
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
-const stats = require('./webpack.config/stats');
+const stats = require("./webpack.config/stats");
 
-const projectName = 'dx';
-const project = `./src/main/content/jcr_root/apps/${projectName}/config-manager/common/clientlibs`;
+const projectName = "dx";
+const project = `./jcr_root/apps/${projectName}/config-manager/common/clientlibs`;
 
 module.exports = {
-    entry: {
-        react: [
-            `${project}/react/src/js/app.js`,
-            `${project}/react/src/less/app.less`,
-        ],
-    },
-    output: {
-        path: `${__dirname}/src/main/content/jcr_root/apps/${projectName}/config-manager/common/clientlibs`,
-        filename: '[name]/dist/js/app.min.js',
-    },
-    module: {
-        rules: [
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            },
-            {
-                test: /\.(css|less)$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'less-loader',
-                ],
-            },
-        ],
-    },
-    optimization: {
-        minimize: true,
-        minimizer: [new TerserPlugin()],
-    },
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env.SCALE_MEDIUM': 'true',
-            'process.env.SCALE_LARGE': 'false',
-            'process.env.THEME_LIGHT': 'true',
-            'process.env.THEME_LIGHTEST': 'true',
-            'process.env.THEME_DARK': 'false',
-            'process.env.THEME_DARKEST': 'false'
-        }),
-        new MiniCssExtractPlugin({ filename: '[name]/dist/css/app.min.css' }),
-        new OptimizeCSSAssetsPlugin({}),
+  entry: {
+    react: [
+      `${project}/react/src/js/app.js`,
+      `${project}/react/src/less/app.less`,
     ],
-    stats,
+  },
+  output: {
+    path: `${__dirname}/jcr_root/apps/${projectName}/config-manager/common/clientlibs`,
+    filename: "[name]/dist/js/app.min.js",
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+      {
+        test: /\.(css|less)$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
+      },
+    ],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env.SCALE_MEDIUM": "true",
+      "process.env.SCALE_LARGE": "false",
+      "process.env.THEME_LIGHT": "true",
+      "process.env.THEME_LIGHTEST": "true",
+      "process.env.THEME_DARK": "false",
+      "process.env.THEME_DARKEST": "false",
+    }),
+    new MiniCssExtractPlugin({ filename: "[name]/dist/css/app.min.css" }),
+    new OptimizeCSSAssetsPlugin({}),
+  ],
+  stats,
 };

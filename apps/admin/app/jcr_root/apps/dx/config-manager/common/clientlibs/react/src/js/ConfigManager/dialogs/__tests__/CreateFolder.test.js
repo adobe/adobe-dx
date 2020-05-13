@@ -20,28 +20,30 @@ import CreateFolder from '../CreateFolder';
 
 describe('CreateFolder', () => {
     test('should set the name and title values via props', () => {
-        const { getByPlaceholderText } = render(<CreateFolder name='MyName' title='MyTitle' />);
+        const { getByPlaceholderText } = render(<CreateFolder name="MyName" title="MyTitle" />);
         expect(getByPlaceholderText('name').value).toBe('MyName');
         expect(getByPlaceholderText('Title').value).toBe('MyTitle');
     });
 
     test('should call onChange prop with target name', () => {
         const changeHandler = jest.fn();
-        const { getByLabelText, getByPlaceholderText } = render(<CreateFolder onChange={ changeHandler }/>);
+        const { getByLabelText, getByPlaceholderText } = render(
+            <CreateFolder onChange={changeHandler} />
+        );
 
-        fireEvent.change(getByPlaceholderText('name'), { target: { value: 'test name' }});
-        expect(changeHandler).toHaveBeenCalledWith({'name': 'test name'});
+        fireEvent.change(getByPlaceholderText('name'), { target: { value: 'test name' } });
+        expect(changeHandler).toHaveBeenCalledWith({ name: 'test name' });
         changeHandler.mockReset();
 
-        fireEvent.change(getByPlaceholderText('Title'), { target: { value: 'test title' }});
-        expect(changeHandler).toHaveBeenCalledWith({'title': 'test title'});
+        fireEvent.change(getByPlaceholderText('Title'), { target: { value: 'test title' } });
+        expect(changeHandler).toHaveBeenCalledWith({ title: 'test title' });
         changeHandler.mockReset();
 
         fireEvent.click(getByLabelText('Ordered'));
-        expect(changeHandler).toHaveBeenCalledWith({'orderable': true});
+        expect(changeHandler).toHaveBeenCalledWith({ orderable: true });
         changeHandler.mockReset();
 
         fireEvent.click(getByLabelText('Ordered'));
-        expect(changeHandler).toHaveBeenCalledWith({'orderable': false});
+        expect(changeHandler).toHaveBeenCalledWith({ orderable: false });
     });
 });
