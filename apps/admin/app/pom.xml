@@ -30,7 +30,7 @@
     <!-- ====================================================================== -->
     <!-- P R O J E C T  D E S C R I P T I O N                                   -->
     <!-- ====================================================================== -->
-    <artifactId>dx.admin</artifactId>
+    <artifactId>admin</artifactId>
     <packaging>content-package</packaging>
     <name>${module.name} - App package</name>
 
@@ -57,7 +57,7 @@
                         <cloudManagerTarget>none</cloudManagerTarget>
                     </properties>
                     <group>com.adobe.dx</group>
-                    <name>admin.apps</name>
+                    <name>dx.admin.apps</name>
                     <filters>
                         <filter><root>/apps/cq/core/content/nav/tools/cloudservices/configManager</root></filter>
                         <filter><root>/apps/dx/adobe-fonts</root></filter>
