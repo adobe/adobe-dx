@@ -57,7 +57,10 @@
                     <name>dx.docs</name>
                     <filters>
                         <filter><root>/apps/dx-docs</root></filter>
-                        <filter><root>/conf/dx-docs</root></filter>
+                        <filter>
+                            <root>/conf/dx-docs</root>
+                            <mode>update</mode>
+                        </filter>
                         <filter><root>/content/dx-docs/jcr:content</root></filter>
                         <filter><root>/content/dx-docs/us/jcr:content</root></filter>
                         <filter><root>/content/dx-docs/us/en/jcr:content</root></filter>

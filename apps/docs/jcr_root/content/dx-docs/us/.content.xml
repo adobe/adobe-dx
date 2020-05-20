@@ -5,5 +5,19 @@
         jcr:primaryType="cq:PageContent"
         jcr:title="DX Documentation"
         cq:template="/conf/dx-docs/settings/wcm/templates/content-page-template"
-        sling:resourceType="dx-docs/components/structure/page"/>
+        sling:resourceType="dx-docs/components/structure/page">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/responsivegrid">
+            <content
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/foundation/components/responsivegrid">
+                <flex
+                    jcr:primaryType="nt:unstructured"
+                    dx_id="c3fa17f4"
+                    dx_pageId="5aff75cf"
+                    sling:resourceType="dx/components/structure/flex"/>
+            </content>
+        </root>
+    </jcr:content>
 </jcr:root>
