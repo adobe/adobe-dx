@@ -15,15 +15,12 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.admin.config.manager.internal;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.adobe.dx.admin.config.manager.ColumnViewDataSource;
 import com.adobe.dx.admin.config.manager.ColumnViewItem;
 import static com.adobe.dx.admin.config.manager.Constants.CONF_ROOT;
-
-import javax.annotation.PostConstruct;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -35,7 +32,7 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 
 @Model(adaptables = { SlingHttpServletRequest.class }, 
        adapters = { ColumnViewDataSource.class },
-       resourceType = "dx/config-manager/common/components/content")
+       resourceType = "dx/config-manager/components/content")
 @Exporter(name = "jackson", extensions = "json")
 public class ColumnViewDataSourceImpl implements ColumnViewDataSource {
 

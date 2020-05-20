@@ -16,7 +16,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>8</version>
+        <version>9-SNAPSHOT</version>
         <relativePath>parent/main</relativePath>
     </parent>
 
@@ -41,7 +41,7 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <id>build-all</id>
+            <id>build-all</id>            
             <modules>
                 <module>parent</module>
                 <module>bundles/testing</module>
@@ -53,4 +53,5 @@
             </modules>
         </profile>
     </profiles>
+
 </project>

@@ -31,7 +31,6 @@ import java.util.Iterator;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
 import org.apache.sling.caconfig.resource.impl.ConfigurationResourceResolverImpl;
 import org.apache.sling.caconfig.resource.impl.def.DefaultConfigurationResourceResolvingStrategy;
 import org.apache.sling.caconfig.resource.impl.def.DefaultContextPathStrategy;
@@ -43,8 +42,6 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 public class ContextAwareDatasourceTest extends AbstractTest {
 
     private static final String DATASOURCE_CLASS = "com.adobe.granite.ui.components.ds.DataSource";
-
-    private ConfigurationResourceResolver confResourceResolver;
 
     @BeforeEach
     public void setUp() {
@@ -59,7 +56,7 @@ public class ContextAwareDatasourceTest extends AbstractTest {
         context.request().setResource(component);
 
         try {
-            confResourceResolver = registerConfigurationResourceResolver();
+            registerConfigurationResourceResolver();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,9 +78,10 @@ public class ContextAwareDatasourceTest extends AbstractTest {
 
     @Test
     public void getCaDsFromPage() {
-        context.request().setParameterMap(new HashMap<String, Object>(){{
-            put("item", "/content/dexter");
-        }});
+        context.request().setParameterMap(new HashMap<String, Object>(){
+            private static final long serialVersionUID = 1L;
+            { put("item", "/content/dexter"); }
+        });
         SimpleDataSource ds = getDataSource(context);
         assertTrue(ds instanceof SimpleDataSource);
         Iterator<Resource> dsResources = ds.iterator();
@@ -120,10 +118,10 @@ public class ContextAwareDatasourceTest extends AbstractTest {
         }
     }
 
-    private ConfigurationResourceResolver registerConfigurationResourceResolver() throws IOException {
+    private void registerConfigurationResourceResolver() throws IOException {
         context.registerInjectActivateService(new DefaultContextPathStrategy());
         context.registerInjectActivateService(new DefaultConfigurationResourceResolvingStrategy());
-        return context.registerInjectActivateService(new ConfigurationResourceResolverImpl());
+        context.registerInjectActivateService(new ConfigurationResourceResolverImpl());
     }
 
     private SimpleDataSource getDataSource(AemContext context) {

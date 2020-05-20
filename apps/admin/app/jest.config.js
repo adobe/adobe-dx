@@ -15,6 +15,9 @@ const config = {
             moduleNameMapper: {
                 '\\.(css|less)$': '<rootDir>/.jestconfig/__mocks__/styleMock.js',
             },
+            transform: {
+                '^.+\\.js?$': './babelwrapper.js',
+            },
             setupFilesAfterEnv: ['<rootDir>/.jestconfig/jest.setup.js'],
             testPathIgnorePatterns: ['/node_modules/', '/.history/'],
         },

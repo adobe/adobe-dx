@@ -15,9 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.admin.config.manager;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 public final class Constants {
 
     private Constants() {
