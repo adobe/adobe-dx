@@ -1,18 +1,15 @@
 {
     "extends": [
         "airbnb",
-        "plugin:jest/recommended",
         "prettier",
         "prettier/standard",
         "prettier/react"
     ],
     "parser": "babel-eslint",
-    "plugins": ["jest"],
     "ignorePatterns": ["webpack.config.js", "node_modules/"],
     "env": {
         "browser": true,
         "es6": true,
-        "jest/globals": true,
         "node": true
     },
     "parserOptions": {

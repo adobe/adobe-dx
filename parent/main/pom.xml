@@ -39,14 +39,14 @@
         <bnd.version>4.2.0</bnd.version>
         <bundle.additional.properties />
         <frontend-maven-plugin.version>1.7.6</frontend-maven-plugin.version>
+        <node.version>v10.13.0</node.version>
+        <npm.version>6.4.1</npm.version>
         <gpg.useagent>true</gpg.useagent>
         <jacoco.version>0.8.3</jacoco.version>
         <jacoco.data.file>${project.build.directory}/jacoco.exec</jacoco.data.file>
         <java.version>8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <node.version>v10.13.0</node.version>
-        <npm.version>6.4.1</npm.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <sling.user>admin</sling.user>
         <sling.password>admin</sling.password>
@@ -92,7 +92,6 @@
     <!-- B U I L D                                                               -->
     <!-- ======================================================================= -->
     <build>
-
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -296,6 +295,35 @@ ${bundle.additional.properties}
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <inherited>false</inherited>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${frontend-maven-plugin.version}</version>
+                <configuration>
+                    <nodeVersion>${node.version}</nodeVersion>
+                    <npmVersion>${npm.version}</npmVersion>
+                    <workingDirectory>../../</workingDirectory>
+                    <installDirectory>../../</installDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -554,9 +582,23 @@ ${bundle.additional.properties}
             </dependency>
             <dependency>
                 <groupId>com.adobe.dx</groupId>
+                <artifactId>com.adobe.dx.core</artifactId>
+                <version>0.0.3-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.adobe.dx</groupId>
                 <artifactId>repository-structure</artifactId>
                 <version>9-SNAPSHOT</version>
                 <type>zip</type>
+            </dependency>
+            <!-- Uber Jar-->
+            <dependency>
+                <groupId>com.adobe.aem</groupId>
+                <artifactId>uber-jar</artifactId>
+                <version>${aem.version}</version>
+                <classifier>apis</classifier>
+                <scope>provided</scope>
             </dependency>
             <!-- Testing dependencies -->
             <dependency>

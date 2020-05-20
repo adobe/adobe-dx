@@ -1,0 +1,81 @@
+/*
+ *  Copyright 2019 Adobe
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+* {
+    box-sizing: border-box;
+}
+
+.dx-ActionBar {
+    padding: 8px;
+    width: 100%;
+
+    &.dx-ActionBar--fixed {
+        display: none;
+        z-index: 1;
+        position: fixed;
+        top: 0;
+        background-color: #FFF;
+        box-shadow: 0 1px 4px rgba(0,0,0,.15);
+
+        &.is-Active {
+            display: block;
+        }
+    }
+
+    &.dx-ActionBar--secondary {
+        border-bottom: 1px solid #E1E1E1;
+
+    }
+
+    .dx-ActionBar-Provider {
+        display: flex;
+        justify-content: space-between;
+
+        &.dx-ActionBar-Provider--alignEnd {
+            justify-content: flex-end;
+        }
+    }
+
+    .dx-MenuWrapper {
+        z-index: 1;
+    }
+}
+
+.dx-Provider--ColumnView {
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.spectrum-AssetList-item {
+    .dx-ColumnItemLabel {
+        margin-left: 16px;
+    }
+
+    .dx-Icon.dx-Icon--ColumnItem {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+    }
+}
+
+.spectrum-Underlay.is-open {
+    pointer-events: all;
+    visibility: visible;
+    opacity: 1;
+    z-index: 1;
+}
+
+.spectrum-Popover {
+    min-width: 150px;
+}

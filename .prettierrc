@@ -1,0 +1,7 @@
+{
+  "endOfLine": "auto",
+  "parser": "babel",
+  "printWidth": 100,
+  "singleQuote": true,
+  "tabWidth": 4
+}

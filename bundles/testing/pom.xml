@@ -19,7 +19,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>8</version>
+        <version>9-SNAPSHOT</version>
         <relativePath>../../parent/main</relativePath>
     </parent>
     <artifactId>com.adobe.dx.testing</artifactId>

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019 Adobe
+ *  Copyright 2020 Adobe
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,81 +14,59 @@
  *  limitations under the License.
  */
 
+// NPM Imports
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const stats = require('./webpack.config/stats');
+// Mono Imports
+const monoRoot = '../../../';
+const spectrumConfig = require(`${monoRoot}webpack-scripts/spectrum.config.js`);
+const eslintLoader = require(`${monoRoot}webpack-scripts/eslintLoader.js`);
+const babelLoader = require(`${monoRoot}webpack-scripts/babelLoader.js`);
+const prettierLoader = require(`${monoRoot}webpack-scripts/prettierLoader.js`);
+const {
+    miniCssExtractLoader,
+    MiniCssExtractPlugin,
+} = require(`${monoRoot}webpack-scripts/miniCssExtractWrapper.js`);
+const optimization = require(`${monoRoot}webpack-scripts/optimization.js`);
+const optimizeCssAssets = require(`${monoRoot}webpack-scripts/optimizeCssAssetsWrapper.js`);
+const devtool = require(`${monoRoot}webpack-scripts/devtool.js`);
+const performance = require(`${monoRoot}webpack-scripts/performance.js`);
+const stats = require(`${monoRoot}webpack-scripts/stats.js`);
 
-const projectName = 'dx';
-const project = `./jcr_root/apps/${projectName}/config-manager/common/clientlibs`;
+// Project Setup
+const PROJECT_NAME = 'dx/config-manager';
+const PROJECT_PATH = `${__dirname}/jcr_root/apps/${PROJECT_NAME}/clientlibs`;
 
+// Production Detection
 const isProduction = process.env.NODE_ENV === 'production';
 
-if (isProduction) {
-    console.log('Production Build');
-}
-
-const rules = [
-    {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        enforce: 'pre',
-        loader: 'eslint-loader',
-        options: {
-            failOnError: true,
-        },
-    },
-    {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-            loader: 'babel-loader',
-        },
-    },
-    {
-        test: /\.(css|less)$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
-    },
-];
-
+// Rules
+const rules = [eslintLoader, babelLoader, miniCssExtractLoader()];
 if (!isProduction) {
-    rules.push({
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: {
-            loader: 'prettier-loader',
-        },
-    });
+    rules.push(prettierLoader);
 }
 
 module.exports = {
     entry: {
-        react: [`${project}/react/src/js/app.js`, `${project}/react/src/less/app.less`],
+        registry: [`${PROJECT_PATH}/registry/src/js/app.js`],
+        configs: [`${PROJECT_PATH}/configs/src/js/app.js`],
+        manager: [
+            `${PROJECT_PATH}/manager/src/js/app.js`,
+            `${PROJECT_PATH}/manager/src/less/app.less`,
+        ],
     },
     output: {
-        path: `${__dirname}/jcr_root/apps/${projectName}/config-manager/common/clientlibs`,
+        path: `${PROJECT_PATH}`,
         filename: '[name]/dist/js/app.min.js',
     },
-    module: {
-        rules,
-    },
-    optimization: {
-        minimize: true,
-        minimizer: [new TerserPlugin()],
-    },
+    module: { rules },
+    devtool: devtool(),
+    optimization,
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env.SCALE_MEDIUM': 'true',
-            'process.env.SCALE_LARGE': 'false',
-            'process.env.THEME_LIGHT': 'true',
-            'process.env.THEME_LIGHTEST': 'true',
-            'process.env.THEME_DARK': 'false',
-            'process.env.THEME_DARKEST': 'false',
-        }),
+        new webpack.DefinePlugin(spectrumConfig),
         new MiniCssExtractPlugin({ filename: '[name]/dist/css/app.min.css' }),
-        new OptimizeCSSAssetsPlugin({}),
+        optimizeCssAssets,
     ],
+    performance,
     stats,
 };

@@ -79,11 +79,13 @@ Bundle-DocURL:
     </build>
     <dependencies>
         <dependency>
+            <groupId>com.adobe.dx</groupId>
+            <artifactId>com.adobe.dx.core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>uber-jar</artifactId>
-            <version>${aem.version}</version>
             <classifier>apis</classifier>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
@@ -120,7 +122,7 @@ Bundle-DocURL:
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>com.adobe.dx.testing</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>javax.annotation</groupId>
