@@ -48,6 +48,7 @@
                 <module>bundles/core</module>
 		        <module>apps/admin</module>
                 <module>apps/structure</module>
+                <module>apps/content</module>
                 <module>apps/all</module>
                 <module>apps/docs</module>
             </modules>

@@ -67,6 +67,12 @@
                             <filter>true</filter>
                         </embedded>
                         <embedded>
+                            <groupId>com.adobe.dx</groupId>
+                            <artifactId>content</artifactId>
+                            <target>/apps/dx-packages/application/install</target>
+                            <filter>true</filter>
+                        </embedded>
+                        <embedded>
                             <groupId>com.adobe.cq</groupId>
                             <artifactId>core.wcm.components.all</artifactId>
                             <target>/apps/dx-packages/application/install</target>
@@ -119,6 +125,12 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>structure</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.dx</groupId>
+            <artifactId>content</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <type>zip</type>
         </dependency>
