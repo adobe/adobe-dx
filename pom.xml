@@ -50,6 +50,7 @@
                 <module>apps/structure</module>
                 <module>apps/all</module>
                 <module>apps/docs</module>
+                <module>apps/content</module>
             </modules>
         </profile>
     </profiles>
