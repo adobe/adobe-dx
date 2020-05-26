@@ -15,7 +15,7 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.tag="com.adobe.dx.admin.config.fonts.Tag" data-sly-test="${tag.id}">
     <!--/* Default Link Tag Embed */-->
-    <link data-sly-test="${tag.embedType == 'linkTag'}" 
+    <link data-sly-test="${tag.embedType == 'linkTag'}"
           rel="stylesheet" href="${'{0}/{1}.css' @ format = [tag.url, tag.id], context = 'uri'}" />
     <!--/* Style Tag Embed */-->
     <style data-sly-test="${tag.embedType == 'styleTag'}">

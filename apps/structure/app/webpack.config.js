@@ -34,7 +34,7 @@ const performance = require(`${monoRoot}webpack-scripts/performance.js`);
 const stats = require(`${monoRoot}webpack-scripts/stats.js`);
 
 // Project Setup
-const PROJECT_NAME = 'dx/config-manager';
+const PROJECT_NAME = 'dx';
 const PROJECT_PATH = `${__dirname}/jcr_root/apps/${PROJECT_NAME}/clientlibs`;
 
 // Production Detection
@@ -48,11 +48,9 @@ if (!isProduction) {
 
 module.exports = {
     entry: {
-        registry: [`${PROJECT_PATH}/registry/src/js/app.js`],
-        configs: [`${PROJECT_PATH}/configs/src/js/app.js`],
-        manager: [
-            `${PROJECT_PATH}/manager/src/js/app.js`,
-            `${PROJECT_PATH}/manager/src/less/app.less`,
+        configs: [
+            `${PROJECT_PATH}/configs/src/js/app.js`,
+            `${PROJECT_PATH}/configs/src/less/app.less`,
         ],
     },
     output: {
@@ -65,7 +63,6 @@ module.exports = {
         'react-dom': 'ReactDOM',
     },
     devtool: devtool(),
-    optimization,
     plugins: [
         new webpack.DefinePlugin(spectrumConfig),
         new MiniCssExtractPlugin({ filename: '[name]/dist/css/app.min.css' }),
@@ -74,3 +71,7 @@ module.exports = {
     performance,
     stats,
 };
+
+if (isProduction) {
+    module.exports.optimization = optimization;
+}
