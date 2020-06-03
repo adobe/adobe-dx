@@ -29,10 +29,6 @@
     <artifactId>content.core</artifactId>
     <name>${module.name} - Core bundle</name>
 
-    <properties>
-        <maven.deploy.skip>true</maven.deploy.skip>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.adobe.dx</groupId>

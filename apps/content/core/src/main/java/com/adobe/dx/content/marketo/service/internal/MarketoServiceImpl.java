@@ -19,7 +19,7 @@ package com.adobe.dx.content.marketo.service.internal;
 import static org.apache.commons.lang.StringUtils.EMPTY;
 
 import com.adobe.dx.content.marketo.models.internal.MarketoConfDetailedInfo;
-import com.adobe.dx.content.marketo.service.CloudConfigReader;
+import com.adobe.dx.utils.service.CloudConfigReader;
 import com.adobe.dx.content.marketo.service.MarketoClientService;
 import com.adobe.dx.content.marketo.service.MarketoClientService.MarketoAccessToken;
 import com.adobe.dx.content.marketo.service.MarketoClientService.MarketoForms;
@@ -137,7 +137,8 @@ public class MarketoServiceImpl implements MarketoService {
     }
 
     private MarketoAccessToken fetchAuthToken(MarketoConfDetailedInfo marketoDetailedInfo) {
-        return marketoClientService.getAuthToken(marketoDetailedInfo.getRestApiBaseUrl(), marketoDetailedInfo.getClientId(),
+        return marketoClientService.getAuthToken(marketoDetailedInfo.getRestApiBaseUrl(),
+            marketoDetailedInfo.getClientId(),
             marketoDetailedInfo.getClientSecret());
     }
 

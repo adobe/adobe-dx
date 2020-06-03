@@ -23,7 +23,7 @@ import static org.apache.commons.lang.StringUtils.EMPTY;
 import static org.apache.sling.api.servlets.HttpConstants.METHOD_GET;
 import static org.apache.sling.api.servlets.ServletResolverConstants.SLING_SERVLET_EXTENSIONS;
 import static org.apache.sling.api.servlets.ServletResolverConstants.SLING_SERVLET_METHODS;
-import static org.apache.sling.api.servlets.ServletResolverConstants.SLING_SERVLET_PATHS;
+import static org.apache.sling.api.servlets.ServletResolverConstants.SLING_SERVLET_RESOURCE_TYPES;
 
 import com.adobe.granite.crypto.CryptoException;
 import com.adobe.granite.crypto.CryptoSupport;
@@ -32,6 +32,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -40,6 +41,7 @@ import javax.servlet.Servlet;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
+import org.apache.sling.xss.XSSAPI;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,8 +51,7 @@ import org.slf4j.LoggerFactory;
 @Component(
     service = Servlet.class,
     property = {
-        SLING_SERVLET_PATHS + "=/services/private/encryptValues",
-        SLING_SERVLET_EXTENSIONS +  "=json",
+        SLING_SERVLET_RESOURCE_TYPES + "=dx/components/services/encryption",
         SLING_SERVLET_METHODS + "=" + METHOD_GET})
 public class EncryptionServlet extends SlingSafeMethodsServlet {
 
@@ -68,6 +69,9 @@ public class EncryptionServlet extends SlingSafeMethodsServlet {
 
     @Reference
     private transient CryptoSupport cryptoSupport = null;
+
+    @Reference
+    private transient XSSAPI xssApi = null;
 
     @Override
     protected void doGet(@NotNull SlingHttpServletRequest request, @NotNull SlingHttpServletResponse response)
@@ -95,8 +99,10 @@ public class EncryptionServlet extends SlingSafeMethodsServlet {
 
     @SuppressWarnings("unchecked")
     private String encryptJsonMap(Map toBeConverted) throws JsonProcessingException {
-        toBeConverted.replaceAll((k, v) -> encrypt(String.valueOf(v)).orElse(EMPTY));
-        return new ObjectMapper().writeValueAsString(toBeConverted);
+        Map<String, String> encryptedMap = new HashMap<>();
+        toBeConverted.forEach((k,v) -> encryptedMap.put(xssApi.encodeForJSString(String.valueOf(k)),
+            encrypt(String.valueOf(v)).orElse(EMPTY)));
+        return new ObjectMapper().writeValueAsString(encryptedMap);
     }
 
     private void writeResponse(SlingHttpServletResponse response, int code, String responseJson) throws IOException {

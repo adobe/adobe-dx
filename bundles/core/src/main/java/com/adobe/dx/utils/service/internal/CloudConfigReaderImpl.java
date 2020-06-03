@@ -14,13 +14,12 @@
   ~ limitations under the License.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-package com.adobe.dx.content.marketo.service.internal;
+package com.adobe.dx.utils.service.internal;
 
 import static com.day.cq.commons.jcr.JcrConstants.JCR_CONTENT;
 import static org.apache.sling.api.resource.ResourceResolverFactory.SUBSERVICE;
 
-import com.adobe.dx.content.marketo.service.CloudConfigReader;
-import org.apache.commons.lang3.StringUtils;
+import com.adobe.dx.utils.service.CloudConfigReader;
 
 import java.util.Collections;
 import java.util.Map;
@@ -30,6 +29,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
+import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
@@ -44,7 +44,6 @@ public class CloudConfigReaderImpl implements CloudConfigReader {
 
     private static final Map<String, Object> SERVICE_USER = Collections.singletonMap(SUBSERVICE,
         "readService");
-    private static final String SLASH = "/";
 
     @Reference
     private ConfigurationResourceResolver configurationResolver = null;
@@ -53,9 +52,9 @@ public class CloudConfigReaderImpl implements CloudConfigReader {
     private ResourceResolverFactory resourceResolverFactory = null;
 
     @Override
-    public <T> T getContextAwareCloudConfigRes(String resourcePath, String configName, Class<T> type) {
+    public <T> T getContextAwareCloudConfigRes(@NotNull String resourcePath, String configName, Class<T> type) {
         try (ResourceResolver resolver = resourceResolverFactory.getServiceResourceResolver(SERVICE_USER)) {
-            Resource resource = getResourceFromResourceTree(resolver, resourcePath);
+            Resource resource = resolver.getResource(resourcePath);
             Resource confRes = null != resource ? configurationResolver.getResource(resource, BUCKET_NAME,
                 configName) : null;
             if (null != confRes) {
@@ -64,17 +63,7 @@ public class CloudConfigReaderImpl implements CloudConfigReader {
             }
         } catch (LoginException e) {
             LOG.error("Login Exception occurred when reading config ", e);
-            return null;
         }
         return null;
-    }
-
-    private Resource getResourceFromResourceTree(ResourceResolver resolver, String resourcePath) {
-        Resource resource = resolver.getResource(resourcePath);
-        while(resource == null && StringUtils.isNotEmpty(resourcePath)) {
-            resourcePath = StringUtils.substringBeforeLast(resourcePath, SLASH);
-            resource = resolver.getResource(resourcePath);
-        }
-        return resource;
     }
 }

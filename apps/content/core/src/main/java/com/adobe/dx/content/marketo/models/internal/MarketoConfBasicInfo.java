@@ -17,7 +17,9 @@
 package com.adobe.dx.content.marketo.models.internal;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 @Model(adaptables = Resource.class)
@@ -29,11 +31,19 @@ public class MarketoConfBasicInfo {
     @ValueMapValue
     private String munchkinId;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = {"dx/components/content/marketo"})
+    private String[] marketoComponentTypes;
+
     public String getBaseUrl() {
         return baseUrl;
     }
 
     public String getMunchkinId() {
         return munchkinId;
+    }
+
+    public String[] getMarketoComponentTypes() {
+        return marketoComponentTypes;
     }
 }

@@ -14,9 +14,11 @@
   ~ limitations under the License.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-package com.adobe.dx.content.marketo.service;
+package com.adobe.dx.utils.service;
+
+import org.jetbrains.annotations.NotNull;
 
 public interface CloudConfigReader {
 
-    <T> T getContextAwareCloudConfigRes(String resourcePath, String configName, Class<T> type);
+    <T> T getContextAwareCloudConfigRes(@NotNull String resourcePath, String configName, Class<T> type);
 }   
