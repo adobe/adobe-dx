@@ -102,7 +102,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>install ../../admin/app/react-collection-view-4.1.5.tgz</arguments>
+                            <arguments>install --no-optional ../../admin/app/react-collection-view-4.1.5.tgz</arguments>
                         </configuration>
                     </execution>
                     <execution>
@@ -111,7 +111,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>install --no-optional</arguments>
                         </configuration>
                     </execution>
                     <execution>
