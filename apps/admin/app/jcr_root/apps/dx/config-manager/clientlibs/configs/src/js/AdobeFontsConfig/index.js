@@ -53,8 +53,10 @@ export default class AdobeFonts extends React.Component {
     setupState() {
         if (this.props.config.data) {
             const { name, data } = this.props.config;
+            // eslint-disable-next-line react/no-direct-mutation-state
             this.state = { name, data, replace: true, cleanName: name };
         } else {
+            // eslint-disable-next-line react/no-direct-mutation-state
             this.state = DEFAULT_STATE;
         }
     }

@@ -32,8 +32,6 @@
         <maven.deploy.skip>false</maven.deploy.skip>
         <repositoryId>github-dx</repositoryId>
         <frontend-maven-plugin.version>1.7.6</frontend-maven-plugin.version>
-        <node.version>v10.13.0</node.version>
-        <npm.version>6.4.1</npm.version>
     </properties>
 
     <licenses>

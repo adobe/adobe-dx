@@ -1,0 +1,13 @@
+{
+  "jcr:primaryType": "sling:Folder",
+  "component": {
+    "jcr:primaryType": "cq:Component",
+    "style": {
+      "jcr:primaryType": "nt:unstructured",
+      "datasource": {
+        "sling:bucketName": "cq:styleguide",
+        "confName": "gradients"
+      }
+    }
+  }
+}
