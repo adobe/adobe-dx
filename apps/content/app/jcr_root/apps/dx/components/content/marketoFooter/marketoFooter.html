@@ -1,0 +1,12 @@
+<h2>This is the marketo footer</h2>
+<sly data-sly-use.footer="com.adobe.dx.content.marketo.models.MarketoFooter">
+    <sly data-sly-test.marketoConfBasicInfo="${footer.marketoConfBasicInfo}">
+        <script data-sly-test.marketoFormIds="${footer.marketoFormIds}"
+                src="${marketoConfBasicInfo.baseUrl}/js/forms2/js/forms2.js"></script>
+        <script  data-sly-list="${marketoFormIds}">
+            MktoForms2.loadForm("${marketoConfBasicInfo.baseUrl @context='text'}",
+                "${marketoConfBasicInfo.munchkinId  @context='text'}",
+                 "${item @context='text'}");
+        </script>
+    </sly>
+</sly>

@@ -63,6 +63,7 @@
                         <filter><root>/apps/dx/adobe-fonts</root></filter>
                         <filter><root>/apps/dx/admin</root></filter>
                         <filter><root>/apps/dx/config-manager</root></filter>
+                        <filter><root>/apps/dx/services/private/encryptValues</root></filter>
                     </filters>
                     <embeddeds>
                         <embedded>
