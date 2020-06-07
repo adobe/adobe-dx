@@ -64,9 +64,11 @@ public class MarketoFooter {
     private void init() {
         marketoConfBasicInfo = cloudConfigReader.getContextAwareCloudConfigRes(
             currentPage.getPath(), CONFIG_NAME, MarketoConfBasicInfo.class);
-        Set<String> marketoComponentTypes = new HashSet<>(Arrays
-            .asList(marketoConfBasicInfo.getMarketoComponentTypes()));
-        marketoFormIds = getMarketoFormIds(marketoComponentTypes, currentPage);
+        if (null != marketoConfBasicInfo) {
+            Set<String> marketoComponentTypes = new HashSet<>(Arrays
+                .asList(marketoConfBasicInfo.getMarketoComponentTypes()));
+            marketoFormIds = getMarketoFormIds(marketoComponentTypes, currentPage);
+        }
     }
 
     public Set<String> getMarketoFormIds() {
