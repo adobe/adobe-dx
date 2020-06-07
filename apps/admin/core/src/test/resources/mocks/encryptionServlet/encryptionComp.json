@@ -1,0 +1,4 @@
+{
+  "sling:resourceType" : "dx/components/services/encryption",
+  "jcr:primaryType" : "cq:Component"
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.adobe.dx.content.marketo.servlet.MarketoDatasource" configuration-policy="ignore">
+    <implementation class="com.adobe.dx.content.marketo.servlet.MarketoDatasource"/>
+    <service>
+        <provide interface="javax.servlet.Servlet"/>
+    </service>
+    <reference name="marketoService"
+               interface="com.adobe.dx.content.marketo.service.MarketoService" field="marketoService"/>
+    <property name="sling.servlet.extensions" type="String" value="json"/>
+    <property name="sling.servlet.methods" type="String" value="GET"/>
+</scr:component>

@@ -21,7 +21,6 @@ import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.apache.commons.lang.StringUtils.EMPTY;
 import static org.apache.sling.api.servlets.HttpConstants.METHOD_GET;
-import static org.apache.sling.api.servlets.ServletResolverConstants.SLING_SERVLET_EXTENSIONS;
 import static org.apache.sling.api.servlets.ServletResolverConstants.SLING_SERVLET_METHODS;
 import static org.apache.sling.api.servlets.ServletResolverConstants.SLING_SERVLET_RESOURCE_TYPES;
 
