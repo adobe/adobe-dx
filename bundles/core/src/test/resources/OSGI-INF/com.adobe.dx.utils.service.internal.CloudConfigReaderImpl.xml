@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.adobe.dx.utils.service.internal.CloudConfigReaderImpl" configuration-policy="ignore">
+    <implementation class="com.adobe.dx.utils.service.internal.CloudConfigReaderImpl"/>
+    <service>
+        <provide interface="com.adobe.dx.utils.service.CloudConfigReader"/>
+    </service>
+    <reference name="resourceResolverFactory"
+               interface="org.apache.sling.api.resource.ResourceResolverFactory" field="resourceResolverFactory"/>
+    <reference name="configurationResolver"
+               interface="org.apache.sling.caconfig.resource.ConfigurationResourceResolver" field="configurationResolver"/>
+</scr:component>

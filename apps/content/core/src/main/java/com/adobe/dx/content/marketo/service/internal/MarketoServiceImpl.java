@@ -19,18 +19,19 @@ package com.adobe.dx.content.marketo.service.internal;
 import static org.apache.commons.lang.StringUtils.EMPTY;
 
 import com.adobe.dx.content.marketo.models.internal.MarketoConfDetailedInfo;
-import com.adobe.dx.utils.service.CloudConfigReader;
 import com.adobe.dx.content.marketo.service.MarketoClientService;
 import com.adobe.dx.content.marketo.service.MarketoClientService.MarketoAccessToken;
 import com.adobe.dx.content.marketo.service.MarketoClientService.MarketoForms;
 import com.adobe.dx.content.marketo.service.MarketoFormData;
 import com.adobe.dx.content.marketo.service.MarketoService;
+import com.adobe.dx.utils.service.CloudConfigReader;
 
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -63,14 +64,15 @@ public class MarketoServiceImpl implements MarketoService {
     public List<MarketoFormData> getMarketoForms(@NotNull String resourcePath) {
         MarketoConfDetailedInfo marketoDetailedInfo = cloudConfigReader.getContextAwareCloudConfigRes(resourcePath,
             CONFIG_NAME, MarketoConfDetailedInfo.class);
-        if (null != marketoDetailedInfo) {
+        if (null != marketoDetailedInfo && StringUtils.isNotEmpty(marketoDetailedInfo.getClientSecret())) {
             MarketoForms marketoForms = retrieveMarketoForms(marketoDetailedInfo);
             if (null != marketoForms) {
                 if (!marketoForms.isSuccess()) {
                     LOG.error("There was an error when trying to retrieve marketo forms {}",
                         marketoForms.getErrorMessage());
+                    return Collections.emptyList();
                 }
-                return marketoForms.getResult();
+                return Optional.ofNullable(marketoForms.getResult()).orElse(Collections.emptyList());
             }
         }
         return Collections.emptyList();
@@ -92,8 +94,13 @@ public class MarketoServiceImpl implements MarketoService {
     }
 
     private MarketoForms getMarketoFormsFromClient(MarketoConfDetailedInfo marketoDetailedInfo) {
-        return  marketoClientService.getMarketoForms(marketoDetailedInfo.getRestApiBaseUrl(),
-            getAuthToken(marketoDetailedInfo));
+        String authToken = getAuthToken(marketoDetailedInfo);
+        // Prevent Forms call if auth token was not available.
+        if (StringUtils.isNotEmpty(authToken)) {
+            return marketoClientService.getMarketoForms(marketoDetailedInfo.getRestApiBaseUrl(),
+                getAuthToken(marketoDetailedInfo));
+        }
+        return null;
     }
 
     private String getAuthToken(MarketoConfDetailedInfo marketoDetailedInfo) {
@@ -131,7 +138,9 @@ public class MarketoServiceImpl implements MarketoService {
         MarketoAccessToken authToken = authTokenMap.get(clientInfo);
         if (authToken == null || isAuthTokenInValid(authToken.getAccessToken(), authToken.getValidUntil())) {
             authToken = fetchAuthToken(marketoDetailedInfo);
-            authTokenMap.put(clientInfo, authToken);
+            if (null != authToken) {
+                authTokenMap.put(clientInfo, authToken);
+            }
         }
         return authToken;
     }

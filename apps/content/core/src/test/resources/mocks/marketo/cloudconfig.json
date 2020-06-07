@@ -1,0 +1,17 @@
+{
+  "jcr:primaryType": "cq:Page",
+  "jcr:content": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "Marketo",
+    "munchkinId": "123-shs-456",
+    "clientSecret": "protected_validSecret",
+    "tagComponentFooter": "dx/components/content/marketoFooter",
+    "baseUrl": "//app-ab12.marketo.com",
+    "marketoComponentTypes": [
+      "dx/components/content/marketo"
+    ],
+    "clientId": "validClient",
+    "sling:resourceType": "dx/config-manager/marketo-config",
+    "restApiBaseUrl": "//123-shs-456.mktorest.com"
+  }
+}
