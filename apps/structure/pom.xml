@@ -24,7 +24,6 @@
     </parent>
     <properties>
         <module.name>${project.prefix} - Structure Components</module.name>
-        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
     <scm>
