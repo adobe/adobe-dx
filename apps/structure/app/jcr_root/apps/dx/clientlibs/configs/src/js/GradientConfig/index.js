@@ -70,7 +70,7 @@ const GradientConfig = (props) => {
     const [angle, setAngle] = useState();
     const [config, setConfig] = useState(EMPTY_STATE);
     const [gradientCss, setGradientCss] = useState();
-    const [mode, setMode] = useState('linear');
+    const [mode, setMode] = useState();
 
     useEffect(() => {
         if (props.config.data) {
@@ -192,7 +192,7 @@ const GradientConfig = (props) => {
                 <GridRow>
                     <GradientPicker
                         angle={angle}
-                        cssString={config.data.gradientCss}
+                        cssString={gradientCss}
                         debounceMS={DEBOUNCE_MS}
                         mode={mode}
                         setMode={onModeChange}
