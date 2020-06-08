@@ -39,13 +39,15 @@ public class BackgroundGradient {
     protected Resource resource;
 
     private String resolveGradient(String gradient) {
-        if (gradient != null) {
+        if (gradient != null && configurationResolver != null) {
             Resource gradientConfigs = configurationResolver.getResource(resource, CQ_STYLEGUIDE_BUCKETNAME, GRADIENTS_CONFIG_NAME);
-            Resource gradientConfig = gradientConfigs.getChild(gradient);
-            if (gradientConfig != null) {
-                ValueMap valueMap = gradientConfig.getValueMap();
-                if (valueMap != null) {
-                    return valueMap.get(GRADIENT_KEY, String.class);
+            if (gradientConfigs != null) {
+                Resource gradientConfig = gradientConfigs.getChild(gradient);
+                if (gradientConfig != null) {
+                    ValueMap valueMap = gradientConfig.getValueMap();
+                    if (valueMap != null) {
+                        return valueMap.get(GRADIENT_KEY, String.class);
+                    }
                 }
             }
         }
