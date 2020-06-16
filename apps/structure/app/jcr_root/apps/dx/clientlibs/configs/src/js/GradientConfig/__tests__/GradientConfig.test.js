@@ -18,15 +18,11 @@ describe('GradientConfig', () => {
 
         const nameField = getByLabelText('Name');
         const cssField = getByLabelText('CSS');
-        const linearButton = getByText('Linear').parentElement;
-        const radialButton = getByText('Radial').parentElement;
 
         expect(nameField.value).toBe('');
         expect(cssField.value).toBe(
             'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0.1%,rgba(255, 0, 0, 1) 95%)'
         );
-        expect(linearButton).toHaveClass('is-selected');
-        expect(radialButton).not.toHaveClass('is-selected');
     });
 
     test('should set the Name field based on Title field', async () => {
@@ -69,6 +65,28 @@ describe('GradientConfig', () => {
         await waitFor(() => expect(titleField.value).toBe('My Gradient'));
         expect(cssField.value).toBe(
             'radial-gradient(circle at center, rgba(0, 0, 0, 0.5) 0.1%,rgba(255, 0, 0, 1) 95.0%)'
+        );
+    });
+
+    test('should be able to change css via textfield', async () => {
+        const setConfigCallback = (config) => {};
+        const config = {};
+
+        const { getByLabelText } = render(
+            <GradientConfig mode="new" config={config} setConfig={setConfigCallback} />
+        );
+
+        const cssField = getByLabelText('CSS');
+        cssField.value = '';
+        await userEvent.type(
+            cssField,
+            'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0.1%,rgba(255, 0, 0, 1) 95.0%)'
+        );
+        fireEvent.keyPress(cssField, { key: 'Enter', code: 13, charCode: 13 });
+        // the blur event does not fire in jsdom, so trigger manually
+        fireEvent.blur(cssField);
+        expect(cssField.value).toBe(
+            'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0.1%,rgba(255, 0, 0, 1) 95%)'
         );
     });
 });
