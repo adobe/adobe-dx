@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.adobe.dx.content.marketo.service.internal.MarketoClientServiceImpl" configuration-policy="ignore">
+    <implementation class="com.adobe.dx.content.marketo.service.internal.MarketoClientServiceImpl"/>
+    <service>
+        <provide interface="com.adobe.dx.content.marketo.service.MarketoClientService"/>
+    </service>
+</scr:component>

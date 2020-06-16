@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -55,12 +56,9 @@ public class MarketoClientServiceImpl implements MarketoClientService {
 
     private static final int OFFSET_BUFFER = 5;
 
-    private static final String PROTOCOL = "https:";
-
-
     @Override
     public MarketoAccessToken getAuthToken(String baseUrl, String clientId, String clientSecret) {
-        String authTokenUrl = PROTOCOL + baseUrl + IDENTITY_REST_API
+        String authTokenUrl = baseUrl + IDENTITY_REST_API
             + "&client_id=" + clientId + "&client_secret=" + clientSecret;
         Calendar executionCallStart = Calendar.getInstance();
         MarketoAccessTokenInstance accessTokenInstance = executeCall(authTokenUrl, MarketoAccessTokenInstance.class);
@@ -73,15 +71,23 @@ public class MarketoClientServiceImpl implements MarketoClientService {
 
     @Override
     public MarketoForms getMarketoForms(String baseUrl, String authToken) {
-        return executeCall(PROTOCOL + baseUrl + FORMS_REST_API
+        return executeCall(baseUrl + FORMS_REST_API
             + authToken + "&maxReturn=" + MAX_FORMS, MarketoForms.class);
     }
 
     private <T> T  executeCall(String url, Class<T> mapperClass) {
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+            return triggerRequest(httpClient, url, mapperClass);
+        } catch (IOException e) {
+            LOG.error("IO Exception when closing closeable httpclient ", e);
+        }
+        return null;
+    }
+
+    private <T> T triggerRequest(CloseableHttpClient httpClient, String url, Class<T> mapperClass) {
         try (CloseableHttpResponse httpResponse = httpClient.execute(new HttpGet(url))) {
             int statusCode = httpResponse.getStatusLine().getStatusCode();
-            if(HttpStatus.SC_OK == statusCode) {
+            if (HttpStatus.SC_OK == statusCode) {
                 ObjectMapper objectMapper = setupObjectMapper();
                 InputStream content = httpResponse.getEntity().getContent();
                 return objectMapper.readValue(content, mapperClass);
@@ -94,6 +100,7 @@ public class MarketoClientServiceImpl implements MarketoClientService {
         }
         return null;
     }
+
 
     private ObjectMapper setupObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -144,6 +151,7 @@ public class MarketoClientServiceImpl implements MarketoClientService {
         @JsonProperty("success")
         private boolean isSuccess;
         private List<MarketoFormData> result;
+        @JsonProperty("errors")
         private List<MarketoFormError> errors = Collections.emptyList();
 
         @Override
@@ -158,7 +166,7 @@ public class MarketoClientServiceImpl implements MarketoClientService {
 
         @Override
         public String getErrorMessage() {
-            return null != errors ? errors.toString() : EMPTY;
+            return CollectionUtils.isNotEmpty(errors) ? errors.toString() : EMPTY;
         }
 
         @Override
@@ -171,8 +179,9 @@ public class MarketoClientServiceImpl implements MarketoClientService {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @SuppressWarnings("UnusedDeclaration")
     private static class MarketoFormError {
-
+        @JsonProperty("code")
         private String code;
+        @JsonProperty("message")
         private String message;
 
         String getCode() {

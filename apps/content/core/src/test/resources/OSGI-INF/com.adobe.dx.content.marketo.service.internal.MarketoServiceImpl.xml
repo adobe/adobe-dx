@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.adobe.dx.content.marketo.service.internal.MarketoServiceImpl" configuration-policy="ignore">
+    <implementation class="com.adobe.dx.content.marketo.service.internal.MarketoServiceImpl"/>
+    <service>
+        <provide interface="com.adobe.dx.content.marketo.service.MarketoService"/>
+    </service>
+    <reference name="marketoClientService"
+               interface="com.adobe.dx.content.marketo.service.MarketoClientService" field="marketoClientService"/>
+    <reference name="cloudConfigReader"
+               interface="com.adobe.dx.utils.service.CloudConfigReader" field="cloudConfigReader"/>
+</scr:component>
