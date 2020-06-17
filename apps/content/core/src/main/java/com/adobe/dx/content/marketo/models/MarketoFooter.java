@@ -23,6 +23,8 @@ import static org.apache.commons.lang.StringUtils.EMPTY;
 import com.adobe.dx.content.marketo.models.internal.MarketoConfBasicInfo;
 import com.adobe.dx.utils.service.CloudConfigReader;
 import com.day.cq.wcm.api.Page;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -56,9 +58,13 @@ public class MarketoFooter {
 
     private static final String MARKETO_FORM_ID = "marketoFormId";
 
+    private static final String EMPTY_JSON_ARRAY = "[]";
+
     private MarketoConfBasicInfo marketoConfBasicInfo;
 
     private Set<String> marketoFormIds =  new HashSet<>();
+
+    private String marketoFormIdsJsonRep = EMPTY_JSON_ARRAY;
 
     @PostConstruct
     private void init() {
@@ -68,6 +74,7 @@ public class MarketoFooter {
             Set<String> marketoComponentTypes = new HashSet<>(Arrays
                 .asList(marketoConfBasicInfo.getMarketoComponentTypes()));
             marketoFormIds = getMarketoFormIds(marketoComponentTypes, currentPage);
+            marketoFormIdsJsonRep = getJsonArrayRepresentation();
         }
     }
 
@@ -75,8 +82,20 @@ public class MarketoFooter {
         return marketoFormIds;
     }
 
+    public String getMarketoFormIdsJsonRep() {
+        return marketoFormIdsJsonRep;
+    }
+
     public MarketoConfBasicInfo getMarketoConfBasicInfo() {
         return marketoConfBasicInfo;
+    }
+
+    private String getJsonArrayRepresentation() {
+        try {
+            return new ObjectMapper().writeValueAsString(marketoFormIds);
+        } catch (JsonProcessingException e) {
+            return EMPTY_JSON_ARRAY;
+        }
     }
 
     // TODO All the code below this to be replaced with the generic service.
