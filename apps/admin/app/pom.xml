@@ -60,10 +60,7 @@
                     <name>dx.admin.apps</name>
                     <filters>
                         <filter><root>/apps/cq/core/content/nav/tools/cloudservices/configManager</root></filter>
-                        <filter><root>/apps/dx/adobe-fonts</root></filter>
                         <filter><root>/apps/dx/admin</root></filter>
-                        <filter><root>/apps/dx/config-manager</root></filter>
-                        <filter><root>/apps/dx/services/private/encryptValues</root></filter>
                     </filters>
                     <embeddeds>
                         <embedded>
@@ -106,7 +103,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>install --no-optional react-collection-view-4.1.5.tgz</arguments>
+                            <arguments>install --no-optional ../../../react-collection-view-4.1.5.tgz</arguments>
                         </configuration>
                     </execution>
                     <execution>

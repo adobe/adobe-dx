@@ -7,21 +7,15 @@
         jcr:primaryType="cq:PageContent"
         sling:resourceType="dx-docs/components/structure/page">
         <root
+            editable="{Boolean}true"
             jcr:primaryType="nt:unstructured"
-            sling:resourceType="wcm/foundation/components/responsivegrid">
-            <content
-                jcr:primaryType="nt:unstructured"
-                sling:resourceType="wcm/foundation/components/responsivegrid"
-                editable="{Boolean}true">
-                <cq:responsive jcr:primaryType="nt:unstructured"></cq:responsive>
-            </content>
-        </root>
+            sling:resourceType="wcm/foundation/components/responsivegrid"/>
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">
                 <phone
                     jcr:primaryType="nt:unstructured"
                     title="Smaller Screen"
-                    width="{Long}650"/>
+                    width="{Long}600"/>
                 <tablet
                     jcr:primaryType="nt:unstructured"
                     title="Tablet"

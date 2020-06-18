@@ -42,15 +42,15 @@
   "dependencies": {
     "@adobe/spectrum-css": "2.9.0",
     "@babel/runtime": "^7.8.7",
-    "@react/collection-view": "file:../../admin/app/react-collection-view-4.1.5.tgz",
-    "@react/react-spectrum": "file:../../admin/app/react-react-spectrum-2.25.0.tgz",
+    "@react/collection-view": "file:../../../react-collection-view-4.1.5.tgz",
+    "@react/react-spectrum": "file:../../../react-react-spectrum-2.25.0.tgz",
     "bufferutil": "^4.0.1",
     "canvas": "^2.5.0",
     "react-gpickr": "^0.2.1",
     "utf-8-validate": "^5.0.2"
   },
   "resolutions": {
-    "@react/collection-view": "file:../../admin/app/react-collection-view-4.1.5.tgz"
+    "@react/collection-view": "file:../../../react-collection-view-4.1.5.tgz"
   },
   "peerDependencies": {
     "react": "^16.13.1",

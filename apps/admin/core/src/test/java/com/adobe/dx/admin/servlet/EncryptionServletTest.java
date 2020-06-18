@@ -70,7 +70,7 @@ class EncryptionServletTest extends AbstractTest {
     @Test
     void testSingleValueEncryption() throws IOException {
         request.setParameterMap(generateRequestMap("someValue"));
-        triggerAndAssertResponse(SC_OK, "{\"protected\" : \"protected_someValue\"}");
+        triggerAndAssertResponse(SC_OK, "{\"encrypted\" : \"protected_someValue\"}");
     }
 
     @Test
@@ -84,14 +84,14 @@ class EncryptionServletTest extends AbstractTest {
     @Test
     void testAnythingOtherThanJson() throws IOException {
         request.setParameterMap(generateRequestMap("[\"someValue\"]"));
-        triggerAndAssertResponse(SC_OK, "{\"protected\" : \"protected_[\"someValue\"]\"}");
+        triggerAndAssertResponse(SC_OK, "{\"encrypted\" : \"protected_[\"someValue\"]\"}");
     }
 
     @Test
     void testWhenCryptoSupportFailsForSingleValue() throws IOException {
         mockCryptoSupport.setException();
         request.setParameterMap(generateRequestMap("someValue"));
-        triggerAndAssertResponse(SC_OK, "{\"protected\" : \"\"}");
+        triggerAndAssertResponse(SC_OK, "{\"encrypted\" : \"\"}");
     }
 
     @Test

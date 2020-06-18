@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
         jcr:primaryType="cq:PageContent"
-        jcr:title="DX Documentation"
+        jcr:title="Dx Documentation"
         sling:configRef="/conf/dx-docs"
         cq:allowedTemplates="[/conf/dx-docs/settings/wcm/templates/content-page-template]"
         sling:resourceType="dx-docs/components/structure/page"/>

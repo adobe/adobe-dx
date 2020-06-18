@@ -42,6 +42,11 @@
     "style-loader": "^1.1.3"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.7"
+    "@babel/runtime": "^7.8.7",
+    "@react/collection-view": "file:react-collection-view-4.1.5.tgz",
+    "@react/react-spectrum": "file:react-react-spectrum-2.25.0.tgz"
+  },
+  "resolutions": {
+    "@react/collection-view": "file:react-collection-view-4.1.5.tgz"
   }
 }

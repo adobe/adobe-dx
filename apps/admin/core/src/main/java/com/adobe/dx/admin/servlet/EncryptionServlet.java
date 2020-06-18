@@ -58,7 +58,7 @@ public class EncryptionServlet extends SlingSafeMethodsServlet {
 
     private static final String TO_BE_ENCRYPTED = "toBeEncrypted";
 
-    private static final String SIMPLE_JSON_TEMPLATE = "{\"protected\" : \"protectedValue\"}";
+    private static final String SIMPLE_JSON_TEMPLATE = "{\"encrypted\" : \"protectedValue\"}";
 
     private static final String ERROR = "{\"error\" : \"encryption issue\"}";
 

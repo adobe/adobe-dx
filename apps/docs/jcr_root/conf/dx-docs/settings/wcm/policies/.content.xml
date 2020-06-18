@@ -6,8 +6,8 @@
         <foundation jcr:primaryType="nt:unstructured">
             <components jcr:primaryType="nt:unstructured">
                 <responsivegrid jcr:primaryType="nt:unstructured">
-                    <dx-structure
-                        jcr:description="Policy for templates to allow structure components"
+                    <dx-root
+                        jcr:description="Policy for templates to allow components"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="DX Structure"
                         sling:resourceType="wcm/core/components/policy/policy"
@@ -22,25 +22,21 @@
                                     droptarget="image"
                                     resourceType="dx-docs/components/content/image"
                                     type="Images"/>
-                                <fragment
+                                <contentFragment
                                     jcr:primaryType="nt:unstructured"
                                     assetGroup="media"
                                     assetMimetype="text/html"
                                     droptarget="fragment"
                                     resourceType="dam/cfm/components/contentfragment"
                                     type="Content Fragment"/>
+                                <experienceFragment
+                                    jcr:primaryType="nt:unstructured"
+                                    assetGroup="content"
+                                    assetMimetype="text/html"
+                                    droptarget="experiencefragment"
+                                    resourceType="dx-docs/components/content/xfreference"/>
                             </assetToComponentMapping>
                         </cq:authoring>
-                        <jcr:content
-                            jcr:mixinTypes="[cq:ReplicationStatus]"
-                            jcr:primaryType="nt:unstructured"
-                            mergeList="{Boolean}true"/>
-                    </dx-structure>
-                    <dx-root
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="DX Root"
-                        sling:resourceType="wcm/core/components/policy/policy"
-                        components="[group:DXDOCS.content]">
                         <jcr:content
                             jcr:mixinTypes="[cq:ReplicationStatus]"
                             jcr:primaryType="nt:unstructured"

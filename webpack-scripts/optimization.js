@@ -1,6 +1,13 @@
-const TerserPlugin = require("terser-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-  minimize: true,
-  minimizer: [new TerserPlugin()],
+    usedExports: true,
+    minimize: true,
+    minimizer: [
+        new TerserPlugin({
+            terserOptions: {
+                module: true,
+            },
+        }),
+    ],
 };

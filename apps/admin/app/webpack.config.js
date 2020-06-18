@@ -33,8 +33,9 @@ const devtool = require(`${monoRoot}webpack-scripts/devtool.js`);
 const performance = require(`${monoRoot}webpack-scripts/performance.js`);
 const stats = require(`${monoRoot}webpack-scripts/stats.js`);
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 // Project Setup
-const PROJECT_NAME = 'dx/config-manager';
+const PROJECT_NAME = 'dx/admin';
 const PROJECT_PATH = `${__dirname}/jcr_root/apps/${PROJECT_NAME}/clientlibs`;
 const ROOT_DIR = `${__dirname}/../../..`;
 
@@ -55,6 +56,7 @@ module.exports = {
             `${PROJECT_PATH}/manager/src/js/app.js`,
             `${PROJECT_PATH}/manager/src/less/app.less`,
         ],
+        author: [`${PROJECT_PATH}/author/src/js/app.js`],
     },
     output: {
         path: `${PROJECT_PATH}`,
@@ -75,11 +77,11 @@ module.exports = {
             patterns: [
                 {
                     from: `${ROOT_DIR}/node_modules/react/umd/react.production.min.js`,
-                    to: `${__dirname}/jcr_root/apps/dx/config-manager/clientlibs/reactumd/dist/js/react.production.min.js`,
+                    to: `${__dirname}/jcr_root/apps/dx/admin/clientlibs/reactumd/dist/js/react.production.min.js`,
                 },
                 {
                     from: `${ROOT_DIR}/node_modules/react-dom/umd/react-dom.production.min.js`,
-                    to: `${__dirname}/jcr_root/apps/dx/config-manager/clientlibs/reactumd/dist/js/react-dom.production.min.js`,
+                    to: `${__dirname}/jcr_root/apps/dx/admin/clientlibs/reactumd/dist/js/react-dom.production.min.js`,
                 },
             ],
         }),

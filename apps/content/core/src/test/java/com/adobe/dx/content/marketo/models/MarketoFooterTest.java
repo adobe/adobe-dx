@@ -60,7 +60,7 @@ class MarketoFooterTest extends AbstractRequestModelTest {
         MarketoFooter footer = getModel(MarketoFooter.class, CURRENT_PAGE_PATH);
         MarketoConfBasicInfo marketoConfig = footer.getMarketoConfBasicInfo();
         assertNotNull(marketoConfig);
-        assertArrayEquals(new String[]{"dx/components/content/marketo"}, marketoConfig.getMarketoComponentTypes());
+        assertArrayEquals(new String[]{"dx/content/components/marketo"}, marketoConfig.getMarketoComponentTypes());
         assertEquals("//app-ab12.marketo.com", marketoConfig.getBaseUrl());
         assertEquals("123-shs-456", marketoConfig.getMunchkinId());
     }
