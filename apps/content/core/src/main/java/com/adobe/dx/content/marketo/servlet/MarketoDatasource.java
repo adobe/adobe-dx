@@ -49,9 +49,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
     service = Servlet.class,
     property = {
-        SLING_SERVLET_RESOURCE_TYPES + "=dx/components/author/datasource/marketoDataSource",
+        SLING_SERVLET_RESOURCE_TYPES + "=dx/author/components/datasource/marketoDataSource",
         SLING_SERVLET_METHODS + "=" + METHOD_GET})
 public class MarketoDatasource extends SlingSafeMethodsServlet {
+
+    private static final long serialVersionUID = 1749536445567557530L;
 
     @SuppressWarnings("squid:S1075")
     private static final String CONTENT_ROOT_PATH = "/content";

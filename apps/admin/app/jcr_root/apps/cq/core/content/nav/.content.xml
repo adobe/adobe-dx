@@ -22,8 +22,8 @@
                 jcr:description="Manage configurations"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Config Manager"
-                href="/apps/dx/config-manager.html"
-                icon="settings"
+                href="/apps/dx/admin/content/config-manager.html"
+                icon="gearsEdit"
                 id="dx-config-manager"/>
         </cloudservices>
     </tools>

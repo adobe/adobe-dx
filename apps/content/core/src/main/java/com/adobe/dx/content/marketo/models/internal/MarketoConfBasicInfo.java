@@ -32,7 +32,7 @@ public class MarketoConfBasicInfo {
     private String munchkinId;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(values = {"dx/components/content/marketo"})
+    @Default(values = {"dx/content/components/marketo"})
     private String[] marketoComponentTypes;
 
     public String getBaseUrl() {

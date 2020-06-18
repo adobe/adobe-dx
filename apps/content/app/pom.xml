@@ -44,9 +44,7 @@
                         <cloudManagerTarget>none</cloudManagerTarget>
                     </properties>
                     <filters>
-                        <filter><root>/apps/dx/components/content/marketo</root></filter>
-                        <filter><root>/apps/dx/components/content/marketoFooter</root></filter>
-                        <filter><root>/apps/dx/components/author/datasource/marketoDataSource</root></filter>
+                        <filter><root>/apps/dx/content</root></filter>
                         <filter><root>/apps/dx/content-configs</root></filter>
                     </filters>
                     <embeddeds>
@@ -73,6 +71,61 @@
             <plugin>
                 <groupId>org.apache.sling</groupId>
                 <artifactId>htl-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${frontend-maven-plugin.version}</version>
+                <configuration>
+                    <nodeVersion>${node.version}</nodeVersion>
+                    <npmVersion>${npm.version}</npmVersion>
+                    <workingDirectory>./</workingDirectory>
+                    <installDirectory>../../../</installDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm install collection-view</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install --no-optional ../../../react-collection-view-4.1.5.tgz</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install --no-optional</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run build-production</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm test and coverage</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run test-coverage</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

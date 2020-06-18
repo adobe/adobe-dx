@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
 
 class MarketoDatasourceTest extends AbstractTest {
 
-    private static final String MARKETO_COMPONENT = "/apps/dx/components/marketo";
+    private static final String MARKETO_COMPONENT = "/apps/dx/content/components/marketo";
 
     private MarketoDatasource marketoDatasource = new MarketoDatasource();
 

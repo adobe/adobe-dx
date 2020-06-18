@@ -34,7 +34,7 @@ const performance = require(`${monoRoot}webpack-scripts/performance.js`);
 const stats = require(`${monoRoot}webpack-scripts/stats.js`);
 
 // Project Setup
-const PROJECT_NAME = 'dx';
+const PROJECT_NAME = 'dx/structure';
 const PROJECT_PATH = `${__dirname}/jcr_root/apps/${PROJECT_NAME}/clientlibs`;
 
 // Production Detection

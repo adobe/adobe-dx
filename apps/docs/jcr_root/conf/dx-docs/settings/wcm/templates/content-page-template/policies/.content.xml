@@ -8,11 +8,6 @@
         <root
             cq:policy="wcm/foundation/components/responsivegrid/dx-root"
             jcr:primaryType="nt:unstructured"
-            sling:resourceType="wcm/core/components/policies/mapping">
-            <content
-                cq:policy="wcm/foundation/components/responsivegrid/dx-structure"
-                jcr:primaryType="nt:unstructured"
-                sling:resourceType="wcm/core/components/policies/mapping"/>
-        </root>
+            sling:resourceType="wcm/core/components/policies/mapping"/>
     </jcr:content>
 </jcr:root>

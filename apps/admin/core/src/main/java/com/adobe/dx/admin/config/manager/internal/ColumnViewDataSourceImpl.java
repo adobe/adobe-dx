@@ -32,7 +32,7 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 
 @Model(adaptables = { SlingHttpServletRequest.class }, 
        adapters = { ColumnViewDataSource.class },
-       resourceType = "dx/config-manager/components/content")
+       resourceType = "dx/admin/components/configmanager")
 @Exporter(name = "jackson", extensions = "json")
 public class ColumnViewDataSourceImpl implements ColumnViewDataSource {
 
