@@ -33,7 +33,7 @@
         <aem.port>4502</aem.port>
         <aem.publish.host>localhost</aem.publish.host>
         <aem.publish.port>4503</aem.publish.port>
-        <aem.version>6.4.8</aem.version>
+        <aem.version>6.4.8.1</aem.version>
         <aem.contextPath />
         <sling.url>http://${aem.host}:${aem.port}${aem.contextPath}</sling.url>
         <bnd.version>4.2.0</bnd.version>
