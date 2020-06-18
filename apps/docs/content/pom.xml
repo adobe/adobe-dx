@@ -21,12 +21,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.adobe.dx</groupId>
-        <artifactId>content.reactor</artifactId>
+        <artifactId>docs.reactor</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>content-content</artifactId>
+    <artifactId>docs-content</artifactId>
     <packaging>content-package</packaging>
 
     <name>${module.name} - Content Package</name>
@@ -43,7 +43,13 @@
                         <cloudManagerTarget>none</cloudManagerTarget>
                     </properties>
                     <filters>
-                        <filter><root>/conf/dx/settings/cloudconfigs/marketo</root></filter>
+                        <filter>
+                            <root>/conf/dx-docs</root>
+                            <mode>update</mode>
+                        </filter>
+                        <filter><root>/content/dx-docs/jcr:content</root></filter>
+                        <filter><root>/content/dx-docs/us/jcr:content</root></filter>
+                        <filter><root>/content/dx-docs/us/en/jcr:content</root></filter>
                     </filters>
                 </configuration>
             </plugin>
