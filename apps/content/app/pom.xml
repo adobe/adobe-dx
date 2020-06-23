@@ -54,12 +54,6 @@
                             <target>/apps/dx/install</target>
                             <filter>true</filter>
                         </embedded>
-                        <embedded>
-                            <groupId>com.adobe.dx</groupId>
-                            <artifactId>content-content</artifactId>
-                            <target>/apps/dx-packages/content/install</target>
-                            <filter>true</filter>
-                        </embedded>
                     </embeddeds>
                 </configuration>
             </plugin>
@@ -135,14 +129,6 @@
             <groupId>com.adobe.dx</groupId>
             <artifactId>content.core</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.adobe.dx</groupId>
-            <artifactId>content-content</artifactId>
-            <version>${project.version}</version>
-            <type>zip</type>
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
