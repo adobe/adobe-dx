@@ -24,7 +24,7 @@
     </parent>
     <artifactId>com.adobe.dx.testing</artifactId>
     <name>${project.prefix} - Testing</name>
-    <version>0.0.4</version>
+    <version>0.0.5-SNAPSHOT</version>
     <description>Testing utilities for dx project</description>
 
     <scm>
