@@ -30,14 +30,14 @@
     <scm>
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
-        <url>https://github.com/adobe/adobe-dx/apps/admin/tree/master</url>
+        <url>https://github.com/adobe/adobe-dx/tree/master/apps/content</url>
         <tag>content.reactor-0.0.2</tag>
     </scm>
 
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>content.reactor</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>${project.prefix} - Content - Reactor</name>
