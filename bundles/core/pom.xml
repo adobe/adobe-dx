@@ -19,12 +19,12 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>9-SNAPSHOT</version>
+        <version>13-SNAPSHOT</version>
         <relativePath>../../parent/main</relativePath>
     </parent>
     <artifactId>com.adobe.dx.core</artifactId>
     <name>${project.prefix} - Core</name>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <description>Core classes for dx projects</description>
 
     <scm>

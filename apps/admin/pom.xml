@@ -35,7 +35,7 @@
 
     <name>${module.name}</name>
     <artifactId>admin.reactor</artifactId>
-    <version>0.0.6-SNAPSHOT</version>
+    <version>0.0.7-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>core</module>
