@@ -19,19 +19,19 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>10</version>
+        <version>13-SNAPSHOT</version>
         <relativePath>../../parent/main</relativePath>
     </parent>
     <artifactId>com.adobe.dx.testing</artifactId>
     <name>${project.prefix} - Testing</name>
-    <version>0.0.6</version>
+    <version>0.0.7-SNAPSHOT</version>
     <description>Testing utilities for dx project</description>
 
     <scm>
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
         <url>https://github.com/adobe/adobe-dx/bundles/testing/tree/master</url>
-        <tag>com.adobe.dx.testing-0.0.6</tag>
+        <tag>com.adobe.dx.testing-0.0.4</tag>
     </scm>
     
     <build>
