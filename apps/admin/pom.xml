@@ -20,8 +20,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>13-SNAPSHOT</version>
-        <relativePath>../../parent/main</relativePath>
+        <version>14</version>
     </parent>
     <properties>
         <module.name>${project.prefix} - Admin Components</module.name>
