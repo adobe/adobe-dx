@@ -23,14 +23,14 @@
     </parent>
     <artifactId>core</artifactId>
     <name>${project.prefix} - Core</name>
-    <version>0.0.6</version>
+    <version>0.0.7-SNAPSHOT</version>
     <description>Core classes for dx projects</description>
 
     <scm>
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
         <url>https://github.com/adobe/adobe-dx/bundles/core/tree/master</url>
-        <tag>core-0.0.6</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <build>
