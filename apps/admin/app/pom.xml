@@ -81,7 +81,7 @@
                     <embeddeds>
                         <embedded>
                             <groupId>com.adobe.dx</groupId>
-                            <artifactId>com.adobe.dx.admin.core</artifactId>
+                            <artifactId>admin.core</artifactId>
                             <target>/apps/dx/install</target>
                             <filter>true</filter>
                         </embedded>

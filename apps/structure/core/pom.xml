@@ -25,7 +25,7 @@
     <properties>
         <maven.deploy.skip>false</maven.deploy.skip>
     </properties>
-    <artifactId>com.adobe.dx.structure.core</artifactId>
+    <artifactId>structure.core</artifactId>
     <name>${module.name} - Core bundle</name>
     <description>Core bundle for structure components</description>
     <build>
