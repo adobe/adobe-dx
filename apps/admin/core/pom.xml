@@ -80,7 +80,8 @@ Bundle-DocURL:
     <dependencies>
         <dependency>
             <groupId>com.adobe.dx</groupId>
-            <artifactId>com.adobe.dx.core</artifactId>
+            <artifactId>core</artifactId>
+            <version>0.0.6</version>
         </dependency>
         <dependency>
             <groupId>com.adobe.aem</groupId>
