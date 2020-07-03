@@ -19,7 +19,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>admin-reactor</artifactId>
-        <version>0.0.24</version>
+        <version>0.0.25-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
     <artifactId>admin-core</artifactId>
@@ -31,8 +31,8 @@
     <scm>
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
-        <url>https://github.com/adobe/adobe-dx/apps/admin/core/tree/master</url>
-        <tag>admin-reactor-0.0.24</tag>
+        <url>https://github.com/adobe/adobe-dx/tree/master/apps/admin</url>
+        <tag>HEAD</tag>
     </scm>
     <build>
         <plugins>
