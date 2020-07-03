@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>admin.reactor</artifactId>
-        <version>0.0.13-SNAPSHOT</version>
+        <version>0.0.14</version>
         <relativePath>..</relativePath>
     </parent>
 
