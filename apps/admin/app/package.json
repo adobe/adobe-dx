@@ -41,7 +41,7 @@
   "dependencies": {
     "@adobe/spectrum-css": "2.9.0",
     "@babel/runtime": "^7.8.7",
-    "@react/collection-view": "file:../../../react-collection-view-4.1.5.tgz",
+    "@react/collection-view": "file:../../../../../../../github/npeltier/adobe-dx/react-collection-view-4.1.5.tgz",
     "@react/react-spectrum": "file:../../../react-react-spectrum-2.25.0.tgz",
     "bufferutil": "^4.0.1",
     "canvas": "^2.5.0",
