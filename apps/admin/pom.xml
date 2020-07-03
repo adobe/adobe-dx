@@ -24,7 +24,6 @@
     </parent>
     <properties>
         <module.name>${project.prefix} - Admin Components</module.name>
-        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
     <scm>
@@ -36,7 +35,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>admin.reactor</artifactId>
+    <artifactId>admin-reactor</artifactId>
     <version>0.0.11-SNAPSHOT</version>
     <packaging>pom</packaging>
 
