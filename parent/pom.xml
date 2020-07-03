@@ -67,6 +67,7 @@
     <modules>
         <module>repository-structure</module>
         <module>main</module>
+        <module>node-main</module>
     </modules>
 
     <!-- ======================================================================= -->
