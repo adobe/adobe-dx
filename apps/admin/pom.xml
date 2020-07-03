@@ -31,13 +31,13 @@
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
         <url>https://github.com/adobe/adobe-dx/tree/master/apps/admin</url>
-        <tag>HEAD</tag>
+        <tag>admin.reactor-0.0.12</tag>
     </scm>
 
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>admin.reactor</artifactId>
-    <version>0.0.11-SNAPSHOT</version>
+    <version>0.0.12</version>
     <packaging>pom</packaging>
 
     <name>${project.prefix} - Admin - Reactor</name>
