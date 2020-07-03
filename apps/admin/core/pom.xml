@@ -19,7 +19,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>admin.reactor</artifactId>
-        <version>0.0.11-SNAPSHOT</version>
+        <version>0.0.12</version>
         <relativePath>..</relativePath>
     </parent>
     <artifactId>admin.core</artifactId>
