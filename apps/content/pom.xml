@@ -42,8 +42,8 @@
     <name>${project.prefix} - Content - Reactor</name>
 
     <modules>
-        <module>app</module>
         <module>core</module>
+        <module>app</module>
     </modules>
 
 </project>

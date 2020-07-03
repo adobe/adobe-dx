@@ -100,7 +100,7 @@
                     <nodeVersion>${node.version}</nodeVersion>
                     <npmVersion>${npm.version}</npmVersion>
                     <workingDirectory>./</workingDirectory>
-                    <installDirectory>${maven.multiModuleProjectDirectory}/</installDirectory>
+                    <installDirectory>../../../</installDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -115,7 +115,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>install --no-optional ${maven.multiModuleProjectDirectory}/react-collection-view-4.1.5.tgz</arguments>
+                            <arguments>install --no-optional ../../../react-collection-view-4.1.5.tgz</arguments>
                         </configuration>
                     </execution>
                     <execution>
