@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>admin-reactor</artifactId>
-        <version>0.0.17-SNAPSHOT</version>
+        <version>0.0.11-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -157,7 +157,7 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>admin-core</artifactId>
-            <version>0.0.17-SNAPSHOT</version>
+            <version>0.0.11-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>
