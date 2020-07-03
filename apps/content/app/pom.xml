@@ -30,6 +30,10 @@
 
     <name>${module.name} - App Package</name>
 
+    <properties>
+        <maven.deploy.skip>false</maven.deploy.skip>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
