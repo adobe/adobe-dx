@@ -124,13 +124,13 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>structure</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>0.0.5-SNAPSHOT</version>
             <type>zip</type>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>content</artifactId>
-            <version>0.0.5-SNAPSHOT</version>
+            <version>0.0.9-SNAPSHOT</version>
             <type>zip</type>
         </dependency>
         <dependency>
