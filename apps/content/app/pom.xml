@@ -22,13 +22,17 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>content.reactor</artifactId>
-        <version>0.0.5-SNAPSHOT</version>
+        <version>0.0.9-SNAPSHOT</version>
     </parent>
 
     <artifactId>content</artifactId>
     <packaging>content-package</packaging>
 
     <name>${module.name} - App Package</name>
+
+    <properties>
+        <maven.deploy.skip>false</maven.deploy.skip>
+    </properties>
 
     <build>
         <plugins>
@@ -127,8 +131,6 @@
             <groupId>com.adobe.dx</groupId>
             <artifactId>content.core</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>

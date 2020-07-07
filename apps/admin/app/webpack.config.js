@@ -76,11 +76,11 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: `${ROOT_DIR}/node_modules/react/umd/react.production.min.js`,
+                    from: `${__dirname}/node_modules/react/umd/react.production.min.js`,
                     to: `${__dirname}/jcr_root/apps/dx/admin/clientlibs/reactumd/dist/js/react.production.min.js`,
                 },
                 {
-                    from: `${ROOT_DIR}/node_modules/react-dom/umd/react-dom.production.min.js`,
+                    from: `${__dirname}/node_modules/react-dom/umd/react-dom.production.min.js`,
                     to: `${__dirname}/jcr_root/apps/dx/admin/clientlibs/reactumd/dist/js/react-dom.production.min.js`,
                 },
             ],

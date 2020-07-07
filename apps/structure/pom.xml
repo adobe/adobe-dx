@@ -19,8 +19,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>13-SNAPSHOT</version>
-        <relativePath>../../parent/main</relativePath>
+        <version>14</version>
     </parent>
     <properties>
         <module.name>${project.prefix} - Structure Components</module.name>
@@ -35,7 +34,7 @@
 
     <name>${module.name}</name>
     <artifactId>structure.reactor</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>core</module>

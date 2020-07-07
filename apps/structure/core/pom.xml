@@ -19,13 +19,13 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>structure.reactor</artifactId>
-        <version>0.0.3-SNAPSHOT</version>
+        <version>0.0.5-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
     <properties>
         <maven.deploy.skip>false</maven.deploy.skip>
     </properties>
-    <artifactId>com.adobe.dx.structure.core</artifactId>
+    <artifactId>structure.core</artifactId>
     <name>${module.name} - Core bundle</name>
     <description>Core bundle for structure components</description>
     <build>
@@ -123,8 +123,8 @@ Bundle-DocURL:
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>
-            <artifactId>com.adobe.dx.testing</artifactId>
-            <version>0.0.7-SNAPSHOT</version>
+            <artifactId>testing</artifactId>
+            <version>0.0.8</version>
         </dependency>
     </dependencies>
 </project>
