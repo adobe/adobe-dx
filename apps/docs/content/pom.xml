@@ -28,6 +28,7 @@
 
     <artifactId>docs-content</artifactId>
     <packaging>content-package</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
     <name>${module.name} - Content Package</name>
 
