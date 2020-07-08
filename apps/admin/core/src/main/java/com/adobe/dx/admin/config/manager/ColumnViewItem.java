@@ -22,9 +22,15 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import static com.day.cq.commons.jcr.JcrConstants.JCR_CONTENT;
+import static com.day.cq.commons.jcr.JcrConstants.JCR_PRIMARYTYPE;
+import static com.day.cq.commons.jcr.JcrConstants.JCR_TITLE;
+import static com.day.cq.commons.jcr.JcrConstants.NT_FOLDER;
 import com.day.cq.wcm.api.Page;
 
 import org.apache.sling.api.resource.Resource;
+import static org.apache.sling.jcr.resource.api.JcrResourceConstants.NT_SLING_FOLDER;
+import static org.apache.sling.jcr.resource.api.JcrResourceConstants.NT_SLING_ORDERED_FOLDER;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.Self;
@@ -38,17 +44,17 @@ public class ColumnViewItem {
 
     private static final String ICON_CONFIG = "config";
 
-    private static final Collection<String> IGNORED_NODES = Arrays.asList("jcr:content", "rep:policy", "workflow", "granite");
+    private static final Collection<String> IGNORED_NODES = Arrays.asList(JCR_CONTENT, "rep:policy", "workflow", "granite");
 
-    private static final Collection<String> FOLDER_TYPES = Arrays.asList("nt:folder", "sling:Folder", "sling:OrderedFolder");
+    private static final Collection<String> FOLDER_TYPES = Arrays.asList(NT_FOLDER, NT_SLING_FOLDER, NT_SLING_ORDERED_FOLDER);
 
     @Self
     private Resource resource;
 
-    @ValueMapValue(name = "jcr:primaryType")
+    @ValueMapValue(name = JCR_PRIMARYTYPE)
     private String primaryType;
 
-    @ValueMapValue(name = "jcr:title")
+    @ValueMapValue(name = JCR_TITLE)
     private String title;
 
     private Page page;

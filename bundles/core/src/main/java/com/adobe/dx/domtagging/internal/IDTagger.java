@@ -238,8 +238,8 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
         if (timeSalt) {
             source += Calendar.getInstance().toString();
         }
-        String sha1 = DigestUtils.sha1Hex(source);
-        return sha1.substring(0, ID_SIZE);
+        String sha256 = DigestUtils.sha256Hex(source);
+        return sha256.substring(0, ID_SIZE);
     }
 
     @Override
