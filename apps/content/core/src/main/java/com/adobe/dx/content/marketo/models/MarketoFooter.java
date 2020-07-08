@@ -27,6 +27,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -79,7 +80,7 @@ public class MarketoFooter {
     }
 
     public Set<String> getMarketoFormIds() {
-        return marketoFormIds;
+        return Collections.unmodifiableSet(marketoFormIds);
     }
 
     public String getMarketoFormIdsJsonRep() {
@@ -102,7 +103,7 @@ public class MarketoFooter {
     private Set<String> getMarketoFormIds(Set<String> marketoComponentTypes, Page currentPage) {
         ComponentReferenceFinder visitor = new ComponentReferenceFinder(marketoComponentTypes);
         visitor.accept(currentPage.getContentResource());
-        return visitor.getMatchingResources().stream()
+        Set<String> ids = visitor.getMatchingResources().stream()
             .map(this::getMarketoFormId)
             .filter(StringUtils::isNotEmpty).collect(Collectors.toSet());
     }
@@ -130,7 +131,7 @@ public class MarketoFooter {
         }
 
         Set<Resource> getMatchingResources() {
-            return matchingResources;
+            return Collections.unmodifiableSet(matchingResources);
         }
 
         @Override
