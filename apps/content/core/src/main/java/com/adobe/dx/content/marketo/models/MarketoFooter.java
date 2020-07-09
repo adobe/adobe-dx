@@ -103,7 +103,7 @@ public class MarketoFooter {
     private Set<String> getMarketoFormIds(Set<String> marketoComponentTypes, Page currentPage) {
         ComponentReferenceFinder visitor = new ComponentReferenceFinder(marketoComponentTypes);
         visitor.accept(currentPage.getContentResource());
-        Set<String> ids = visitor.getMatchingResources().stream()
+        return visitor.getMatchingResources().stream()
             .map(this::getMarketoFormId)
             .filter(StringUtils::isNotEmpty).collect(Collectors.toSet());
     }

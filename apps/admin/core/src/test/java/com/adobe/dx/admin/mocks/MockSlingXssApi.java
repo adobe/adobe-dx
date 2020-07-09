@@ -16,8 +16,6 @@
 
 package com.adobe.dx.admin.mocks;
 
-import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.xss.XSSAPI;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -117,16 +115,6 @@ public class MockSlingXssApi implements XSSAPI {
     @Nullable
     @Override
     public String encodeForCSSString(@Nullable String s) {
-        throw new UnsupportedOperationException(NOT_IMPLEMENTED);
-    }
-
-    @Override
-    public XSSAPI getRequestSpecificAPI(SlingHttpServletRequest slingHttpServletRequest) {
-        throw new UnsupportedOperationException(NOT_IMPLEMENTED);
-    }
-
-    @Override
-    public XSSAPI getResourceResolverSpecificAPI(ResourceResolver resourceResolver) {
         throw new UnsupportedOperationException(NOT_IMPLEMENTED);
     }
 

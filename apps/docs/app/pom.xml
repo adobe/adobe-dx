@@ -49,9 +49,6 @@
                 <extensions>true</extensions>
                 <configuration>
                     <packageType>application</packageType>
-                    <properties>
-                        <cloudManagerTarget>none</cloudManagerTarget>
-                    </properties>
                     <group>com.adobe.dx</group>
                     <name>dx.docs</name>
                     <filters>

@@ -88,9 +88,8 @@ Bundle-DocURL:
     <dependencies>
         <dependency>
             <groupId>com.adobe.aem</groupId>
-            <artifactId>uber-jar</artifactId>
+            <artifactId>aem-sdk-api</artifactId>
             <version>${aem.version}</version>
-            <classifier>apis</classifier>
             <scope>provided</scope>
         </dependency>
         <dependency>
