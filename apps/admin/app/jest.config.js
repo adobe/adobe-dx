@@ -1,3 +1,6 @@
+// Ignore for code coverage
+/* istanbul ignore file */
+
 const config = {
     collectCoverageFrom: [
         '**/*.{js,jsx}',
@@ -16,6 +19,7 @@ const config = {
                 '\\.(css|less)$': '<rootDir>/.jestconfig/__mocks__/styleMock.js',
             },
             transform: {
+                '\\.html$': 'jest-raw-loader',
                 '^.+\\.js?$': './babelwrapper.js',
             },
             setupFilesAfterEnv: ['<rootDir>/.jestconfig/jest.setup.js'],

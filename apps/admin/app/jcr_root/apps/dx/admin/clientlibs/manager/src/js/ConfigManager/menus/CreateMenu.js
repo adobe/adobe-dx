@@ -15,13 +15,14 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Menu, MenuItem } from '@react/react-spectrum/Menu';
 import Dropdown from '@react/react-spectrum/Dropdown';
 import Provider from '@react/react-spectrum/Provider';
 import Button from '@react/react-spectrum/Button';
 
-export default class CreateMenu extends React.Component {
+class CreateMenu extends React.Component {
     constructor(props) {
         super(props);
         this.buildMenu();
@@ -30,7 +31,7 @@ export default class CreateMenu extends React.Component {
     buildMenu = () => {
         this.menuItems = [];
         this.menuItems.push(
-            <MenuItem value="folder" key="folder">
+            <MenuItem aria-label="Folder" value="folder" key="folder">
                 Folder
             </MenuItem>
         );
@@ -39,7 +40,7 @@ export default class CreateMenu extends React.Component {
             const config = this.thirdParty[configKey];
             if (config.label && config.app) {
                 this.menuItems.push(
-                    <MenuItem value={configKey} key={configKey}>
+                    <MenuItem aria-label={config.label} value={configKey} key={configKey}>
                         {config.label}
                     </MenuItem>
                 );
@@ -63,7 +64,7 @@ export default class CreateMenu extends React.Component {
                     className="dx-ActionBar-Provider dx-ActionBar-Provider--alignEnd"
                 >
                     <Dropdown onSelect={this.create}>
-                        <Button label="Create" variant="cta" />
+                        <Button aria-label="Create" label="Create" variant="cta" />
                         <Menu>{this.menuItems}</Menu>
                     </Dropdown>
                 </Provider>
@@ -71,3 +72,15 @@ export default class CreateMenu extends React.Component {
         );
     }
 }
+
+CreateMenu.propTypes = {
+    onSelect: PropTypes.func,
+};
+
+// Ignore for code coverage
+/* istanbul ignore next */
+CreateMenu.defaultProps = {
+    onSelect: () => {},
+};
+
+export default CreateMenu;

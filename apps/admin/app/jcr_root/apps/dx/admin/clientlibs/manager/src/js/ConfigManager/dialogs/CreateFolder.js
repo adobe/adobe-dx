@@ -31,7 +31,7 @@ const CreateFolder = (props) => {
                 <Textfield
                     name="name"
                     value={props.name}
-                    placeholder="name"
+                    placeholder="Name"
                     onChange={handleChange}
                 />
             </FormItem>

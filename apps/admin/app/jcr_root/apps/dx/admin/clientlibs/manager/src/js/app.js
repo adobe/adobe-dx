@@ -14,12 +14,14 @@
  *  limitations under the License.
  */
 
+// Ignore for code coverage
+/* istanbul ignore file */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ConfigManager from './ConfigManager';
 
 const admin = document.getElementById('dx-ContentFrame');
-
 if (admin) {
     const props = {
         dataSourcePath: admin.dataset.columnviewDatasource,
