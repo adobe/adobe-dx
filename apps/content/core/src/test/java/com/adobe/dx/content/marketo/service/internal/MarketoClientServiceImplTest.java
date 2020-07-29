@@ -18,6 +18,7 @@ package com.adobe.dx.content.marketo.service.internal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -93,6 +94,7 @@ class MarketoClientServiceImplTest extends AbstractTest {
             marketoClientService.getMarketoForms(TEST_HOST, "validAuthToken");
         assertTrue(formsData.isSuccess());
         assertFalse(formsData.isTokenInvalid());
+        assertTrue(formsData.getResult().get(0).toString().contains("1 (Form 1)"));
         new FormDataValidator().validateFormData(formsData.getResult(), Arrays.asList("Form 1", "Form 2"),
             Arrays.asList(1, 2),
             Arrays.asList("en_US", "de_DE"));

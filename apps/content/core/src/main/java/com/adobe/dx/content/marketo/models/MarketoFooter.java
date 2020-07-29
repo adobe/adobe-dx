@@ -27,6 +27,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -44,6 +45,7 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Model(adaptables = SlingHttpServletRequest.class)
 public class MarketoFooter {
@@ -113,11 +115,8 @@ public class MarketoFooter {
 
     private static class ComponentReferenceFinder extends AbstractResourceVisitor {
 
-        private static final Set<String> POTENTIAL_XF_REFERENCE_PROPERTY_NAMES = new HashSet<>();
-        static {
-            POTENTIAL_XF_REFERENCE_PROPERTY_NAMES.add(PN_FRAGMENT_PATH);
-            POTENTIAL_XF_REFERENCE_PROPERTY_NAMES.add("appBannerPath");
-        }
+        private static final Collection<String> POTENTIAL_XF_REFERENCE_PROPERTY_NAMES =
+            Arrays.asList(PN_FRAGMENT_PATH, "appBannerPath");
         private static final int MAX_XF_COUNT = 50;
 
         private Set<String> requiredResourceTypes;
@@ -138,7 +137,10 @@ public class MarketoFooter {
             if (isMatchingResourceType(resource)) {
                 matchingResources.add(resource);
             } else  {
-                getXfResource(resource).ifPresent(this::testAndTriggerRecursion);
+                Resource xfResource = getXfResource(resource);
+                if (xfResource != null) {
+                    testAndTriggerRecursion(xfResource);
+                }
             }
         }
 
@@ -155,17 +157,18 @@ public class MarketoFooter {
                 .anyMatch(resource::isResourceType);
         }
 
-        private Optional<Resource> getXfResource(Resource resource) {
+        @Nullable
+        private Resource getXfResource(Resource resource) {
             ValueMap properties = resource.getValueMap();
             ResourceResolver resolver = resource.getResourceResolver();
             for (String propName : POTENTIAL_XF_REFERENCE_PROPERTY_NAMES) {
                 String propValue = properties.get(propName, String.class);
                 if (StringUtils.isNotEmpty(propValue)) {
-                     return Optional.ofNullable(resolver
-                         .getResource(StringUtils.appendIfMissing(propValue, "/" + JCR_CONTENT)));
+                     return resolver
+                         .getResource(StringUtils.appendIfMissing(propValue, "/" + JCR_CONTENT));
                 }
             }
-            return Optional.empty();
+            return null;
         }
     }
 
