@@ -15,34 +15,49 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Dialog from '@react/react-spectrum/Dialog';
 
 import deleteResource from '../utils/delete';
 
-const DeleteDialog = (props) => {
+const DeleteDialog = ({ item, onDialogClose, open }) => {
     const dialogConfirm = async () => {
-        await deleteResource(props.item.path);
-        props.onDialogClose(true, true);
+        await deleteResource(item.path);
+        onDialogClose(true, true);
     };
 
     const dialogCancel = () => {
-        props.onDialogClose(false);
+        onDialogClose(false);
     };
 
     return (
         <Dialog
             title="Delete"
             variant="destructive"
-            open={props.open}
+            open={open}
             onConfirm={dialogConfirm}
             confirmLabel="Delete"
             onCancel={dialogCancel}
             cancelLabel="Cancel"
         >
-            {props.item ? props.item.path : ''}
+            {item ? item.path : ''}
         </Dialog>
     );
+};
+
+DeleteDialog.propTypes = {
+    item: PropTypes.shape({ path: PropTypes.string }),
+    onDialogClose: PropTypes.func,
+    open: PropTypes.bool,
+};
+
+// Ignore for code coverage
+/* istanbul ignore next */
+DeleteDialog.defaultProps = {
+    item: undefined,
+    onDialogClose: () => {},
+    open: false,
 };
 
 export default DeleteDialog;

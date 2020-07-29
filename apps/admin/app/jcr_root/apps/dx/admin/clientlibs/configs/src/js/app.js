@@ -1,3 +1,6 @@
+// Ignore for code coverage
+/* istanbul ignore file */
+
 import AdobeFontsConfig from './AdobeFontsConfig';
 import MarketoConfig from './MarketoConfig';
 
