@@ -136,7 +136,7 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.7-SNAPSHOT</version>
+            <version>0.0.9-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>
