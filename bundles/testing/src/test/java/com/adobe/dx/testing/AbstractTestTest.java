@@ -19,6 +19,7 @@ import static com.adobe.dx.testing.AbstractTest.buildContext;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,12 +30,12 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 @ExtendWith(AemContextExtension.class)
 class AbstractTestTest {
 
-    AemContext context = buildContext();
+    AemContext context = buildContext(ResourceResolverType.RESOURCERESOLVER_MOCK);
     AbstractTest test;
 
     @BeforeEach
     public void setup() {
-        test = new AbstractRequestModelTest();
+        test = new AbstractTest();
         test.context = context;
     }
 

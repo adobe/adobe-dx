@@ -15,14 +15,12 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.admin.rendercondition;
 
-import static org.apache.sling.testing.mock.caconfig.ContextPlugins.CACONFIG;
-import static org.apache.sling.testing.mock.sling.ResourceResolverType.JCR_OAK;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.adobe.dx.testing.AbstractTest;
+import com.adobe.dx.testing.AbstractOakTest;
 import com.adobe.granite.ui.components.Config;
 import com.adobe.granite.ui.components.rendercondition.RenderCondition;
 
@@ -38,27 +36,43 @@ import org.apache.jackrabbit.api.security.user.User;
 import org.apache.jackrabbit.api.security.user.UserManager;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.testing.mock.caconfig.MockContextAwareConfig;
 import org.apache.sling.testing.mock.sling.servlet.MockRequestPathInfo;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletResponse;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import io.wcm.testing.mock.aem.junit5.AemContextBuilder;
+import io.wcm.testing.mock.aem.junit5.AemContext;
 
-class AbstractRenderConditionTest extends AbstractTest {
+class AbstractRenderConditionTest extends AbstractOakTest {
 
     AbstractRenderCondition condition;
-
+    
     @BeforeEach
-    private void setup() {
-        context = new AemContextBuilder(JCR_OAK).plugin(CACONFIG).build();
+    void setup(AemContext context) throws RepositoryException {
         condition = new AbstractRenderCondition() {
             @Override
             protected RenderCondition computeRenderCondition(@NotNull SlingHttpServletRequest request) {
                 return null;
             }
         };
+        UserManager userManager = ((JackrabbitSession)context.resourceResolver().adaptTo(Session.class)).getUserManager();
+        User user = userManager.createUser("test", "test");
+        userManager.createUser("another", "another");
+        Group group = userManager.createGroup("containsTest");
+        Group superGroup = userManager.createGroup("containsAll");
+        Group blank = userManager.createGroup("containsNothing");
+        group.addMember(user);
+        superGroup.addMember(group);
+        String resourceType = "some/type";
+        context.create().resource(CONTENT_ROOT, "sling:configRef", CONF_ROOT,"sling:resourceType",resourceType);
+        MockContextAwareConfig.registerAnnotationClasses(context, RenderConditionConfiguration.class);
+        MockContextAwareConfig.writeConfiguration(context, CONTENT_ROOT, RenderConditionConfiguration.class,
+            "passthroughGroups", new String[] {"doesNotExist","containsAll","containsNothing"});
+        context.currentResource(CONTENT_ROOT);
+        ((MockRequestPathInfo)context.request().getRequestPathInfo()).setSuffix(CONTENT_ROOT);
     }
 
     @Test
@@ -70,46 +84,28 @@ class AbstractRenderConditionTest extends AbstractTest {
         assertEquals("foobar", config.get("test"));
     }
 
-    SlingHttpServletRequest prepareAuthorizationContext() throws RepositoryException {
-        UserManager userManager = ((JackrabbitSession)context.resourceResolver().adaptTo(Session.class)).getUserManager();
-        User user = userManager.createUser("test", "test");
-        userManager.createUser("another", "another");
-        Group group = userManager.createGroup("containsTest");
-        Group superGroup = userManager.createGroup("containsAll");
-        Group blank = userManager.createGroup("containsNothing");
-        group.addMember(user);
-        superGroup.addMember(group);
-        String resourcePath = "/content/some/resource";
-        String resourceType = "some/type";
-        context.create().resource(resourcePath, "sling:resourceType",resourceType);
-        // create a content policy with mapping for resource type
-        context.contentPolicyMapping(resourceType,
-            "passthroughGroup", new String[] {"doesNotExist","containsAll","containsNothing"});
-        ((MockRequestPathInfo)context.request().getRequestPathInfo()).setSuffix(resourcePath);
-
-        return context.request();
-    }
-
     @Test
+    @DisplayName("admin should passthrough")
     void shouldPassthroughAdminUser() {
         assertTrue(condition.shouldPassthrough("admin", context.request()));
     }
 
     @Test
+    @DisplayName("'another' user does not belong to any configured group, so the condition should not passthrough")
     void shouldNotPassthroughAnotherUser() throws RepositoryException {
-        assertFalse(condition.shouldPassthrough("another", prepareAuthorizationContext()));
+        assertFalse(condition.shouldPassthrough("another", context.request()));
     }
 
     @Test
+    @DisplayName("test user belongs to passthrough groups, so the condition should passthrough")
     void shouldPassthroughTestUser() throws RepositoryException {
-        assertTrue(condition.shouldPassthrough("test", prepareAuthorizationContext()));
+        assertTrue(condition.shouldPassthrough("test", context.request()));
     }
 
     @Test
-    void doGet() throws RepositoryException, ServletException, IOException {
-        SlingHttpServletRequest request = prepareAuthorizationContext();
+    void doGet() throws ServletException, IOException {
         SlingHttpServletResponse response = new MockSlingHttpServletResponse();
-        condition.doGet(request, response);
-        assertNotNull(request.getAttribute(RenderCondition.class.getName()));
+        condition.doGet(context.request(), response);
+        assertNotNull(context.request().getAttribute(RenderCondition.class.getName()));
     }
 }

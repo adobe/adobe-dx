@@ -24,7 +24,6 @@ import com.day.cq.wcm.api.policies.ContentPolicyManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 import javax.jcr.RepositoryException;
@@ -40,6 +39,7 @@ import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
+import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -49,20 +49,22 @@ public abstract class AbstractRenderCondition extends SlingSafeMethodsServlet {
     Logger log = LoggerFactory.getLogger(AbstractRenderCondition.class);
 
     protected abstract RenderCondition computeRenderCondition(@NotNull SlingHttpServletRequest request);
-    private static final String PN_GROUP = "passthroughGroup";
     private static final String PASSTHROUGH_USER = "admin";
-    private static final Collection<String> DEFAULT_PASSTHROUGH_GROUPS = Arrays.asList("template-authors", "administrators");
 
     protected @NotNull Config getConfig(@NotNull Resource dialogResource) {
         return new Config(dialogResource);
     }
 
-    protected @Nullable ContentPolicy getContentPolicy(@NotNull SlingHttpServletRequest request) {
+    protected Resource getComponentResource(@NotNull SlingHttpServletRequest request) {
         ResourceResolver resolver = request.getResourceResolver();
         String resourcePath = request.getRequestPathInfo().getSuffix();
-        Resource componentResource = resolver.getResource(resourcePath);
+        return resolver.getResource(resourcePath);
+    }
+
+    protected @Nullable ContentPolicy getContentPolicy(@NotNull SlingHttpServletRequest request) {
+        Resource componentResource = getComponentResource(request);
         if (componentResource != null) {
-            ContentPolicyManager policyManager = resolver.adaptTo(ContentPolicyManager.class);
+            ContentPolicyManager policyManager = request.getResourceResolver().adaptTo(ContentPolicyManager.class);
             if (policyManager != null) {
                 return policyManager.getPolicy(componentResource, request);
             }
@@ -73,14 +75,11 @@ public abstract class AbstractRenderCondition extends SlingSafeMethodsServlet {
     protected Collection<Group> getConfiguredGroups(@NotNull SlingHttpServletRequest request,
                                                     @NotNull UserManager userManager) throws RepositoryException {
         Collection<Group> groups = new ArrayList<>();
-        Collection<String> groupNames = DEFAULT_PASSTHROUGH_GROUPS;
-        ContentPolicy policy = getContentPolicy(request);
-        if (policy != null) {
-            String[] configuredGroups = policy.getProperties().get(PN_GROUP, String[].class);
-            if (configuredGroups != null) {
-                groupNames = Arrays.asList(configuredGroups);
-            }
-            for (String groupName : groupNames) {
+        Resource componentResource = getComponentResource(request);
+        if (componentResource != null) {
+            RenderConditionConfiguration config = componentResource.adaptTo(ConfigurationBuilder.class)
+                .as(RenderConditionConfiguration.class);
+            for (String groupName : config.passthroughGroups()) {
                 Group group = (Group) userManager.getAuthorizable(groupName);
                 if (group != null) {
                     groups.add(group);

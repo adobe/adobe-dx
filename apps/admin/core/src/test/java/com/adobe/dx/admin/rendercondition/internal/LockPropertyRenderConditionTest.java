@@ -29,6 +29,7 @@ import javax.servlet.ServletException;
 
 import org.apache.sling.testing.mock.sling.servlet.MockRequestPathInfo;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class LockPropertyRenderConditionTest extends AbstractTest {
@@ -36,18 +37,18 @@ class LockPropertyRenderConditionTest extends AbstractTest {
     LockPropertyRenderCondition condition;
     final String propertyName = "foo";
     final String resourceType = "some/type";
-    final String resourcePath = "/content/some/resource";
 
     @BeforeEach
     public void setup() {
         condition = new LockPropertyRenderCondition();
-        context.create().resource(resourcePath, "sling:resourceType",resourceType,
+        context.create().resource(CONTENT_ROOT, "sling:resourceType",resourceType,
             "property", propertyName);
-        context.currentResource(resourcePath);
-        ((MockRequestPathInfo)context.request().getRequestPathInfo()).setSuffix(resourcePath);
+        context.currentResource(CONTENT_ROOT);
+        ((MockRequestPathInfo)context.request().getRequestPathInfo()).setSuffix(CONTENT_ROOT);
     }
 
     @Test
+    @DisplayName("condition should not be checked if lock property is present")
     void computeRenderConditionLocked() throws RepositoryException, ServletException, IOException {
         context.contentPolicyMapping(resourceType, propertyName, "true");
         RenderCondition result = condition.computeRenderCondition(context.request());
@@ -56,6 +57,7 @@ class LockPropertyRenderConditionTest extends AbstractTest {
     }
 
     @Test
+    @DisplayName("condition should be checked if no lock property is present")
     void computeRenderConditionUnlocked() throws RepositoryException, ServletException, IOException {
         RenderCondition result = condition.computeRenderCondition(context.request());
         assertNotNull(result);
