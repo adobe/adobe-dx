@@ -51,6 +51,13 @@ class AbstractRequestModelTestTest {
     }
 
     @Test
+    public void testGetExistingResourceWithPath() throws Exception {
+        context.build().resource(CONTENT_ROOT).commit();
+        TestModel model = test.getModel(TestModel.class, CONTENT_ROOT);
+        assertEquals(CONTENT_ROOT, model.resource.getPath());
+    }
+
+    @Test
     public void testGetNonExistingResource() throws Exception {
         TestModel model = test.getModel(TestModel.class);
         assertNull(model.resource);

@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Provider from '@react/react-spectrum/Provider';
 import ButtonGroup from '@react/react-spectrum/ButtonGroup';
@@ -25,9 +26,9 @@ import Edit from '@react/react-spectrum/Icon/Edit';
 import Close from '@react/react-spectrum/Icon/Close';
 import Delete from '@react/react-spectrum/Icon/Delete';
 
-const actionMenu = (props) => {
+const ActionMenu = ({ fixedActionBar, openDialog, toggleActionBar }) => {
     let actionBarStyle = 'dx-ActionBar dx-ActionBar--fixed';
-    if (props.fixedActionBar.show) {
+    if (fixedActionBar.show) {
         actionBarStyle += ' is-Active';
     }
 
@@ -35,19 +36,20 @@ const actionMenu = (props) => {
         <div className={actionBarStyle}>
             <Provider theme="lightest" className="dx-ActionBar-Provider">
                 <ButtonGroup
-                    value={props.fixedActionBar.primary}
+                    value={fixedActionBar.primary}
                     aria-label="PrimaryButtons"
-                    onChange={(value) => props.openDialog(value, undefined)}
+                    onChange={(value) => openDialog(value, undefined)}
                 >
-                    <Button label="Edit" value="edit" icon={<Edit />} />
-                    <Button label="Delete" value="delete" icon={<Delete />} />
+                    <Button aria-label="Edit" label="Edit" value="edit" icon={<Edit />} />
+                    <Button aria-label="Delete" label="Delete" value="delete" icon={<Delete />} />
                 </ButtonGroup>
                 <ButtonGroup
-                    value={props.fixedActionBar.secondary}
+                    value={fixedActionBar.secondary}
                     aria-label="SecondaryButtons"
-                    onChange={props.toggleActionBar}
+                    onChange={toggleActionBar}
                 >
                     <Button
+                        aria-label="Close"
                         label="Close"
                         value="close"
                         icon={<Close />}
@@ -59,4 +61,26 @@ const actionMenu = (props) => {
     );
 };
 
-export default actionMenu;
+ActionMenu.propTypes = {
+    fixedActionBar: PropTypes.shape({
+        show: PropTypes.bool.isRequired,
+        primary: PropTypes.string,
+        secondary: PropTypes.string,
+    }),
+    openDialog: PropTypes.func,
+    toggleActionBar: PropTypes.func,
+};
+
+// Ignore for code coverage
+/* istanbul ignore next */
+ActionMenu.defaultProps = {
+    fixedActionBar: {
+        show: false,
+        primary: '',
+        secondary: '',
+    },
+    openDialog: () => {},
+    toggleActionBar: () => {},
+};
+
+export default ActionMenu;

@@ -38,14 +38,13 @@ class MarketoFooterTest extends AbstractRequestModelTest {
     private static final String CLOUD_CONFIG = "/conf/global/settings/cloudconfigs/marketo-config";
 
     @BeforeEach
-    private void setup() {
+    public void setup() {
         context.load().json("/mocks/marketo/cloudconfig.json",
             CLOUD_CONFIG);
         context.load().json("/mocks/marketo/simplepage.json",
             CURRENT_PAGE_PATH);
         Resource config = context.resourceResolver()
             .getResource(CLOUD_CONFIG + "/jcr:content");
-        context.addModelsForClasses(MarketoConfBasicInfo.class);
         MockCloudConfigReader mockCloudConfigReader = new MockCloudConfigReader();
         if (null != config) {
             mockCloudConfigReader.setWhatToReturn(CURRENT_PAGE_PATH,

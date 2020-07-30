@@ -21,7 +21,7 @@ import CreateFolder from '../CreateFolder';
 describe('CreateFolder', () => {
     test('should set the name and title values via props', () => {
         const { getByPlaceholderText } = render(<CreateFolder name="MyName" title="MyTitle" />);
-        expect(getByPlaceholderText('name').value).toBe('MyName');
+        expect(getByPlaceholderText('Name').value).toBe('MyName');
         expect(getByPlaceholderText('Title').value).toBe('MyTitle');
     });
 
@@ -31,7 +31,7 @@ describe('CreateFolder', () => {
             <CreateFolder onChange={changeHandler} />
         );
 
-        fireEvent.change(getByPlaceholderText('name'), { target: { value: 'test name' } });
+        fireEvent.change(getByPlaceholderText('Name'), { target: { value: 'test name' } });
         expect(changeHandler).toHaveBeenCalledWith({ name: 'test name' });
         changeHandler.mockReset();
 

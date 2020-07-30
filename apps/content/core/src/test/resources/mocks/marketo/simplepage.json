@@ -11,6 +11,21 @@
       "andAnother": {
         "jcr:primaryType": "nt:unstructured",
         "someProperty": "and its value"
+      },
+      "andOneMatching": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "dx/content/components/marketo"
+      },
+      "andAReference": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:description": "crappy reference node just to mock reference call",
+        "appBannerPath": "/content/dx/us/en/somePageWithMarketo/jcr:content/some/banner"
+      },
+      "banner": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:content": {
+          "jcr:primaryType": "nt:unstructured"
+        }
       }
     }
   }

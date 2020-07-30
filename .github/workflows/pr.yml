@@ -28,4 +28,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo start simple maven build
-          mvn -B --no-transfer-progress -s settings.xml
+          mvn -B --no-transfer-progress -s settings.xml -Pjacoco-report
