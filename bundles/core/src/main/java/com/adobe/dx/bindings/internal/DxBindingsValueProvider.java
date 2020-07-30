@@ -17,7 +17,7 @@ package com.adobe.dx.bindings.internal;
 
 import static com.day.cq.wcm.scripting.WCMBindingsConstants.NAME_CURRENT_CONTENT_POLICY;
 
-import com.adobe.dx.responsive.ResponsiveService;
+import com.adobe.dx.responsive.ResponsiveConfiguration;
 import com.adobe.dx.responsive.internal.ResponsiveProperties;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 
@@ -27,6 +27,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.api.scripting.SlingBindings;
 import org.apache.sling.api.wrappers.CompositeValueMap;
+import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.scripting.api.BindingsValuesProvider;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.Constants;
@@ -50,10 +51,7 @@ public class DxBindingsValueProvider implements BindingsValuesProvider {
     private static final String POLICY_KEY = "dxPolicy";
 
     private static final String RESP_PROPS_KEY = "respProperties";
-
-    @Reference
-    ResponsiveService responsiveService;
-
+    
     @Override
     public void addBindings(@NotNull Bindings bindings) {
         if (!bindings.containsKey(POLICY_KEY)) {
@@ -65,7 +63,10 @@ public class DxBindingsValueProvider implements BindingsValuesProvider {
                 ValueMap dxPolicy = policy != null ? new CompositeValueMap(resource.getValueMap(), policy.getProperties()) :
                     resource.getValueMap();
                 bindings.put(POLICY_KEY, dxPolicy);
-                bindings.put(RESP_PROPS_KEY, new ResponsiveProperties(responsiveService.getBreakpoints(), dxPolicy));
+                ResponsiveConfiguration configuration = resource
+                    .adaptTo(ConfigurationBuilder.class)
+                    .as(ResponsiveConfiguration.class);
+                bindings.put(RESP_PROPS_KEY, new ResponsiveProperties(configuration, dxPolicy));
             }
         }
     }
