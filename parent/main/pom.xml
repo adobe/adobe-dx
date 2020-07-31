@@ -368,6 +368,7 @@ ${bundle.additional.properties}
                 <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco-merged/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
                 <sonar.javascript.lcov.reportPaths>js_reports/coverage/lcov.info</sonar.javascript.lcov.reportPaths>
                 <sonar.testExecutionReportPaths>apps/admin/app/js_reports/test-reporter.xml</sonar.testExecutionReportPaths>
+                <sonar.test.inclusions>**/*.test.js</sonar.test.inclusions>
                 <sonar.verbose>true</sonar.verbose>
             </properties>
         </profile>
