@@ -16,6 +16,7 @@
 package com.adobe.dx.testing;
 
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.apache.sling.testing.mock.caconfig.ContextPlugins.CACONFIG;
@@ -30,10 +31,14 @@ public class AbstractTest {
     protected final static String CONTENT_ROOT = "/content/foo";
     protected final static String CONF_ROOT = "/conf/foo";
 
-    protected AemContext context = buildContext();
+    protected AemContext context = buildContext(getType());
 
-    protected static AemContext buildContext() {
-        return new AemContextBuilder()
+    protected ResourceResolverType getType() {
+        return ResourceResolverType.RESOURCERESOLVER_MOCK;
+    }
+
+    protected static AemContext buildContext(ResourceResolverType type) {
+        return new AemContextBuilder(type)
             .plugin(CACONFIG)
             .build();
     }

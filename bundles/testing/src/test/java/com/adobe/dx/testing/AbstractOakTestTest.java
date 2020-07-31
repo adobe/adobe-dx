@@ -28,14 +28,13 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 @ExtendWith(AemContextExtension.class)
-class AbstractTestTest {
-
-    AemContext context = buildContext(ResourceResolverType.RESOURCERESOLVER_MOCK);
-    AbstractTest test;
+public class AbstractOakTestTest {
+    AemContext context = buildContext(ResourceResolverType.JCR_OAK);
+    AbstractOakTest test;
 
     @BeforeEach
     public void setup() {
-        test = new AbstractTest();
+        test = new AbstractOakTest();
         test.context = context;
     }
 
@@ -44,6 +43,6 @@ class AbstractTestTest {
         context.build().resource(AbstractTest.CONTENT_ROOT, "foo", "bar", "blah", 2).commit();
         ValueMap properties = test.getVM(AbstractTest.CONTENT_ROOT);
         assertEquals("bar", properties.get("foo"));
-        assertEquals(2, properties.get("blah"));
+        assertEquals(2L, properties.get("blah"));
     }
 }
