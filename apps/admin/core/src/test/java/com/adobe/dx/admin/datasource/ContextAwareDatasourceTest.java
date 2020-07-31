@@ -24,16 +24,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.adobe.granite.ui.components.ds.SimpleDataSource;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.caconfig.resource.impl.ConfigurationResourceResolverImpl;
-import org.apache.sling.caconfig.resource.impl.def.DefaultConfigurationResourceResolvingStrategy;
-import org.apache.sling.caconfig.resource.impl.def.DefaultContextPathStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -54,12 +50,6 @@ public class ContextAwareDatasourceTest extends AbstractTest {
 
         Resource component = resolver.getResource("/apps/component/style");
         context.request().setResource(component);
-
-        try {
-            registerConfigurationResourceResolver();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
@@ -116,12 +106,6 @@ public class ContextAwareDatasourceTest extends AbstractTest {
             String text = style.getValueMap().get("text", String.class);
             assertEquals("Red", text);
         }
-    }
-
-    private void registerConfigurationResourceResolver() throws IOException {
-        context.registerInjectActivateService(new DefaultContextPathStrategy());
-        context.registerInjectActivateService(new DefaultConfigurationResourceResolvingStrategy());
-        context.registerInjectActivateService(new ConfigurationResourceResolverImpl());
     }
 
     private SimpleDataSource getDataSource(AemContext context) {
