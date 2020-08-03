@@ -35,7 +35,8 @@ window.MutationObserver = SimulateMutationObserver;
 window.CQ = {};
 
 // use require as import is hoisted
-require('../app');
+const authorWatch = require('../authorWatch.js').default;
+authorWatch(document);
 
 describe('authorWatch', () => {
     beforeEach(() => {
