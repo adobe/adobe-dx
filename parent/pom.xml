@@ -41,6 +41,13 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <name>Adobe Web Platform team</name>
+            <email>grp-dexter-tech@adobe.com</email>
+        </developer>
+    </developers>
+
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
