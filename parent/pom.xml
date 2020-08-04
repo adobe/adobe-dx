@@ -23,7 +23,7 @@
 
     <groupId>com.adobe.dx</groupId>
     <artifactId>parent-reactor</artifactId>
-    <version>17-SNAPSHOT</version>
+    <version>15-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
