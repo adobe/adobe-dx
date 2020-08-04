@@ -141,7 +141,7 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>repository-structure</artifactId>
-            <version>14</version>
+            <version>16</version>
             <type>zip</type>
         </dependency>
         <dependency>
