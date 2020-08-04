@@ -276,6 +276,7 @@
                             <preparationGoals>clean install</preparationGoals>
                             <goals>deploy</goals>
                             <useReleaseProfile>false</useReleaseProfile>
+                            <releaseProfiles>dx-release</releaseProfiles>
                             <projectVersionPolicyId>OddEvenVersionPolicy</projectVersionPolicyId>
                         </configuration>
                     </plugin>
