@@ -7,7 +7,7 @@ A toolkit for AEM to help build exceptional digital experiences, on top of [AEM 
 
 #### building DX modules
 
-first ensure you have both `github-dx` maven repository setup ([server and repository as in this settings.xml file](./settings.xml))
+first ensure you have adobe public repository setup ([see 'adobe-public' profile in our bots settings.xml file](./settings.xml))
 
 DX is a set of modules that can be used separately, you can build them all using
  
