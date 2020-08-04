@@ -11,13 +11,6 @@
 	governing permissions and limitations under the License.
 -->
 <settings>
-    <servers>
-        <server>
-            <id>github-dx</id>
-            <username>releng</username>
-            <password>${env.GITHUB_TOKEN}</password>
-        </server>
-    </servers>
     <profiles>
         <!-- ====================================================== -->
         <!-- A D O B E   P U B L I C   P R O F I L E                -->
@@ -30,18 +23,6 @@
             </activation>
 
             <repositories>
-                <repository>
-                    <id>github-dx</id>
-                    <name>GitHub Adobe DX Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/adobe/adobe-dx</url>
-                    <releases>
-                        <enabled>true</enabled>
-                        <updatePolicy>never</updatePolicy>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
                 <repository>
                     <id>adobe-public-releases</id>
                     <name>Adobe Public Repository</name>
