@@ -93,7 +93,7 @@ Bundle-DocURL:
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.9-SNAPSHOT</version>
+            <version>0.0.10</version>
         </dependency>
         <dependency>
             <groupId>com.adobe.aem</groupId>
