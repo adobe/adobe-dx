@@ -19,13 +19,13 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>16</version>
+        <version>17-SNAPSHOT</version>
         <relativePath>../main</relativePath>
     </parent>
 
     <groupId>com.adobe.dx</groupId>
     <artifactId>node.main</artifactId>
-    <version>2</version>
+    <version>3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>${project.prefix} - DX Node Main modules build</name>
