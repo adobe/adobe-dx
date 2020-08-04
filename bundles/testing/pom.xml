@@ -23,14 +23,15 @@
     </parent>
     <artifactId>testing</artifactId>
     <name>${project.prefix} - Testing</name>
-    <version>0.0.9-SNAPSHOT</version>
+    <version>0.0.10</version>
     <description>Testing utilities for dx project</description>
 
     <scm>
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
         <url>https://github.com/adobe/adobe-dx/bundles/testing/tree/master</url>
-    </scm>
+      <tag>testing-0.0.10</tag>
+  </scm>
     
     <build>
         <plugins>
