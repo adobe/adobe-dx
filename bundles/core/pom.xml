@@ -119,7 +119,7 @@ Bundle-DocURL:
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>testing</artifactId>
-            <version>0.0.9-SNAPSHOT</version>
+            <version>0.0.10</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
