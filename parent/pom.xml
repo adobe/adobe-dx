@@ -23,14 +23,13 @@
 
     <groupId>com.adobe.dx</groupId>
     <artifactId>parent-reactor</artifactId>
-    <version>15-SNAPSHOT</version>
+    <version>17-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.prefix>Adobe DX</project.prefix>
         <maven.deploy.skip>false</maven.deploy.skip>
-        <repositoryId>github-dx</repositoryId>
         <frontend-maven-plugin.version>1.7.6</frontend-maven-plugin.version>
     </properties>
 
@@ -42,16 +41,17 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <name>Adobe Web Platform team</name>
+            <email>grp-dexter-tech@adobe.com</email>
+        </developer>
+    </developers>
+
     <distributionManagement>
-        <repository>
-            <id>${repositoryId}</id>
-            <name>GitHub Adobe DX Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/adobe/adobe-dx</url>
-        </repository>
         <snapshotRepository>
-            <id>${repositoryId}</id>
-            <name>GitHub Adobe DX Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/adobe/adobe-dx</url>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -79,17 +79,25 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.0.0-M1</version>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.7</version>
+                    <extensions>true</extensions>
                     <configuration>
-                        <skip>${maven.deploy.skip}</skip>
+                        <serverId>ossrh</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        <skipNexusStagingDeployMojo>${maven.deploy.skip}</skipNexusStagingDeployMojo>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>3.0.1</version>
+                    <executions>
+                        <execution>
+                            <id>default-deploy</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>deploy</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.rat</groupId>
@@ -187,12 +195,55 @@
                         </configuration>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>1.6</version>
                         <configuration>
                             <gpgArguments>
                                 <arg>--digest-algo=SHA512</arg>
                             </gpgArguments>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>3.0.0-M1</version>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -216,6 +267,7 @@
                             <preparationGoals>clean install</preparationGoals>
                             <goals>deploy</goals>
                             <useReleaseProfile>false</useReleaseProfile>
+                            <releaseProfiles>dx-release</releaseProfiles>
                             <projectVersionPolicyId>OddEvenVersionPolicy</projectVersionPolicyId>
                         </configuration>
                     </plugin>

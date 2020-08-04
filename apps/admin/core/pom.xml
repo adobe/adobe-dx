@@ -84,10 +84,16 @@ Bundle-DocURL:
         </plugins>
     </build>
     <dependencies>
+        <!--testing-->
+        <dependency>
+            <groupId>com.adobe.dx</groupId>
+            <artifactId>testing</artifactId>
+            <version>0.0.10</version>
+        </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.9-SNAPSHOT</version>
+            <version>0.0.10</version>
         </dependency>
         <dependency>
             <groupId>com.adobe.aem</groupId>
@@ -123,20 +129,6 @@ Bundle-DocURL:
             <artifactId>org.apache.sling.api</artifactId>
             <version>2.18.4</version>
             <scope>test</scope>
-        </dependency>
-        <!--testing-->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.adobe.dx</groupId>
-            <artifactId>testing</artifactId>
-            <version>0.0.9-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

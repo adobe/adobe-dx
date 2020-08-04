@@ -19,7 +19,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>15-SNAPSHOT</version>
+        <version>17-SNAPSHOT</version>
         <relativePath>../main</relativePath>
     </parent>
 
@@ -28,7 +28,7 @@
     <!-- ====================================================================== -->
     <artifactId>repository-structure</artifactId>
     <name>Adobe DX - Repository Structure Package</name>
-    <version>15-SNAPSHOT</version>
+    <version>17-SNAPSHOT</version>
     <packaging>content-package</packaging>
     <description>
         Empty package that defines the structure of the Adobe Experience Manager repository the Code packages in this project deploy into.

@@ -104,7 +104,7 @@
     <dependencies>
         <dependency>
             <groupId>com.adobe.dx</groupId>
-            <artifactId>dx.all</artifactId>
+            <artifactId>all</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <type>zip</type>
         </dependency>

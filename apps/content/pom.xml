@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>parent</artifactId>
-        <version>14</version>
+        <version>16</version>
     </parent>
     <properties>
         <module.name>${project.prefix} - Content Components</module.name>
