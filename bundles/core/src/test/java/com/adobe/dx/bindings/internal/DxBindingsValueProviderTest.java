@@ -20,8 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.adobe.dx.responsive.ResponsiveService;
-import com.adobe.dx.responsive.internal.ResponsiveServiceImpl;
+import com.adobe.dx.responsive.internal.ResponsivePropertiesTest;
 import com.adobe.dx.testing.AbstractTest;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 
@@ -30,9 +29,15 @@ import javax.script.SimpleBindings;
 
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.api.scripting.SlingBindings;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class DxBindingsValueProviderTest extends AbstractTest {
+
+    @BeforeEach
+    void setup() {
+        ResponsivePropertiesTest.initResponsiveConfiguration(context);
+    }
     
     void mockAddContentPolicy(Bindings bindings) {
         final String POLICY_PATH = "/blah";
@@ -44,14 +49,13 @@ class DxBindingsValueProviderTest extends AbstractTest {
     }
 
     void mockAddResource(Bindings bindings) {
-        context.build().resource(CONTENT_ROOT, "k1", "v11").commit();
-        bindings.put(SlingBindings.RESOURCE,  context.resourceResolver().getResource(CONTENT_ROOT));
+        String contentPath = CONTENT_ROOT + "/child";
+        context.build().resource(contentPath, "k1", "v11").commit();
+        bindings.put(SlingBindings.RESOURCE,  context.resourceResolver().getResource(contentPath));
     }
 
     DxBindingsValueProvider getProvider() {
-        context.registerInjectActivateService(new ResponsiveServiceImpl());
         DxBindingsValueProvider mgr = new DxBindingsValueProvider();
-        mgr.responsiveService = context.getService(ResponsiveService.class);
         return mgr;
     }
 
@@ -79,7 +83,7 @@ class DxBindingsValueProviderTest extends AbstractTest {
         Bindings bindings = new SimpleBindings();
         mockAddResource(bindings);
         ValueMap vm = computeVM(bindings);
-        assertEquals(1, vm.size(), "there should be 1 items in that VM");
+        assertEquals(1  , vm.size(), "there should be 2 items in that VM");
         assertEquals("v11", vm.get("k1", String.class), "first one comes from comp resource");
     }
 
