@@ -17,25 +17,49 @@ package com.adobe.dx.responsive.internal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.adobe.dx.responsive.ResponsiveConfiguration;
 import com.adobe.dx.testing.AbstractTest;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.caconfig.ConfigurationBuilder;
+import org.apache.sling.testing.mock.caconfig.MockContextAwareConfig;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ResponsivePropertiesTest extends AbstractTest {
+import io.wcm.testing.mock.aem.junit5.AemContext;
 
-    String[] BREAKPOINTS = new String[] {"Mobile", "Tablet", "Desktop"};
+public class ResponsivePropertiesTest extends AbstractTest {
 
-    LinkedHashMap<String,String> getProperty(final String[] breakpoints, String key, Object...entries) {
+    public final static String[] BREAKPOINTS = new String[] {"Mobile", "Tablet", "Desktop"};
+    ResponsiveConfiguration configuration;
+
+    public static ResponsiveConfiguration initResponsiveConfiguration(AemContext context) {
+        context.create().resource(CONTENT_ROOT, "sling:configRef", CONF_ROOT);
+        MockContextAwareConfig.registerAnnotationClasses(context, ResponsiveConfiguration.class);
+        MockContextAwareConfig.writeConfiguration(context, CONTENT_ROOT, ResponsiveConfiguration.class,"breakpoints", BREAKPOINTS);
+        return context.resourceResolver()
+            .getResource(CONTENT_ROOT)
+            .adaptTo(ConfigurationBuilder.class)
+            .as(ResponsiveConfiguration.class);
+    }
+
+    @BeforeEach
+    void setup() {
+        configuration = initResponsiveConfiguration(context);
+    }
+
+    LinkedHashMap<String,String> getProperty(final ResponsiveConfiguration rConfig, String key, Object...entries) {
         String path = "/content/" + StringUtils.join(Arrays.asList(entries), "/");
         context.build().resource(path, entries).commit();
         Resource resource = context.resourceResolver().getResource(path);
-        ResponsiveProperties responsiveProperties = new ResponsiveProperties(breakpoints, resource.getValueMap());
+        ResponsiveProperties responsiveProperties = new ResponsiveProperties(rConfig, resource.getValueMap());
         return (LinkedHashMap<String,String>)responsiveProperties.get(key);
     }
 
@@ -50,37 +74,42 @@ class ResponsivePropertiesTest extends AbstractTest {
     @Test
     void get() {
         assertLinkedHashMapEqual("three widths are provided",
-            getProperty(BREAKPOINTS, "width", "widthTablet", 34,"widthMobile", 12, "widthDesktop", 43),
+            getProperty(configuration, "width", "widthTablet", 34,"widthMobile", 12, "widthDesktop", 43),
             "mobile", "12", "tablet", "34", "desktop", "43");
         assertLinkedHashMapEqual("no mobile",
-            getProperty(BREAKPOINTS, "width", "widthTablet", 34, "widthDesktop", 43),
+            getProperty(configuration, "width", "widthTablet", 34, "widthDesktop", 43),
             "mobile", null, "tablet", "34", "desktop", "43");
         assertLinkedHashMapEqual("only desktop",
-            getProperty(BREAKPOINTS, "width", "widthDesktop", 43),
+            getProperty(configuration, "width", "widthDesktop", 43),
             "mobile", null, "tablet", null, "desktop", "43");
         assertLinkedHashMapEqual("should work with boolean too...",
-            getProperty(BREAKPOINTS, "inherit", "inheritMobile", true, "inheritDesktop", false),
+            getProperty(configuration, "inherit", "inheritMobile", true, "inheritDesktop", false),
             "mobile", "true", "tablet", null, "desktop", "false");
-        assertNull(getProperty(BREAKPOINTS, "height", "blah", 34,"foo", 12),
+        assertNull(getProperty(configuration, "height", "blah", 34,"foo", 12),
             "no value should be null");
-        assertNull(getProperty(BREAKPOINTS, "height", "blah", 34,"foo", 12,"heightDesktop", ""),
+        assertNull(getProperty(configuration, "height", "blah", 34,"foo", 12,"heightDesktop", ""),
             "blank value should be null");
-        assertNull(new ResponsiveProperties(BREAKPOINTS, ValueMap.EMPTY).get(null));
+        assertNull(new ResponsiveProperties(configuration, ValueMap.EMPTY).get(null));
     }
 
     @Test
     void unsupported() {
-        ResponsiveProperties props = new ResponsiveProperties(BREAKPOINTS, ValueMap.EMPTY);
-        assertThrows(UnsupportedOperationException.class, () -> props.clear());
-        assertThrows(UnsupportedOperationException.class, () -> props.putAll(ValueMap.EMPTY));
-        assertThrows(UnsupportedOperationException.class, () -> props.put("foo", "bar"));
-        assertThrows(UnsupportedOperationException.class, () -> props.containsKey("foo"));
-        assertThrows(UnsupportedOperationException.class, () -> props.containsValue("bar"));
-        assertThrows(UnsupportedOperationException.class, () -> props.size());
-        assertThrows(UnsupportedOperationException.class, () -> props.values());
-        assertThrows(UnsupportedOperationException.class, () -> props.keySet());
-        assertThrows(UnsupportedOperationException.class, () -> props.entrySet());
-        assertThrows(UnsupportedOperationException.class, () -> props.isEmpty());
-        assertThrows(UnsupportedOperationException.class, () -> props.remove("foo"));
+        ResponsiveProperties props = new ResponsiveProperties(configuration, ValueMap.EMPTY);
+        final Collection<Callable> unsupportedOperations = Arrays.asList(
+            () -> {props.clear(); return 0;},
+            () -> {props.putAll(ValueMap.EMPTY); return 0;},
+            () -> props.put("foo", "bar"),
+            () -> props.containsKey("foo"),
+            () -> props.containsValue("bar"),
+            () -> props.size(),
+            () -> props.values(),
+            () -> props.keySet(),
+            () -> props.entrySet(),
+            () -> props.isEmpty(),
+            () -> props.remove("foo"));
+        for (Callable callable : unsupportedOperations) {
+            assertThrows(UnsupportedOperationException.class, () -> callable.call());
+        }
+
     }
 }
