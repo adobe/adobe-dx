@@ -24,6 +24,7 @@
         <groupId>com.adobe.dx</groupId>
         <artifactId>docs.reactor</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>..</relativePath>
     </parent>
 
     <!-- ====================================================================== -->
@@ -49,19 +50,47 @@
                 <extensions>true</extensions>
                 <configuration>
                     <packageType>application</packageType>
-                    <properties>
-                        <cloudManagerTarget>none</cloudManagerTarget>
-                    </properties>
                     <group>com.adobe.dx</group>
                     <name>dx.docs</name>
                     <filters>
                         <filter><root>/apps/dx-docs</root></filter>
+                        <filter><root>/apps/dx-docs-packages</root></filter>
                     </filters>
                     <embeddeds>
                         <embedded>
                             <groupId>com.adobe.dx</groupId>
                             <artifactId>docs-content</artifactId>
-                            <target>/apps/dx-packages/content/install</target>
+                            <target>/apps/dx-docs-packages/content/install</target>
+                            <filter>true</filter>
+                        </embedded>
+                        <embedded>
+                            <groupId>com.adobe.dx</groupId>
+                            <artifactId>structure</artifactId>
+                            <target>/apps/dx-docs-packages/application/install</target>
+                            <filter>true</filter>
+                        </embedded>
+                        <embedded>
+                            <groupId>com.adobe.dx</groupId>
+                            <artifactId>admin</artifactId>
+                            <target>/apps/dx-docs-packages/application/install</target>
+                            <filter>true</filter>
+                        </embedded>
+                        <embedded>
+                            <groupId>com.adobe.dx</groupId>
+                            <artifactId>content</artifactId>
+                            <target>/apps/dx-docs-packages/application/install</target>
+                            <filter>true</filter>
+                        </embedded>
+                        <embedded>
+                            <groupId>com.adobe.cq</groupId>
+                            <artifactId>core.wcm.components.all</artifactId>
+                            <target>/apps/dx-docs-packages/application/install</target>
+                            <filter>true</filter>
+                        </embedded>
+                        <embedded>
+                            <groupId>com.adobe.dx</groupId>
+                            <artifactId>core</artifactId>
+                            <target>/apps/dx-docs/install</target>
                             <filter>true</filter>
                         </embedded>
                     </embeddeds>
@@ -104,13 +133,37 @@
     <dependencies>
         <dependency>
             <groupId>com.adobe.dx</groupId>
-            <artifactId>all</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>admin</artifactId>
+            <version>0.1.0</version>
             <type>zip</type>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>
+            <artifactId>structure</artifactId>
+            <version>0.0.6</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.dx</groupId>
+            <artifactId>content</artifactId>
+            <version>0.0.10</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.dx</groupId>
+            <artifactId>core</artifactId>
+            <version>0.0.12</version>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.dx</groupId>
             <artifactId>repository-structure</artifactId>
+            <version>16</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.cq</groupId>
+            <artifactId>core.wcm.components.all</artifactId>
+            <version>2.11.0</version>
             <type>zip</type>
         </dependency>
         <dependency>
