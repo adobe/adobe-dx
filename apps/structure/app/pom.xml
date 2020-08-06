@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.adobe.dx</groupId>
         <artifactId>structure.reactor</artifactId>
-        <version>0.0.6</version>
+        <version>0.0.7-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -143,7 +143,7 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>structure.core</artifactId>
-            <version>0.0.6</version>
+            <version>0.0.7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>
