@@ -27,6 +27,7 @@ As proposed in the ticket, in order to counter balance this, pls execute followi
 
 ```gpg -u <your key's email> --use-agent --armor --detach-sign --output $(mktemp) pom.xml```
 
+For mac users, you can fix it by installing [pinentry-mac](https://github.com/Homebrew/homebrew-core/issues/14737#issuecomment-309547412)
 ## Release
 
 ### commands

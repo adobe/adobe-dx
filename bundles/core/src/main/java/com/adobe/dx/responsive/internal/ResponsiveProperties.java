@@ -16,6 +16,8 @@
 
 package com.adobe.dx.responsive.internal;
 
+import com.adobe.dx.responsive.ResponsiveConfiguration;
+
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,8 +37,8 @@ public class ResponsiveProperties implements Map<String, Object> {
     private final String[] breakpoints;
     private ValueMap properties;
 
-    public ResponsiveProperties(final String[] breakpoints, ValueMap properties) {
-        this.breakpoints = breakpoints;
+    public ResponsiveProperties(final ResponsiveConfiguration configuration, ValueMap properties) {
+        this.breakpoints = configuration.breakpoints();
         this.properties = properties;
     }
 

@@ -29,7 +29,7 @@ public class AbstractRequestModelTest extends AbstractTest {
         return type.getDeclaredConstructor().newInstance();
     }
 
-    protected <ModelType> ModelType getModel(final Class<ModelType> type, String path) throws ReflectiveOperationException {
+    protected <T> T getModel(final Class<T> type, String path) throws ReflectiveOperationException {
         context.currentResource(path);
         return getModel(type);
     }

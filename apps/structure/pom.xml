@@ -34,7 +34,7 @@
 
     <name>${module.name}</name>
     <artifactId>structure.reactor</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.7-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>core</module>

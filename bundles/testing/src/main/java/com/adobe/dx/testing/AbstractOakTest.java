@@ -18,6 +18,7 @@ package com.adobe.dx.testing;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 
 public class AbstractOakTest extends AbstractTest {
+    @Override
     protected ResourceResolverType getType() {
         return ResourceResolverType.JCR_OAK;
     }
