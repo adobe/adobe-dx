@@ -25,5 +25,70 @@
         }
       }
     }
+  },
+  "somereferredPage": {
+    "jcr:primaryType": "cq:Page",
+    "jcr:content": {
+      "jcr:primaryType": "cq:PageContent",
+      "jcr:title": "Some page",
+      "sling:resourceType": "some/page",
+      "root" : {
+        "sling:resourceType": "some/dx/container",
+        "children": {
+          "anotherref": {
+            "myOwnProperty": "anotherref",
+            "reference": "reference1id",
+            "sling:resourceType": "some/dx/reference"
+          },
+          "image": {
+            "dx_id": "refimageid",
+            "sling:resourceType": "some/dx/image"
+          }
+        }
+      }
+    }
+  },
+  "viewedPage": {
+    "jcr:primaryType": "cq:Page",
+    "jcr:content": {
+      "jcr:primaryType": "cq:PageContent",
+      "jcr:title": "Some page",
+      "sling:resourceType": "some/page",
+      "root" : {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "some/dx/container",
+        "children": {
+          "jcr:primaryType": "nt:unstructured",
+          "ref1": {
+            "jcr:primaryType": "nt:unstructured",
+            "dx_id": "ref1",
+            "sling:resourceType": "some/dx/reference"
+          },
+          "image": {
+            "jcr:primaryType": "nt:unstructured",
+            "myOwnProperty": "blueskywithbirds",
+            "dx_id": "refimageid",
+            "sling:resourceType": "some/dx/image"
+          },
+          "ref2": {
+            "jcr:primaryType": "nt:unstructured",
+            "reference": "reference1id",
+            "dx_id": "ref2",
+            "sling:resourceType": "some/dx/reference"
+          },
+          "text": {
+            "jcr:primaryType": "nt:unstructured",
+            "jcr:description": "no id set",
+            "sling:resourceType": "some/dx/text"
+          }
+        }
+      }
+    }
+  },
+  "someRandomFolder": {
+    "jcr:primaryType": "nt:folder"
+  },
+  "someRandomAsset": {
+    "jcr:primaryType": "dam:Asset"
   }
 }

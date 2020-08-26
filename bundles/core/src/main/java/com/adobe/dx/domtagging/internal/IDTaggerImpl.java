@@ -18,6 +18,7 @@ package com.adobe.dx.domtagging.internal;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.sling.api.resource.ResourceResolverFactory.SUBSERVICE;
 
+import com.adobe.dx.domtagging.IDTagger;
 import com.day.cq.replication.Preprocessor;
 import com.day.cq.replication.ReplicationAction;
 import com.day.cq.replication.ReplicationActionType;
@@ -27,6 +28,7 @@ import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,7 +38,7 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.AbstractResourceVisitor;
 import org.apache.sling.api.resource.LoginException;
@@ -50,6 +52,7 @@ import org.apache.sling.servlets.post.Modification;
 import org.apache.sling.servlets.post.ModificationType;
 import org.apache.sling.servlets.post.SlingPostProcessor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -65,8 +68,8 @@ import org.slf4j.LoggerFactory;
  * will tag every untagged component with an id that is meant to be unique and to stick to it:
  *
  * <ol>
- *     <li><code>dx_id</code> that are the "almost" unique first 8 chars of paths + date's SHA-1</li>
- *     <li><code>dx_pageId</code> that are the "almost" unique first 8 chars of page path SHA-1</li>
+ *     <li><code>dx_id</code> that are the "almost" unique first 8 chars of paths + date's SHA-256</li>
+ *     <li><code>dx_pageId</code> that are the "almost" unique first 8 chars of page path SHA-256</li>
  * </ol>
  *
  * the tag consists in checking page hash, then if it's absent or inconsistent with current page,
@@ -80,9 +83,9 @@ import org.slf4j.LoggerFactory;
  * </ul>
  */
 @Component(configurationPolicy = ConfigurationPolicy.REQUIRE)
-@Designate(ocd = IDTagger.Configuration.class)
-public class IDTagger implements Preprocessor, SlingPostProcessor {
-    private final Logger LOG = LoggerFactory.getLogger(IDTagger.class);
+@Designate(ocd = IDTaggerImpl.Configuration.class)
+public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger {
+    private final Logger log = LoggerFactory.getLogger(IDTaggerImpl.class);
 
     /**
      * page id (obtained from path)
@@ -94,11 +97,21 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
      */
     static final String PN_COMPID = "dx_id";
 
+    static final String ID_SEPARATOR = "-";
+
     static final short ID_SIZE = 8;
 
     static final String SERVICE_NAME = "content-writer";
 
+    static final String ATT_REFERENCE = "dx:idtagger:reference_id";
+
+    static final String ATT_ROOTID = "dx:idtagger:root_id";
+
     Function<Resource, Boolean> resourceFilter;
+
+    List<String> referenceTypes;
+
+    Configuration configuration;
 
     @Reference
     ResourceResolverFactory resourceResolverFactory;
@@ -111,6 +124,8 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
             acceptedTypes.add(Pattern.compile(regexp));
         }
         resourceFilter = getFilter(acceptedTypes);
+        this.configuration = configuration;
+        referenceTypes = Arrays.asList(configuration.referenceTypes());
     }
 
     /**
@@ -132,73 +147,102 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
 
     @Override
     public void preprocess(ReplicationAction replicationAction, ReplicationOptions replicationOptions) throws ReplicationException {
-        if (ReplicationActionType.ACTIVATE.equals(replicationAction.getType())) {
+        if (configuration.tagOnPublication() &&
+            ReplicationActionType.ACTIVATE.equals(replicationAction.getType())) {
             try (ResourceResolver resolver =
                      resourceResolverFactory.getServiceResourceResolver(Collections.singletonMap(SUBSERVICE, SERVICE_NAME))) {
                 Resource currentResource = resolver.getResource(replicationAction.getPath());
                 if (currentResource == null) {
-                    LOG.debug("replication action made on a non existing or not readable resource {}, abort", replicationAction.getPath());
+                    log.debug("replication action made on a non existing or not readable resource {}, abort", replicationAction.getPath());
                     return;
                 }
                 Page currentPage = currentResource.adaptTo(Page.class);
                 if (currentPage == null) {
-                    LOG.debug("replication action made on something else than a page, abort {}", currentResource.getPath());
+                    log.debug("replication action made on something else than a page, abort {}", currentResource.getPath());
                     return;
                 }
                 //we just tag page resources
                 tagPage(currentPage);
                 resolver.commit();
             } catch (LoginException | PersistenceException e) {
-                LOG.error("Issues with current user or content, will not tag that resource", e);
+                log.error("Issues with current user or content, will not tag that resource", e);
             }
         }
     }
 
+    /**
+     * tag every single resource in given page
+     * @param currentPage
+     */
     void tagPage(Page currentPage) {
         String pageHash = getUniqueId(currentPage.getPath(), false);
         for (Iterator<Resource> componentIterator = new ComponentIterator(resourceFilter, currentPage.getContentResource());
              componentIterator.hasNext();) {
             Resource component = componentIterator.next();
-            if (!isResourceTagValid(component, pageHash)) {
+            if (needsUpdate(component, pageHash)) {
                 tagResource(component, pageHash);
             }
         }
     }
 
     /**
-     * Assuming this resource is "taggable", this method will tell us it is validly tagged
-     * that is it has a tag, and current page id tag (not time salted) is still ok.
+     * Indicates wether that resource tags need to be updated
      *
      * @param resource resource we want to check
      * @param currentPageHash  hash from page whom we are browsing the content from
-     * @return validity flag
+     * @return true if we need to update, false otherwise
      */
-    boolean isResourceTagValid(@NotNull Resource resource, @NotNull String currentPageHash) {
+    boolean needsUpdate(@NotNull Resource resource, @NotNull String currentPageHash) {
         ValueMap map = resource.getValueMap();
         if (map.containsKey(PN_PAGEHASH) && map.containsKey(PN_COMPID)) {
-            return currentPageHash.equals(map.get(PN_PAGEHASH, String.class));
+            return !currentPageHash.equals(map.get(PN_PAGEHASH, String.class));
         }
-        return false;
+        return true;
     }
 
     /**
-     * Tags, if needed and configured, a resource with page & component id
-     *
-     * @param resolver current resource resolver
-     * @param path resource path
+     * Get current page Hash
+     * @param resource
+     * @param checkCache
+     * @return page hash or null if not possible to compute
      */
-    void tagResource(ResourceResolver resolver, String path) {
-        Resource resource = resolver.getResource(path);
-        if (resourceFilter.apply(resource)) {
-            PageManager pageManager = resolver.adaptTo(PageManager.class);
-            Page currentPage = pageManager.getContainingPage(resource);
-            if (currentPage != null) {
-                String pageHash = getUniqueId(currentPage.getPath(), false);
-                if (!isResourceTagValid(resource, pageHash)) {
-                    tagResource(resource, pageHash);
-                }
+    String getCurrentPageId(Resource resource, boolean checkCache) {
+        if (checkCache && resource.getValueMap().containsKey(PN_PAGEHASH)) {
+            return resource.getValueMap().get(PN_PAGEHASH, String.class);
+        }
+        PageManager pageManager = resource.getResourceResolver().adaptTo(PageManager.class);
+        Page currentPage = pageManager.getContainingPage(resource);
+        if (currentPage != null) {
+            return getUniqueId(currentPage.getPath(), false);
+        }
+        return null;
+    }
+
+    /**
+     * Get current resource Hash
+     * @param resource
+     * @param checkCache
+     * @return resource path hash
+     */
+    @NotNull String getResourceId(Resource resource, boolean checkCache) {
+        if (checkCache && resource.getValueMap().containsKey(PN_COMPID)) {
+            return resource.getValueMap().get(PN_COMPID, String.class);
+        }
+        return getUniqueId(resource.getPath(), false);
+    }
+
+    @Override
+    public void tagResource(Resource resource) {
+        if (Boolean.TRUE.equals(resourceFilter.apply(resource))) {
+            String pageHash = getCurrentPageId(resource, true);
+            if (needsUpdate(resource, pageHash)) {
+                tagResource(resource, pageHash);
             }
         }
+    }
+
+    void tagResource(ResourceResolver resolver, String path) {
+        tagResource(resolver.getResource(path));
     }
 
     /**
@@ -208,7 +252,10 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
      * @param currentPageHash hash from page whom we are browsing the content from
      */
     void tagResource(Resource resource, String currentPageHash) {
-        tagResource(resource, currentPageHash, getUniqueId(resource.getPath(), true));
+        String existingId = resource.getValueMap().get(PN_COMPID, String.class);
+        String compid = StringUtils.isBlank(existingId) || configuration.shouldRewriteComponentHash() ?
+            getUniqueId(resource.getPath(), true) : existingId;
+        tagResource(resource, currentPageHash, compid);
     }
 
     /**
@@ -216,9 +263,9 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
      *
      * @param resource
      * @param currentPageHash
-     * @param compHash
+     * @param compHash in case this is null, it's not updated
      */
-    void tagResource(Resource resource, String currentPageHash, String compHash) {
+    void tagResource(Resource resource, String currentPageHash, @Nullable String compHash) {
         ModifiableValueMap map = resource.adaptTo(ModifiableValueMap.class);
         if (map != null) {
             map.put(PN_PAGEHASH, currentPageHash);
@@ -233,29 +280,90 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
      * @param timeSalt      wether we should salt it with a time based salt or not
      * @return              The unique ID (first <code>ID_SIZE</code> chars of sha1 hash)
      */
-    String getUniqueId(final String path, boolean timeSalt) {
+    public String getUniqueId(final String path, boolean timeSalt) {
         String source = path;
         if (timeSalt) {
             source += Calendar.getInstance().toString();
         }
-        String sha1 = DigestUtils.sha1Hex(source);
-        return sha1.substring(0, ID_SIZE);
+        String sha256 = DigestUtils.sha256Hex(source);
+        return sha256.substring(0, ID_SIZE);
     }
 
     @Override
-    public void process(SlingHttpServletRequest request, List<Modification> list) throws Exception {
-        for (Modification modification : list) {
-            LOG.trace("{}", modification);
-            ResourceResolver resolver = request.getResourceResolver();
-            if (ModificationType.CREATE.equals(modification.getType())) {
-                tagResource(resolver, modification.getSource());
-            } else if (ModificationType.COPY.equals(modification.getType())) {
-                Resource resource = resolver.getResource(modification.getDestination());
-                //removing old tags
-                tagResource(resource, EMPTY, EMPTY);
-                tagResource(resolver, modification.getDestination());
+    public void process(SlingHttpServletRequest request, List<Modification> list) {
+        if (configuration.tagOnModification()) {
+            for (Modification modification : list) {
+                log.trace("{}", modification);
+                ResourceResolver resolver = request.getResourceResolver();
+                if (ModificationType.CREATE.equals(modification.getType())) {
+                    tagResource(resolver, modification.getSource());
+                } else if (ModificationType.COPY.equals(modification.getType())) {
+                    Resource resource = resolver.getResource(modification.getDestination());
+                    //removing old tags
+                    tagResource(resource, EMPTY, EMPTY);
+                    tagResource(resolver, modification.getDestination());
+                }
             }
         }
+    }
+
+    boolean isCurrentRequestForRootPage(SlingHttpServletRequest request, String pageId) {
+        return pageId.equals(request.getAttribute(ATT_ROOTID));
+    }
+
+    /**
+     * Prefix a given component id with an eventual reference
+     * @param request current request
+     * @param pageId current page hash
+     * @param componentId component hash
+     * @return (<XF reference component Hash>-)?<component Hash> prefix only if we are in the XF context and if
+     * we are not in the page root already
+     */
+    String prefixWithRootReference(SlingHttpServletRequest request, String pageId, String componentId) {
+        if (!isCurrentRequestForRootPage(request, pageId) && request.getAttribute(ATT_REFERENCE) != null) {
+            return request.getAttribute(ATT_REFERENCE) + ID_SEPARATOR + componentId;
+        }
+        return componentId;
+    }
+
+    /**
+     * checks if current component request has an override set for the ID
+     * @param request current request
+     * @param pageId hash of the page path
+     * @param property override property name
+     * @return
+     */
+    String getOverride(SlingHttpServletRequest request, String pageId, String property) {
+        if (StringUtils.isNotBlank(property)) {
+            String override = request.getResource().getValueMap().get(property, String.class);
+            if (StringUtils.isNotBlank(override)) {
+                return prefixWithRootReference(request, pageId, override);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String computeComponentId(SlingHttpServletRequest request, @Nullable String property) {
+        Resource resource = request.getResource();
+        String pageId = getCurrentPageId(resource, true);
+        if (request.getAttribute(ATT_ROOTID) == null) {
+            request.setAttribute(ATT_ROOTID, pageId);
+        }
+        //first we check if an override exist
+        String id = getOverride(request, pageId, property);
+        if (StringUtils.isBlank(id)) {
+            //the we go for default id tagging
+            id = prefixWithRootReference(request, pageId, getResourceId(resource, true));
+        }
+        if (isCurrentRequestForRootPage(request, pageId)) {
+            String refId = null;
+            if (referenceTypes.contains(resource.getResourceType())) {
+                refId = id;
+            }
+            request.setAttribute(ATT_REFERENCE, refId);
+        }
+        return id;
     }
 
     /**
@@ -274,7 +382,7 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
 
         @Override
         protected void visit(@NotNull Resource resource) {
-            if (rFilter.apply(resource)) {
+            if (Boolean.TRUE.equals(rFilter.apply(resource))) {
                 internalList.add(resource);
             }
         }
@@ -301,11 +409,36 @@ public class IDTagger implements Preprocessor, SlingPostProcessor {
     public @interface Configuration {
 
         @AttributeDefinition(
+            name = "Tag on publication",
+            description = "should tag components on publication"
+        )
+        boolean tagOnPublication();
+
+        @AttributeDefinition(
+            name = "Tag on creation or copy",
+            description = "should tag components on creation or copy"
+        )
+        boolean tagOnModification();
+
+        @AttributeDefinition(
             name = "Accepted types",
             description = "list of pattern (https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html) "
                 + "for resource types that should be tagged with an id"
         )
         @SuppressWarnings("squid:S00100")
         String[] acceptedTypes() default { "dx/components/structure/.*" };
+
+        @AttributeDefinition(
+            name = "Reference type",
+            description = "type with which a reference is made, we should consider for ID generation"
+        )
+        String[] referenceTypes() default { "cq/experience-fragments/editor/components/experiencefragment" };
+
+        @AttributeDefinition(
+            name = "Should rewrite hash over copies",
+            description = "in anyway, a copy of the component in a new page will have rewritten page hash."
+            + "in case this is checked, the component hash will be rewritten as well"
+        )
+        boolean shouldRewriteComponentHash() default true;
     }
 }
