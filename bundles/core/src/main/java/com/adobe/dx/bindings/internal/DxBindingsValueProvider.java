@@ -50,7 +50,9 @@ public class DxBindingsValueProvider implements BindingsValuesProvider {
 
     private static final String POLICY_KEY = "dxPolicy";
 
-    private static final String RESP_PROPS_KEY = "respProperties";
+    private static final String RESP_PROPS_KEY = "resprops";
+
+    private static final String BP_KEY = "breakpoints";
     
     @Override
     public void addBindings(@NotNull Bindings bindings) {
@@ -66,6 +68,7 @@ public class DxBindingsValueProvider implements BindingsValuesProvider {
                 ResponsiveConfiguration configuration = resource
                     .adaptTo(ConfigurationBuilder.class)
                     .as(ResponsiveConfiguration.class);
+                bindings.put(BP_KEY, configuration.breakpoints());
                 bindings.put(RESP_PROPS_KEY, new ResponsiveProperties(configuration, dxPolicy));
             }
         }

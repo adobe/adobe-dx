@@ -16,8 +16,25 @@
 package com.adobe.dx.responsive;
 
 import org.apache.sling.caconfig.annotation.Configuration;
+import org.apache.sling.caconfig.annotation.Property;
 
-@Configuration(label="Responsive Configuration", description = "sets the responsive behaviour")
-public @interface ResponsiveConfiguration {
-    Breakpoint[] breakpoints();
+@Configuration(collection = true)
+public @interface Breakpoint {
+    @Property(label = "name")
+    String getLabel();
+
+    @Property(label = "property suffix", description = "suffix to append to a property to get the responsive version of it")
+    String propertySuffix();
+
+    @Property(label = "map key", description = "key from where a value will be available")
+    String key();
+
+    @Property(label = "media Query", description = "media query that defines this breakpoint")
+    String mediaQuery();
+
+    @Property(label = "start", description = "screen width from which this breakpoint is set")
+    int start();
+
+    @Property(label = "end", description = "screen width to which this breakpoint is set")
+    int end();
 }

@@ -16,6 +16,7 @@
 
 package com.adobe.dx.responsive.internal;
 
+import com.adobe.dx.responsive.Breakpoint;
 import com.adobe.dx.responsive.ResponsiveConfiguration;
 
 import java.util.Collection;
@@ -34,11 +35,11 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ResponsiveProperties implements Map<String, Object> {
 
-    private final String[] breakpoints;
+    private final Breakpoint[] breakpoints;
     private ValueMap properties;
 
     public ResponsiveProperties(final ResponsiveConfiguration configuration, ValueMap properties) {
-        this.breakpoints = configuration.breakpoints();
+        breakpoints = configuration.breakpoints();
         this.properties = properties;
     }
 
@@ -47,11 +48,11 @@ public class ResponsiveProperties implements Map<String, Object> {
         if (key != null) {
             boolean empty = true;
             LinkedHashMap<String,String> breakpointValues = new LinkedHashMap<>();
-            for (String breakpoint : breakpoints) {
-                String respKey = key + breakpoint;
+            for (Breakpoint breakpoint : breakpoints) {
+                String respKey = key + breakpoint.propertySuffix();
                 String value = properties.get(respKey, String.class);
                 empty &= StringUtils.isBlank(value);
-                breakpointValues.put(breakpoint.toLowerCase(), value);
+                breakpointValues.put(breakpoint.key(), value);
             }
             if (!empty) {
                 return breakpointValues;

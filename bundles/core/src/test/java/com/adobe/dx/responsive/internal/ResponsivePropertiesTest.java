@@ -17,6 +17,7 @@ package com.adobe.dx.responsive.internal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.adobe.dx.responsive.Breakpoint;
 import com.adobe.dx.responsive.ResponsiveConfiguration;
 import com.adobe.dx.testing.AbstractTest;
 
@@ -37,17 +38,23 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 
 public class ResponsivePropertiesTest extends AbstractTest {
 
-    public final static String[] BREAKPOINTS = new String[] {"Mobile", "Tablet", "Desktop"};
     ResponsiveConfiguration configuration;
 
     public static ResponsiveConfiguration initResponsiveConfiguration(AemContext context) {
-        context.create().resource(CONTENT_ROOT, "sling:configRef", CONF_ROOT);
+        context.build().resource(CONF_ROOT + "/sling:configs/" + ResponsiveConfiguration.class.getName() + "/breakpoints")
+            .siblingsMode()
+            .resource("1","propertySuffix", "Mobile", "key", "mobile")
+            .resource("2", "propertySuffix", "Tablet", "key", "tablet")
+            .resource("3", "propertySuffix", "Desktop", "key", "desktop");
         MockContextAwareConfig.registerAnnotationClasses(context, ResponsiveConfiguration.class);
-        MockContextAwareConfig.writeConfiguration(context, CONTENT_ROOT, ResponsiveConfiguration.class,"breakpoints", BREAKPOINTS);
-        return context.resourceResolver()
+        MockContextAwareConfig.registerAnnotationClasses(context, Breakpoint.class);
+        context.create().resource(CONTENT_ROOT, "sling:configRef", CONF_ROOT);
+        ResponsiveConfiguration configuration =  context.resourceResolver()
             .getResource(CONTENT_ROOT)
             .adaptTo(ConfigurationBuilder.class)
             .as(ResponsiveConfiguration.class);
+        assertEquals( 3, configuration.breakpoints().length, "we should have 3 breakpoints configured");
+        return configuration;
     }
 
     @BeforeEach

@@ -1,0 +1,46 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2020 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<template data-sly-template.background="${ @ id}">
+    <sly data-sly-repeat.bp="${breakpoints}">
+
+        <sly data-sly-test="${resprops.backgroundColor[bp.key] || resprops.gradient[bp.key]}">
+            <sly data-sly-test="${bp.mediaQuery}">
+                ${bp.mediaQuery}{
+            </sly>
+            ${'#{0}' @ format=id, context='styleString'} {
+            <sly data-sly-test="${resprops.backgroundColor[bp.key]}">
+                ${'background-color: {0}; ' @ format=resprops.backgroundColor[bp.key], context='styleString'}
+            </sly>
+            <sly data-sly-test="${resprops.gradient[bp.key]}">
+                ${'background-image: {0};' @ format=[resprops.gradient[bp.key]], context='styleString'}
+            </sly>
+            }
+            <sly data-sly-test="${bp.mediaQuery}">}</sly>
+        </sly>
+    </sly>
+</template>
+<template data-sly-template.foreground="${ @ id}">
+    <sly data-sly-repeat.bp="${breakpoints}"
+         data-sly-test="${resprops.foregroundColor[bp.key]}">
+        <sly data-sly-test.mediaQuery="${bp.mediaQuery}">
+            ${bp.mediaQuery}{
+        </sly>
+        ${'#{0}' @ format=id, context='styleString'} {
+        ${'color: {0}; ' @ format=resprops.foregroundColor[bp.key], context='styleString'}
+        }
+        <sly data-sly-test="${bp.mediaQuery}">}</sly>
+    </sly>
+</template>

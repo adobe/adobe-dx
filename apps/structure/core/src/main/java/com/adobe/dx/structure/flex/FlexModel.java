@@ -16,21 +16,38 @@
 
 package com.adobe.dx.structure.flex;
 
+import com.adobe.dx.domtagging.IDTagger;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 
-@Model(adaptables = { SlingHttpServletRequest.class,
-        Resource.class }, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
+@Model(adaptables = SlingHttpServletRequest.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class FlexModel {
 
     @SlingObject
-    protected Resource resource;
+    protected SlingHttpServletRequest request;
+
+    @OSGiService
+    protected IDTagger idTagger;
+
+    String id;
 
     public String getHello() {
         return "Hello";
     }
 
+    public boolean isStyleNeeded() {
+        return true;
+    }
+
+    public String getId() {
+        if (StringUtils.isBlank(id) && idTagger != null) {
+            id = idTagger.computeComponentId(request, null);
+        }
+        return id;
+    }
 }

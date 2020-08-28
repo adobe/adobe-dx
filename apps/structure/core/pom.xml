@@ -118,5 +118,10 @@ Bundle-DocURL:
             <artifactId>testing</artifactId>
             <version>0.0.10</version>
         </dependency>
+        <dependency>
+            <groupId>com.adobe.dx</groupId>
+            <artifactId>core</artifactId>
+            <version>0.0.13-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

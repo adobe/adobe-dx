@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    key="desktop"
+    label="Desktop"
+    mediaQuery="@media only screen and (min-width: 1200px)"
+    propertySuffix="Desktop"
+    start="{Long}1200"/>

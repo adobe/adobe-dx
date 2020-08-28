@@ -13,6 +13,10 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<div data-sly-use.model="com.adobe.dx.structure.flex.FlexModel">${model.hello}</div>
-
-Sup
+<sly data-sly-use.model="com.adobe.dx.structure.flex.FlexModel"></sly>
+<style data-sly-test="${model.styleNeeded}">
+    <sly data-sly-use.colorTpl="color.html" data-sly-call="${colorTpl.background @ id = model.id}"></sly>
+</style>
+<div id="${model.id}" class="dx-flex">
+    <div class="dx-flex-items" data-sly-resource="${'./items' @ resourceType='dx/structure/components/parlite'}"></div>
+</div>
