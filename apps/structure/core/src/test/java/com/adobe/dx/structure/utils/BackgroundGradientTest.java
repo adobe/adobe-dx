@@ -18,11 +18,13 @@ package com.adobe.dx.structure.utils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import com.adobe.dx.testing.AbstractRequestModelTest;
+import com.adobe.dx.testing.AbstractTest;
 
+import org.apache.sling.models.factory.ModelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BackgroundGradientTest extends AbstractRequestModelTest {
+public class BackgroundGradientTest extends AbstractTest {
 
     private BackgroundGradient backgroundGradient;
 
@@ -32,7 +34,9 @@ public class BackgroundGradientTest extends AbstractRequestModelTest {
         context.load().json("/mocks/gradients/gradients-app.json", "/apps");
         context.addModelsForClasses(BackgroundGradient.class);
 
-        backgroundGradient = getModel(BackgroundGradient.class, "/apps/component/style");
+        context.addModelsForClasses(BackgroundGradient.class);
+        context.currentResource("/apps/component/style");
+        backgroundGradient = context.getService(ModelFactory.class).createModel(context.request(), BackgroundGradient.class);
     }
 
     @Test

@@ -13,6 +13,12 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<div data-sly-use.model="com.adobe.dx.structure.flex.FlexModel">${model.hello}</div>
-
-Sup
+<sly data-sly-use.model="com.adobe.dx.structure.flex.FlexModel"></sly>
+<style data-sly-test="${model.style}">${model.style @ context='unsafe'}</style>
+<div id="${model.id}" class="dx-flex">
+    <div data-sly-element="${dxPolicy.elementName}"
+         aria-label="${dxPolicy.ariaLabel}"
+         role="${(!dxPolicy.elementName || dxPolicy.elementName == 'div') && dxPolicy.ariaLandmarkRole}"
+         class="dx-flex-items"
+         data-sly-resource="${'./items' @ resourceType='dx/structure/components/parlite'}"></div>
+</div>

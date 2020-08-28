@@ -5,5 +5,65 @@
         jcr:primaryType="cq:PageContent"
         jcr:title="DX Documentation"
         cq:template="/conf/dx-docs/settings/wcm/templates/content-page-template"
-        sling:resourceType="dx-docs/components/structure/page"/>
+        sling:resourceType="dx-docs/components/structure/page">
+        <root jcr:primaryType="nt:unstructured"
+              sling:resourceType="wcm/foundation/components/responsivegrid">
+            <content jcr:primaryType="nt:unstructured"
+                     sling:resourceType="wcm/foundation/components/responsivegrid">
+                <flex jcr:primaryType="nt:unstructured"
+                    borderAllColor="red"
+                    borderAllRadius="{Long}3"
+                    borderRadius="all"
+                    borderSides="all"
+                    sling:resourceType="dx/structure/components/flex"
+                    inheritDesktop="{Boolean}true"
+                    inheritTablet="{Boolean}true"
+                    shadowColor="red"
+                    gapMobile="{Long}2"
+                    focusXMobile="{Long}30"
+                    focusYMobile="{Long}30"
+                    foregroundColorMobile="white"
+                    gradientMobile="red"
+                    gradientDesktop="another"
+                    foregroundColorDesktop="blue"
+                    justificationMobile="JustifyStretch">
+                    <items jcr:primaryType="nt:unstructured"
+                           sling:resourceType="dx/structure/components/parlite">
+                        <text jcr:primaryType="nt:unstructured"
+                              sling:resourceType="core/wcm/components/text/v2/text"
+                                text="&lt;h1&gt;Hello&lt;/h1&gt;"
+                                textIsRich="true"/>
+                        <text1 jcr:primaryType="nt:unstructured"
+                              sling:resourceType="core/wcm/components/text/v2/text"
+                              text="&lt;h1&gt;World!&lt;/h1&gt;"
+                              textIsRich="true"/>
+                    </items>
+                    <definitionsMobile jcr:primaryType="nt:unstructured">
+                        <item0 jcr:primaryType="nt:unstructured"
+                               minHeight="custom"
+                               minHeightValue="60"
+                               minHeightType="%"
+                               width="custom"
+                               customWidthValue="60"
+                               customWidthType="%"/>
+                        <item1 jcr:primaryType="nt:unstructured"
+                               minHeight="auto"
+                               width="auto"/>
+                    </definitionsMobile>
+                    <definitionsDesktop jcr:primaryType="nt:unstructured">
+                        <item0 jcr:primaryType="nt:unstructured"
+                               minHeight="auto"
+                               width="auto"/>
+                        <item1 jcr:primaryType="nt:unstructured"
+                               minHeight="custom"
+                               minHeightValue="60"
+                               minHeightType="%"
+                               width="custom"
+                               customWidthValue="60"
+                               customWidthType="%"/>
+                    </definitionsDesktop>
+                </flex>
+            </content>
+        </root>
+    </jcr:content>
 </jcr:root>

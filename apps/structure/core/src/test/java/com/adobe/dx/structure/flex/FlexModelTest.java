@@ -16,15 +16,28 @@
 package com.adobe.dx.structure.flex;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import com.adobe.dx.testing.AbstractRequestModelTest;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FlexModelTest extends AbstractRequestModelTest {
 
-    @Test
-    void getHello() throws ReflectiveOperationException {
-        assertEquals("Hello", getModel(FlexModel.class).getHello());
+    FlexModel model;
+
+    @BeforeEach
+    public void setup() {
+        model = getModel(FlexModel.class, CONTENT_ROOT);
     }
+
+    @Test
+    public void testId() {
+        assertNotNull(model.getId());
+    }
+
+    @Test
+    public void testStyle() {
+        assertNotNull(model.getStyle());
+    }
+
 }
