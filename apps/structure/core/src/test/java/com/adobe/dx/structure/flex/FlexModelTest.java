@@ -16,15 +16,41 @@
 package com.adobe.dx.structure.flex;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import com.adobe.dx.domtagging.IDTagger;
 import com.adobe.dx.testing.AbstractRequestModelTest;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FlexModelTest extends AbstractRequestModelTest {
 
+    FlexModel model;
+
+    @BeforeEach
+    public void setup()  throws ReflectiveOperationException {
+        context.build().resource(CONTENT_ROOT,"title", "flex test").commit();
+        model = getModel(FlexModel.class, CONTENT_ROOT);
+    }
+
     @Test
-    void getHello() throws ReflectiveOperationException {
-        assertEquals("Hello", getModel(FlexModel.class).getHello());
+    public void testWorkingId() {
+        model.idTagger = mock(IDTagger.class);
+        when(model.idTagger.computeComponentId(any(), any())).thenReturn("blah");
+        assertEquals("blah", model.getId());
+    }
+
+    @Test
+    public void testNonWorkingId() {
+        assertNull(model.getId());
+    }
+
+
+    @Test
+    public void testIsNeeded() throws ReflectiveOperationException {
+        assertTrue(model.isStyleNeeded());
     }
 }

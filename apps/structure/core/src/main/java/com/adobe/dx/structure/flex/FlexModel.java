@@ -32,13 +32,9 @@ public class FlexModel {
     protected SlingHttpServletRequest request;
 
     @OSGiService
-    protected IDTagger idTagger;
+    IDTagger idTagger;
 
     String id;
-
-    public String getHello() {
-        return "Hello";
-    }
 
     public boolean isStyleNeeded() {
         return true;
