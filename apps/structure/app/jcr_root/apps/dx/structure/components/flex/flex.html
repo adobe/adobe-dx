@@ -15,7 +15,27 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.model="com.adobe.dx.structure.flex.FlexModel"></sly>
 <style data-sly-test="${model.styleNeeded}">
-    <sly data-sly-use.colorTpl="color.html" data-sly-call="${colorTpl.background @ id = model.id}"></sly>
+<sly data-sly-repeat.bp="${breakpoints}">
+<sly data-sly-test="${!resprops.inherit[bp] && (resprops.minHeight[bp] || resprops.gapContainer[bp] || resprops.gap[bp] || resprops.definitions[bp])}">
+    <sly data-sly-test="${bp.mediaQuery}">${bp.mediaQuery}{</sly>
+    ${'#{0}' @ format=model.id, context='styleString'} > .dx-flex-items {
+        ${resprops.minHeight[bp] @ context = 'styleString'}
+        ${resprops.gapContainer[bp] @ context = 'styleString'}
+    }
+    <sly data-sly-test="${resprops.gap[bp]}">
+        ${'#{0}' @ format=model.id, context='styleString'} > .dx-flex-items > * {${model.gap[bp] @ context = 'styleString'}}
+    </sly>
+    <sly data-sly-repeat.definition="${model.definitions[bp]}">
+        ${'#{0}' @ format=model.id, context='styleString'} > .dx-flex-items > *:nth-child(${model.definitions[bp].size @ context='unsafe' }) {
+        ${definition.width}
+        ${definition.minHeight}
+        ${definition.order}
+    }
+    </sly>
+    <sly data-sly-test="${bp.mediaQuery}">}</sly>
+    </sly>
+</sly>
+<sly data-sly-use.colorTpl="color.html" data-sly-call="${colorTpl.background @ id = model.id}"></sly>
 </style>
 <div id="${model.id}" class="dx-flex">
     <div class="dx-flex-items" data-sly-resource="${'./items' @ resourceType='dx/structure/components/parlite'}"></div>

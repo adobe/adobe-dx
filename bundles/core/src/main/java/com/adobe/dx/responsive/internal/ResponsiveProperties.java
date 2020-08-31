@@ -43,13 +43,17 @@ public class ResponsiveProperties implements Map<String, Object> {
         this.properties = properties;
     }
 
+    private String computeResponsiveResourceName(String name, Breakpoint breakpoint) {
+        return name + breakpoint.propertySuffix();
+    }
+
     @Override
     public Object get(Object key) {
         if (key != null) {
             boolean empty = true;
             LinkedHashMap<String,String> breakpointValues = new LinkedHashMap<>();
             for (Breakpoint breakpoint : breakpoints) {
-                String respKey = key + breakpoint.propertySuffix();
+                String respKey = computeResponsiveResourceName(key.toString(), breakpoint);
                 String value = properties.get(respKey, String.class);
                 empty &= StringUtils.isBlank(value);
                 breakpointValues.put(breakpoint.key(), value);

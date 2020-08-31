@@ -16,6 +16,7 @@
 package com.adobe.dx.testing;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.scripting.SlingBindings;
 import org.apache.sling.models.factory.ModelFactory;
 
 public class AbstractRequestModelTest extends AbstractTest {
@@ -32,6 +33,11 @@ public class AbstractRequestModelTest extends AbstractTest {
     protected <T> T getModel(final Class<T> type, String path) throws ReflectiveOperationException {
         context.currentResource(path);
         return getModel(type);
+    }
+
+    protected void addBinding(String binding, Object value) {
+        SlingBindings bindings = (SlingBindings) context.request().getAttribute(SlingBindings.class.getName());
+        bindings.put(binding, value);
     }
 
 }

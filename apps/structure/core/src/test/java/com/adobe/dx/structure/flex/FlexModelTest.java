@@ -21,8 +21,18 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.adobe.dx.domtagging.IDTagger;
+import com.adobe.dx.responsive.Breakpoint;
+import com.adobe.dx.responsive.ResponsiveConfiguration;
 import com.adobe.dx.testing.AbstractRequestModelTest;
+import com.day.cq.wcm.api.policies.ContentPolicy;
+import com.day.cq.wcm.api.policies.ContentPolicyManager;
 
+import java.util.List;
+
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.api.wrappers.CompositeValueMap;
+import org.apache.sling.caconfig.ConfigurationBuilder;
+import org.apache.sling.testing.mock.caconfig.MockContextAwareConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,8 +42,34 @@ class FlexModelTest extends AbstractRequestModelTest {
 
     @BeforeEach
     public void setup()  throws ReflectiveOperationException {
-        context.build().resource(CONTENT_ROOT,"title", "flex test").commit();
+        context.build().resource(CONF_ROOT + "/sling:configs/" + ResponsiveConfiguration.class.getName() + "/breakpoints")
+            .siblingsMode()
+            .resource("1","propertySuffix", "Mobile", "key", "mobile")
+            .resource("2", "propertySuffix", "Tablet", "key", "tablet")
+            .resource("3", "propertySuffix", "Desktop", "key", "desktop");
+        MockContextAwareConfig.registerAnnotationClasses(context, ResponsiveConfiguration.class);
+        MockContextAwareConfig.registerAnnotationClasses(context, Breakpoint.class);
+        context.create().resource(CONTENT_ROOT, "sling:configRef", CONF_ROOT);
+        ResponsiveConfiguration configuration =  context.resourceResolver()
+            .getResource(CONTENT_ROOT)
+            .adaptTo(ConfigurationBuilder.class)
+            .as(ResponsiveConfiguration.class);
+        context.build().resource(CONTENT_ROOT,
+            "sling:resourceType", "dx/structure/components/flex",
+            "title", "dx flex component")
+            .resource("definitionsMobile")
+            .siblingsMode()
+            .resource("1", "minHeight", "custom")
+            .resource("2", "minHeight", "custom");
+        context.currentResource(CONTENT_ROOT);
+        context.contentPolicyMapping("dx/structure/components/flex", "blah", "blah");
+        ContentPolicy policy = context.resourceResolver()
+            .adaptTo(ContentPolicyManager.class).getPolicy(context.currentResource());
+        context.build().resource(policy.getPath() + "/definitionsTablet/items0",
+            "minHeight", "custom");
         model = getModel(FlexModel.class, CONTENT_ROOT);
+        model.breakpoints = configuration.breakpoints();
+        model.init();
     }
 
     @Test
@@ -48,9 +84,20 @@ class FlexModelTest extends AbstractRequestModelTest {
         assertNull(model.getId());
     }
 
+    @Test
+    public void testIsNeeded() {
+        assertTrue(model.isStyleNeeded());
+    }
 
     @Test
-    public void testIsNeeded() throws ReflectiveOperationException {
-        assertTrue(model.isStyleNeeded());
+    public void testGetDefinitions() {
+        List<ValueMap> mobile = model.getDefinitions("mobile");
+        List<ValueMap> tablet = model.getDefinitions("tablet");
+        assertNotNull(mobile);
+        assertNotNull(tablet);
+        assertNull(model.getDefinitions("desktop"));
+        assertEquals(2, mobile.size());
+        assertEquals(1, tablet.size());
+        assertEquals("custom", mobile.get(0).get("minHeight"));
     }
 }

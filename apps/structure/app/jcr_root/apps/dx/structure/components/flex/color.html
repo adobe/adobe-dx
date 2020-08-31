@@ -15,32 +15,23 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <template data-sly-template.background="${ @ id}">
     <sly data-sly-repeat.bp="${breakpoints}">
-
         <sly data-sly-test="${resprops.backgroundColor[bp.key] || resprops.gradient[bp.key]}">
-            <sly data-sly-test="${bp.mediaQuery}">
-                ${bp.mediaQuery}{
-            </sly>
+            <sly data-sly-test="${bp.mediaQuery}">${bp.mediaQuery}{</sly>
             ${'#{0}' @ format=id, context='styleString'} {
             <sly data-sly-test="${resprops.backgroundColor[bp.key]}">
                 ${'background-color: {0}; ' @ format=resprops.backgroundColor[bp.key], context='styleString'}
             </sly>
             <sly data-sly-test="${resprops.gradient[bp.key]}">
                 ${'background-image: {0};' @ format=[resprops.gradient[bp.key]], context='styleString'}
-            </sly>
-            }
-            <sly data-sly-test="${bp.mediaQuery}">}</sly>
+            </sly>}<sly data-sly-test="${bp.mediaQuery}">}</sly>
         </sly>
     </sly>
 </template>
 <template data-sly-template.foreground="${ @ id}">
     <sly data-sly-repeat.bp="${breakpoints}"
          data-sly-test="${resprops.foregroundColor[bp.key]}">
-        <sly data-sly-test.mediaQuery="${bp.mediaQuery}">
-            ${bp.mediaQuery}{
-        </sly>
-        ${'#{0}' @ format=id, context='styleString'} {
-        ${'color: {0}; ' @ format=resprops.foregroundColor[bp.key], context='styleString'}
-        }
+        <sly data-sly-test.mediaQuery="${bp.mediaQuery}">${bp.mediaQuery}{</sly>
+        ${'#{0}' @ format=id, context='styleString'} { ${'color: {0}; ' @ format=resprops.foregroundColor[bp.key], context='styleString'}}
         <sly data-sly-test="${bp.mediaQuery}">}</sly>
     </sly>
 </template>
