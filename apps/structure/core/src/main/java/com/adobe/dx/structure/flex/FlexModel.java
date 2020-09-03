@@ -13,11 +13,11 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 package com.adobe.dx.structure.flex;
 
 import com.adobe.dx.domtagging.IDTagger;
 import com.adobe.dx.responsive.Breakpoint;
+import com.adobe.dx.style.StyleService;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
 
@@ -50,6 +50,9 @@ public class FlexModel {
     @OSGiService
     IDTagger idTagger;
 
+    @OSGiService
+    StyleService styleService;
+
     @ScriptVariable
     Breakpoint[] breakpoints;
 
@@ -58,6 +61,8 @@ public class FlexModel {
 
     String id;
 
+    String style;
+
     @PostConstruct
     void init() {
         bpMap = new HashMap<>();
@@ -65,6 +70,9 @@ public class FlexModel {
             for (Breakpoint breakpoint : breakpoints) {
                 bpMap.put(breakpoint.key(), breakpoint);
             }
+        }
+        if (styleService != null) {
+            style = styleService.getLocalStyle(getId(), request);
         }
     }
 
@@ -77,6 +85,10 @@ public class FlexModel {
             id = idTagger.computeComponentId(request, null);
         }
         return id;
+    }
+
+    public String getStyle() {
+        return style;
     }
 
     private Resource getPolicyResource(String name) {

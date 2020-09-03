@@ -16,28 +16,30 @@
 package com.adobe.dx.testing;
 
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.scripting.SlingBindings;
 import org.apache.sling.models.factory.ModelFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AbstractRequestModelTest extends AbstractTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRequestModelTest.class);
 
-    protected <T> T getModel(final Class<T> type) throws ReflectiveOperationException {
-        Resource resource = context.currentResource();
-        if (resource != null) {
-            context.addModelsForClasses(type);
-            return context.getService(ModelFactory.class).createModel(context.request(), type);
+    protected <T> T getModel(final Class<T> type) {
+        try {
+            Resource resource = context.currentResource();
+            if (resource != null) {
+                context.addModelsForClasses(type);
+                return context.getService(ModelFactory.class).createModel(context.request(), type);
+            }
+            return type.getDeclaredConstructor().newInstance();
+        } catch(ReflectiveOperationException e) {
+            LOGGER.error("unable to fetch model", e);
         }
-        return type.getDeclaredConstructor().newInstance();
+        return null;
     }
 
-    protected <T> T getModel(final Class<T> type, String path) throws ReflectiveOperationException {
+    protected <T> T getModel(final Class<T> type, String path) {
         context.currentResource(path);
         return getModel(type);
-    }
-
-    protected void addBinding(String binding, Object value) {
-        SlingBindings bindings = (SlingBindings) context.request().getAttribute(SlingBindings.class.getName());
-        bindings.put(binding, value);
     }
 
 }

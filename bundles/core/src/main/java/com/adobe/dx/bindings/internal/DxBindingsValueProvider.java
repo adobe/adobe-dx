@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 public class DxBindingsValueProvider implements BindingsValuesProvider {
 
-    private static final String POLICY_KEY = "dxPolicy";
+    public static final String POLICY_KEY = "dxPolicy";
 
-    private static final String RESP_PROPS_KEY = "resprops";
+    public static final String RESP_PROPS_KEY = "resprops";
 
-    private static final String BP_KEY = "breakpoints";
+    public static final String BP_KEY = "breakpoints";
     
     @Override
     public void addBindings(@NotNull Bindings bindings) {

@@ -36,6 +36,19 @@
     </sly>
 </sly>
 <sly data-sly-use.colorTpl="color.html" data-sly-call="${colorTpl.background @ id = model.id}"></sly>
+<!--/* Background Image (Must be set after Background Colors to override background-image) */-->
+<sly data-sly-test="${imageModel.src}" data-sly-use.backgroundTpl="background.html"
+data-sly-call="${backgroundTpl.styles @ colorModel = colorModel, imageModel = imageModel, idGeneratorModel = idGeneratorModel}"></sly>
+<sly data-sly-test="${colorModel.foreground}"
+data-sly-use.colorTpl="${rtPro.componentPath}/color.html"
+data-sly-call="${colorTpl.foreground @ colorModel = colorModel, imageModel = imageModel, idGeneratorModel = idGeneratorModel}"></sly>
+<!--/* Border */-->
+<sly data-sly-test="${model.border || model.borderRadius}"
+data-sly-use.borderTpl="${rtPro.componentPath}/border.html"
+data-sly-call="${borderTpl.border @ idGeneratorModel = idGeneratorModel,  position = model}">
+</sly>
+<!--/* Shadow & Border */-->
+<sly data-sly-test="${model.style}">${model.style @ context='styleString'}</sly>
 </style>
 <div id="${model.id}" class="dx-flex">
     <div class="dx-flex-items" data-sly-resource="${'./items' @ resourceType='dx/structure/components/parlite'}"></div>

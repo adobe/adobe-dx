@@ -17,7 +17,6 @@ package com.adobe.dx.testing;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.api.scripting.SlingBindings;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -30,8 +29,8 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 @ExtendWith(AemContextExtension.class)
 public class AbstractTest {
 
-    protected static final String CONTENT_ROOT = "/content/foo";
-    protected static final String CONF_ROOT = "/conf/foo";
+    public static final String CONTENT_ROOT = "/content/foo";
+    public static final String CONF_ROOT = "/conf/foo";
 
     protected AemContext context = buildContext(getType());
 
