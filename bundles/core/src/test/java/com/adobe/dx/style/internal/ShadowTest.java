@@ -17,11 +17,16 @@ package com.adobe.dx.style.internal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.adobe.dx.testing.AbstractTest;
+import com.adobe.dx.style.StyleWorker;
 
 import org.junit.jupiter.api.Test;
 
-class ShadowTest extends AbstractTest {
+class ShadowTest extends AbstractStyleWorkerTest {
+
+    @Override
+    StyleWorker getWorker() {
+        return new Shadow();
+    }
 
     @Test
     void lockKey() {
@@ -35,13 +40,13 @@ class ShadowTest extends AbstractTest {
             "shadowOffsetY", 10L,
             "shadowBlur", 11L,
             "shadowSpread", 12L);
-        assertEquals("box-shadow: 9px 10px 11px 12px blue", new Shadow().getDeclaration(context.currentResource(), getVM(CONTENT_ROOT)));
+        assertEquals("box-shadow: 9px 10px 11px 12px blue", getDeclaration());
     }
 
     @Test
     void testInset() {
         context.build().resource(CONTENT_ROOT, "shadowColor", "red",
             "shadowInset", true);
-        assertEquals("box-shadow: 0px 0px 0px 0px red inset", new Shadow().getDeclaration(context.currentResource(), getVM(CONTENT_ROOT)));
+        assertEquals("box-shadow: 0px 0px 0px 0px red inset", getDeclaration());
     }
 }

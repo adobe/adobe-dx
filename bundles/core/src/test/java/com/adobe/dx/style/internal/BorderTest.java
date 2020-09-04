@@ -18,11 +18,11 @@ package com.adobe.dx.style.internal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import com.adobe.dx.testing.AbstractTest;
+import com.adobe.dx.style.StyleWorker;
 
 import org.junit.jupiter.api.Test;
 
-public class BorderTest extends AbstractTest {
+public class BorderTest extends AbstractStyleWorkerTest {
 
     @Test
     void lockKey() {
@@ -30,13 +30,13 @@ public class BorderTest extends AbstractTest {
     }
 
     private void assertBorderEquals(String expected) {
-        assertEquals(expected, new Border().getDeclaration(context.currentResource(), getVM(CONTENT_ROOT)));
+        assertEquals(expected, getDeclaration());
     }
 
     @Test
     void getNoBorder() {
         context.build().resource(CONTENT_ROOT, "foo", "bar");
-        assertNull(new Border().getDeclaration(context.currentResource(), getVM(CONTENT_ROOT)));
+        assertNull(getDeclaration(null));
     }
 
     @Test
@@ -81,5 +81,10 @@ public class BorderTest extends AbstractTest {
             "borderBottomStyle", "dotted", "borderBottomWidth", 4, "borderBottomColor", "red",
             "borderRadius", "each", "borderRadiusBottomLeft", 4, "borderRadiusTopRight", 3);
         assertBorderEquals("border-top: dotted 4px red; border-bottom: dotted 4px red; border-radius: 0px 3px 0px 4px");
+    }
+
+    @Override
+    StyleWorker getWorker() {
+        return new Border();
     }
 }

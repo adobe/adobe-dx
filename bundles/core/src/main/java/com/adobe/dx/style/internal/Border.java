@@ -20,14 +20,16 @@ import static com.adobe.dx.style.Constants.DEL_SPACE;
 import static com.adobe.dx.style.Constants.PX;
 import static com.adobe.dx.style.Constants.PX_SPACE;
 import static com.adobe.dx.style.Constants.SPACE;
+import static com.adobe.dx.utils.RequestUtil.getPolicy;
 
+import com.adobe.dx.responsive.Breakpoint;
 import com.adobe.dx.style.StyleWorker;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
@@ -68,18 +70,21 @@ public class Border implements StyleWorker {
     }
 
     @Override
-    public @Nullable String getDeclaration(Resource resource, ValueMap dxPolicy) {
-        List<String> declarations = null;
-        String border = buildBorder(dxPolicy);
-        String radius = buildRadius(dxPolicy);
-        if (border != null) {
-            if (radius != null) {
-                return border + DEL_SPACE + radius;
-            } else {
-                return border;
+    public @Nullable String getDeclaration(Breakpoint breakpoint, SlingHttpServletRequest request) {
+        if (breakpoint == null) {
+            //we only do border for all
+            ValueMap dxPolicy = getPolicy(request);
+            String border = buildBorder(dxPolicy);
+            String radius = buildRadius(dxPolicy);
+            if (border != null) {
+                if (radius != null) {
+                    return border + DEL_SPACE + radius;
+                } else {
+                    return border;
+                }
+            } else if (radius != null) {
+                return radius;
             }
-        } else if (radius != null) {
-            return radius;
         }
         return null;
     }

@@ -15,8 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.style;
 
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ValueMap;
+import com.adobe.dx.responsive.Breakpoint;
+
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -32,10 +33,10 @@ public interface StyleWorker {
     /**
      * Generates a declaration specific to that generator, for an upper rule
      *
-     * @param resource current component resource,
-     * @param dxPolicy policy, could be obtained from above resource, but in the signature for practical reason,
+     * @param breakpoint breakpoint if declaration should be specific to one, null otherwise
+     * @param request current request
      * @return single or several declarations split by ';', or null if not necessary or able to generate some
      */
-    @Nullable String getDeclaration(Resource resource, ValueMap dxPolicy);
+    @Nullable String getDeclaration(@Nullable Breakpoint breakpoint, SlingHttpServletRequest request);
 
 }

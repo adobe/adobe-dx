@@ -16,10 +16,12 @@
 package com.adobe.dx.style.internal;
 
 import static com.adobe.dx.style.Constants.PX_SPACE;
+import static com.adobe.dx.utils.RequestUtil.getPolicy;
 
+import com.adobe.dx.responsive.Breakpoint;
 import com.adobe.dx.style.StyleWorker;
 
-import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
@@ -45,20 +47,24 @@ public class Shadow implements StyleWorker {
     }
 
     @Override
-    public @Nullable String getDeclaration(Resource resource, ValueMap dxPolicy) {
-        String color = dxPolicy.get(PN_COLOR, String.class);
-        if (color != null) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(RULE)
-                .append(dxPolicy.get(PN_OFFSETX, 0L)).append(PX_SPACE)
-                .append(dxPolicy.get(PN_OFFSETY, 0L)).append(PX_SPACE)
-                .append(dxPolicy.get(PN_BLUR, 0L)).append(PX_SPACE)
-                .append(dxPolicy.get(PN_SPREAD, 0L)).append(PX_SPACE)
-                .append(color);
-            if (dxPolicy.containsKey(PN_INSET)) {
-                sb.append(INSET_SUFFIX);
+    public @Nullable String getDeclaration(Breakpoint breakpoint, SlingHttpServletRequest request) {
+        if (breakpoint == null) {
+            //we only do border for all
+            ValueMap dxPolicy = getPolicy(request);
+            String color = dxPolicy.get(PN_COLOR, String.class);
+            if (color != null) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(RULE)
+                    .append(dxPolicy.get(PN_OFFSETX, 0L)).append(PX_SPACE)
+                    .append(dxPolicy.get(PN_OFFSETY, 0L)).append(PX_SPACE)
+                    .append(dxPolicy.get(PN_BLUR, 0L)).append(PX_SPACE)
+                    .append(dxPolicy.get(PN_SPREAD, 0L)).append(PX_SPACE)
+                    .append(color);
+                if (dxPolicy.containsKey(PN_INSET)) {
+                    sb.append(INSET_SUFFIX);
+                }
+                return sb.toString();
             }
-            return sb.toString();
         }
         return null;
     }

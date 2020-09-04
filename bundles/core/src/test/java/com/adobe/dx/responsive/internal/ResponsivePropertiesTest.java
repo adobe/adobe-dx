@@ -44,8 +44,8 @@ public class ResponsivePropertiesTest extends AbstractTest {
         context.build().resource(CONF_ROOT + "/sling:configs/" + ResponsiveConfiguration.class.getName() + "/breakpoints")
             .siblingsMode()
             .resource("1","propertySuffix", "Mobile", "key", "mobile")
-            .resource("2", "propertySuffix", "Tablet", "key", "tablet")
-            .resource("3", "propertySuffix", "Desktop", "key", "desktop");
+            .resource("2", "propertySuffix", "Tablet", "key", "tablet", "mediaQuery", "@media screen and (min-width: 600px)")
+            .resource("3", "propertySuffix", "Desktop", "key", "desktop", "mediaQuery", "@media screen and (min-width: 1200px)");
         MockContextAwareConfig.registerAnnotationClasses(context, ResponsiveConfiguration.class);
         MockContextAwareConfig.registerAnnotationClasses(context, Breakpoint.class);
         context.create().resource(CONTENT_ROOT, "sling:configRef", CONF_ROOT);
