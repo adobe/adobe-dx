@@ -19,8 +19,10 @@ package com.adobe.dx.admin.servlet;
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import com.adobe.dx.admin.mocks.MockSlingXssApi;
 import com.adobe.dx.mocks.MockCryptoSupport;
 import com.adobe.dx.testing.AbstractTest;
 import com.adobe.granite.crypto.CryptoSupport;
@@ -50,7 +52,10 @@ class EncryptionServletTest extends AbstractTest {
             "/apps/dx/services/private/encryptValues");
         context.currentResource( "/apps/dx/services/private/encryptValues");
         context.registerService(CryptoSupport.class, mockCryptoSupport);
-        context.registerService(XSSAPI.class, new MockSlingXssApi());
+        XSSAPI xssapi = mock(XSSAPI.class);
+        when(xssapi.encodeForJSString(anyString())).thenAnswer(i -> i.getArguments()[0]);
+        when(xssapi.filterHTML(anyString())).thenAnswer(i -> i.getArguments()[0]);
+        context.registerService(XSSAPI.class, xssapi);
         request = context.request();
         response = context.response();
         context.registerInjectActivateService(encryptionServlet);
