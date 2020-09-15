@@ -16,10 +16,12 @@
 
 package com.adobe.dx.responsive.internal;
 
-import com.adobe.dx.responsive.ResponsiveConfiguration;
+import com.adobe.dx.responsive.Breakpoint;
+import com.adobe.dx.responsive.InheritedMap;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,32 +34,65 @@ import org.jetbrains.annotations.Nullable;
  * simply check for get operation the required property with and ordered list of
  * suffix. Allowing several properties
  */
-public class ResponsiveProperties implements Map<String, Object> {
+public class ResponsivePropertiesImpl implements Map<String, LinkedHashMap<String, Object>>, InheritedMap {
 
-    private final String[] breakpoints;
+    private final List<Breakpoint> breakpoints;
     private ValueMap properties;
 
-    public ResponsiveProperties(final ResponsiveConfiguration configuration, ValueMap properties) {
-        this.breakpoints = configuration.breakpoints();
+    public ResponsivePropertiesImpl(final List<Breakpoint> breakpoints, ValueMap properties) {
+        this.breakpoints = breakpoints;
         this.properties = properties;
     }
 
+    private String computeResponsiveResourceName(String name, Breakpoint breakpoint) {
+        return name + breakpoint.propertySuffix();
+    }
+
     @Override
-    public Object get(Object key) {
+    public LinkedHashMap<String, Object> get(Object key) {
         if (key != null) {
             boolean empty = true;
-            LinkedHashMap<String,String> breakpointValues = new LinkedHashMap<>();
-            for (String breakpoint : breakpoints) {
-                String respKey = key + breakpoint;
-                String value = properties.get(respKey, String.class);
-                empty &= StringUtils.isBlank(value);
-                breakpointValues.put(breakpoint.toLowerCase(), value);
+            LinkedHashMap<String, Object> breakpointValues = new LinkedHashMap<>();
+            for (Breakpoint breakpoint : breakpoints) {
+                String respKey = computeResponsiveResourceName(key.toString(), breakpoint);
+                Object value = properties.get(respKey);
+                empty &= value == null || StringUtils.isBlank(value.toString());
+                breakpointValues.put(breakpoint.key(), value);
             }
             if (!empty) {
                 return breakpointValues;
             }
         }
         return null;
+    }
+
+    private @Nullable Breakpoint getPreviousBreakpoint(Breakpoint breakpoint) {
+        Breakpoint previous = null;
+        for (Breakpoint candidate : breakpoints) {
+            if (breakpoint.key().equals(candidate.key())) {
+                break;
+            }
+            previous = candidate;
+        }
+        return previous;
+    }
+
+    @Override
+    public <T> T getInheritedValue(String propertyName, Breakpoint breakpoint, T defaultValue) {
+        LinkedHashMap<String, Object> values = get(propertyName);
+        if (values != null) {
+            if (values.get(breakpoint.key()) != null) {
+                return (T) values.get(breakpoint.key());
+            }
+            if (StringUtils.isNotBlank(breakpoint.inheritProperty())
+                && properties.get(breakpoint.inheritProperty(), false)) {
+                Breakpoint previous = getPreviousBreakpoint(breakpoint);
+                if (previous != null) {
+                    return getInheritedValue(propertyName, previous, defaultValue);
+                }
+            }
+        }
+        return defaultValue;
     }
 
     @Override
@@ -82,17 +117,17 @@ public class ResponsiveProperties implements Map<String, Object> {
 
     @Nullable
     @Override
-    public Object put(String key, Object value) {
+    public LinkedHashMap<String, Object> put(String key, LinkedHashMap<String, Object> value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Object remove(Object key) {
+    public LinkedHashMap<String, Object> remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void putAll(@NotNull Map<? extends String, ?> m) {
+    public void putAll(@NotNull Map<? extends String, ? extends LinkedHashMap<String, Object>> m) {
         throw new UnsupportedOperationException();
     }
 
@@ -109,13 +144,14 @@ public class ResponsiveProperties implements Map<String, Object> {
 
     @NotNull
     @Override
-    public Collection<Object> values() {
+    public Collection<LinkedHashMap<String, Object>> values() {
         throw new UnsupportedOperationException();
     }
 
     @NotNull
     @Override
-    public Set<Entry<String, Object>> entrySet() {
+    public Set<Entry<String, LinkedHashMap<String, Object>>> entrySet() {
         throw new UnsupportedOperationException();
     }
+
 }

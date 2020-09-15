@@ -29,10 +29,10 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 @ExtendWith(AemContextExtension.class)
 public class AbstractTest {
 
-    protected static final String CONTENT_ROOT = "/content/foo";
-    protected static final String CONF_ROOT = "/conf/foo";
+    public static final String CONTENT_ROOT = "/content/foo";
+    public static final String CONF_ROOT = "/conf/foo";
 
-    protected AemContext context = buildContext(getType());
+    public AemContext context = buildContext(getType());
 
     protected ResourceResolverType getType() {
         return ResourceResolverType.RESOURCERESOLVER_MOCK;
@@ -44,11 +44,15 @@ public class AbstractTest {
             .build();
     }
 
-    protected ValueMap getVM(String path) {
+    public static ValueMap getVM(AemContext context, String path) {
         Resource resource = context.resourceResolver().getResource(path);
         if (resource != null) {
             return resource.getValueMap();
         }
         return null;
+    }
+
+    protected ValueMap getVM(String path) {
+        return getVM(context, path);
     }
 }

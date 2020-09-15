@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured">
+    <jcr:content jcr:primaryType="nt:unstructured">
+        <breakpoints jcr:primaryType="nt:unstructured">
+            <mobile jcr:primaryType="nt:unstructured"
+                    end="{Long}599"
+                    key="mobile"
+                    label="Mobile / Default"
+                    propertySuffix="Mobile"
+                    start="{Long}0"/>
+            <tablet jcr:primaryType="nt:unstructured"
+                    end="{Long}1199"
+                    key="tablet"
+                    label="Tablet"
+                    inheritProperty="inheritTablet"
+                    mediaQuery="@media only screen and (min-width: 600px)"
+                    propertySuffix="Tablet"
+                    start="{Long}600"/>
+            <desktop jcr:primaryType="nt:unstructured"
+                     key="desktop"
+                     label="Desktop"
+                     inheritProperty="inheritDesktop"
+                     mediaQuery="@media only screen and (min-width: 1200px)"
+                     propertySuffix="Desktop"
+                     start="{Long}1200"/>
+        </breakpoints>
+    </jcr:content>
+</jcr:root>

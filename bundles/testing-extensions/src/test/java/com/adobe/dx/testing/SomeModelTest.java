@@ -13,25 +13,19 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 package com.adobe.dx.testing;
 
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.models.factory.ModelFactory;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class AbstractRequestModelTest extends AbstractTest {
+import org.junit.jupiter.api.Test;
 
-    protected <T> T getModel(final Class<T> type) throws ReflectiveOperationException {
-        Resource resource = context.currentResource();
-        if (resource != null) {
-            context.addModelsForClasses(type);
-            return context.getService(ModelFactory.class).createModel(context.request(), type);
-        }
-        return type.getDeclaredConstructor().newInstance();
+public class SomeModelTest extends AbstractRequestModelTest {
+
+    @Test
+    public void testId() {
+        context.build().resource(CONTENT_ROOT, "foo", "bar");
+        SomeModel model = getModel(SomeModel.class, CONTENT_ROOT);
+        assertNotNull(model.getId());
     }
-
-    protected <T> T getModel(final Class<T> type, String path) throws ReflectiveOperationException {
-        context.currentResource(path);
-        return getModel(type);
-    }
-
 }

@@ -17,9 +17,13 @@ package com.adobe.dx.bindings.internal;
 
 import static com.day.cq.wcm.scripting.WCMBindingsConstants.NAME_CURRENT_CONTENT_POLICY;
 
+import com.adobe.dx.responsive.Breakpoint;
 import com.adobe.dx.responsive.ResponsiveConfiguration;
-import com.adobe.dx.responsive.internal.ResponsiveProperties;
+import com.adobe.dx.responsive.internal.ResponsivePropertiesImpl;
 import com.day.cq.wcm.api.policies.ContentPolicy;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.script.Bindings;
 
@@ -33,7 +37,6 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Reference;
 
 @Component(service = BindingsValuesProvider.class,
     property = {
@@ -48,9 +51,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 public class DxBindingsValueProvider implements BindingsValuesProvider {
 
-    private static final String POLICY_KEY = "dxPolicy";
+    public static final String POLICY_KEY = "dxPolicy";
 
-    private static final String RESP_PROPS_KEY = "respProperties";
+    public static final String RESP_PROPS_KEY = "resprops";
+
+    public static final String BP_KEY = "breakpoints";
     
     @Override
     public void addBindings(@NotNull Bindings bindings) {
@@ -66,7 +71,9 @@ public class DxBindingsValueProvider implements BindingsValuesProvider {
                 ResponsiveConfiguration configuration = resource
                     .adaptTo(ConfigurationBuilder.class)
                     .as(ResponsiveConfiguration.class);
-                bindings.put(RESP_PROPS_KEY, new ResponsiveProperties(configuration, dxPolicy));
+                List<Breakpoint> breakpointList = Arrays.asList(configuration.breakpoints());
+                bindings.put(BP_KEY, breakpointList);
+                bindings.put(RESP_PROPS_KEY, new ResponsivePropertiesImpl(breakpointList, dxPolicy));
             }
         }
     }

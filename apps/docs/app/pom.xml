@@ -140,7 +140,7 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>structure</artifactId>
-            <version>0.0.6</version>
+            <version>0.0.7-SNAPSHOT</version>
             <type>zip</type>
         </dependency>
         <dependency>
@@ -152,7 +152,7 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.12</version>
+            <version>0.0.13-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>

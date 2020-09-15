@@ -310,7 +310,7 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
     }
 
     boolean isCurrentRequestForRootPage(SlingHttpServletRequest request, String pageId) {
-        return pageId.equals(request.getAttribute(ATT_ROOTID));
+        return pageId != null && pageId.equals(request.getAttribute(ATT_ROOTID));
     }
 
     /**
@@ -428,7 +428,7 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
                 + "for resource types that should be tagged with an id"
         )
         @SuppressWarnings("squid:S00100")
-        String[] acceptedTypes() default { "dx/components/structure/.*" };
+        String[] acceptedTypes() default { "dx/structure/components/.*" };
 
         @AttributeDefinition(
             name = "Reference type",

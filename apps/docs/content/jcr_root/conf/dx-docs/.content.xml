@@ -7,4 +7,6 @@
     jcr:primaryType="sling:OrderedFolder"
     jcr:title="DX">
     <settings/>
+    <_cq_styleguide/>
+    <_sling_configs/>
 </jcr:root>
