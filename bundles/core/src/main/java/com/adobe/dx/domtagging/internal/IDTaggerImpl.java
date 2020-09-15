@@ -107,6 +107,8 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
 
     static final String ATT_ROOTID = "dx:idtagger:root_id";
 
+    static final String SLASH = "/";
+
     Function<Resource, Boolean> resourceFilter;
 
     List<String> referenceTypes;
@@ -175,7 +177,7 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
      * @param currentPage
      */
     void tagPage(Page currentPage) {
-        String pageHash = getUniqueId(currentPage.getPath(), false);
+        String pageHash = getUniqueId(currentPage.getContentResource(), false);
         for (Iterator<Resource> componentIterator = new ComponentIterator(resourceFilter, currentPage.getContentResource());
              componentIterator.hasNext();) {
             Resource component = componentIterator.next();
@@ -213,7 +215,7 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
         PageManager pageManager = resource.getResourceResolver().adaptTo(PageManager.class);
         Page currentPage = pageManager.getContainingPage(resource);
         if (currentPage != null) {
-            return getUniqueId(currentPage.getPath(), false);
+            return getUniqueId(currentPage.getContentResource(), false);
         }
         return null;
     }
@@ -228,7 +230,7 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
         if (checkCache && resource.getValueMap().containsKey(PN_COMPID)) {
             return resource.getValueMap().get(PN_COMPID, String.class);
         }
-        return getUniqueId(resource.getPath(), false);
+        return getUniqueId(resource, false);
     }
 
     @Override
@@ -254,7 +256,7 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
     void tagResource(Resource resource, String currentPageHash) {
         String existingId = resource.getValueMap().get(PN_COMPID, String.class);
         String compid = StringUtils.isBlank(existingId) || configuration.shouldRewriteComponentHash() ?
-            getUniqueId(resource.getPath(), true) : existingId;
+            getUniqueId(resource, true) : existingId;
         tagResource(resource, currentPageHash, compid);
     }
 
@@ -274,19 +276,19 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
     }
 
     /**
-     * Creates a Unique ID based on a path.
+     * Creates a Unique ID based on a resource
      *
-     * @param path          The path we should generate an ID from
+     * @param resource      resource from which we need id
      * @param timeSalt      wether we should salt it with a time based salt or not
      * @return              The unique ID (first <code>ID_SIZE</code> chars of sha1 hash)
      */
-    public String getUniqueId(final String path, boolean timeSalt) {
-        String source = path;
+    String getUniqueId(final Resource resource, boolean timeSalt) {
+        String source = resource.getPath();
         if (timeSalt) {
             source += Calendar.getInstance().toString();
         }
         String sha256 = DigestUtils.sha256Hex(source);
-        return sha256.substring(0, ID_SIZE);
+        return StringUtils.substringAfterLast(resource.getResourceType(), SLASH) + ID_SEPARATOR + sha256.substring(0, ID_SIZE);
     }
 
     @Override
@@ -312,7 +314,7 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
     }
 
     /**
-     * Prefix a given component id with an eventual reference
+     * Prefix a given component id with an eventual reference, or the resource type
      * @param request current request
      * @param pageId current page hash
      * @param componentId component hash
@@ -353,7 +355,7 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
         //first we check if an override exist
         String id = getOverride(request, pageId, property);
         if (StringUtils.isBlank(id)) {
-            //the we go for default id tagging
+            //then we go for default id tagging
             id = prefixWithRootReference(request, pageId, getResourceId(resource, true));
         }
         if (isCurrentRequestForRootPage(request, pageId)) {

@@ -129,6 +129,21 @@ class IDTaggerImplTest extends AbstractTest {
         }
     }
 
+    @DisplayName("computeComponentId should prefix ids with component types")
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "viewedPage/jcr:content/root/prefix/image,dx/component/image,image-",
+        "viewedPage/jcr:content/root/prefix/text,dx/component/text,text-"})
+    public void testPrefix(String input){
+        registerTagger(false, false, false);
+        String[] parameters = input.split(",");
+        String path = CONTENT_ROOT + "/" + parameters[0];
+        context.create().resource(path, "sling:resourceType", parameters[1]);
+        context.currentResource(path);
+        String id = tagger.computeComponentId(context.request(), null);
+        assertTrue(id.startsWith(parameters[2]), "id " + id + " of type " + parameters[1] + " should be prefixed by " + parameters[2]);
+    }
+
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
     public void testMovedTagging(boolean rewriteComponentHash) throws Exception {
