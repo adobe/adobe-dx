@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured">
+    <jcr:content jcr:primaryType="nt:unstructured">
+        <colors jcr:primaryType="nt:unstructured">
+            <red  jcr:primaryType="nt:unstructured"
+                  value="#FE0000"
+                  key="red"
+                  label="Adobe Red"/>
+            <blue jcr:primaryType="nt:unstructured"
+                  value="#0000FE"
+                  key="blue"
+                  label="Blue"/>
+            <white jcr:primaryType="nt:unstructured"
+                  value="#FEFEFE"
+                  key="white"
+                  label="White"/>
+        </colors>
+        <gradients jcr:primaryType="nt:unstructured">
+            <red  jcr:primaryType="nt:unstructured"
+                  value="linear-gradient(180deg, rgba(0, 0, 0, 0.5) 36.8%,rgba(255, 0, 0, 0.78) 95.0%)"
+                  key="red"
+                  label="Adobe Red"/>
+            <white  jcr:primaryType="nt:unstructured"
+                  value="linear-gradient(90deg, rgba(0, 0, 0, 0.5) 36.8%,rgba(255, 0, 0, 0.78) 95.0%)"
+                  key="another"
+                  label="Another Red"/>
+        </gradients>
+    </jcr:content>
+</jcr:root>

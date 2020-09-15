@@ -46,7 +46,8 @@
                 <module>parent</module>
                 <module>bundles/testing</module>
                 <module>bundles/core</module>
-		        <module>apps/admin</module>
+                <module>bundles/testing-extensions</module>
+                <module>apps/admin</module>
                 <module>apps/structure</module>
                 <module>apps/content</module>
                 <module>apps/all</module>

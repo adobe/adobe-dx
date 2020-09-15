@@ -16,7 +16,7 @@
                     jcr:primaryType="nt:unstructured"
                     dx_id="c3fa17f4"
                     dx_pageId="5aff75cf"
-                    sling:resourceType="dx/components/structure/flex"/>
+                    sling:resourceType="dx/structure/components/flex"/>
             </content>
         </root>
     </jcr:content>

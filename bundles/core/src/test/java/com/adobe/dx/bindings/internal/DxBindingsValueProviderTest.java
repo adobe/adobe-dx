@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.adobe.dx.responsive.internal.ResponsivePropertiesTest;
+import com.adobe.dx.responsive.internal.ResponsivePropertiesImplTest;
 import com.adobe.dx.testing.AbstractTest;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 
@@ -36,7 +36,7 @@ class DxBindingsValueProviderTest extends AbstractTest {
 
     @BeforeEach
     void setup() {
-        ResponsivePropertiesTest.initResponsiveConfiguration(context);
+        ResponsivePropertiesImplTest.initResponsiveConfiguration(context);
     }
     
     void mockAddContentPolicy(Bindings bindings) {

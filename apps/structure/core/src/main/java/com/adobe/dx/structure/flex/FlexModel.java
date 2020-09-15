@@ -13,24 +13,54 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 package com.adobe.dx.structure.flex;
 
+import com.adobe.dx.domtagging.IDTagger;
+import com.adobe.dx.inlinestyle.InlineStyleService;
+
+import javax.annotation.PostConstruct;
+
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 
-@Model(adaptables = { SlingHttpServletRequest.class,
-        Resource.class }, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
+@Model(adaptables = SlingHttpServletRequest.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class FlexModel {
 
-    @SlingObject
-    protected Resource resource;
+    public static final String PN_MINHEIGHT = "minHeight";
+    public static final String PN_MINHEIGHT_TYPE = PN_MINHEIGHT + "Type";
+    private static final String ID_PREFIX = "flex-";
 
-    public String getHello() {
-        return "Hello";
+    @SlingObject
+    protected SlingHttpServletRequest request;
+
+    @OSGiService
+    IDTagger idTagger;
+
+    @OSGiService
+    InlineStyleService styleService;
+
+    String id;
+
+    String style;
+
+    @PostConstruct
+    void init() {
+        if (idTagger != null) {
+            id = ID_PREFIX + idTagger.computeComponentId(request, null);
+        }
+        if (styleService != null) {
+            style = styleService.getInlineStyle(getId(), request);
+        }
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getStyle() {
+        return style;
+    }
 }
