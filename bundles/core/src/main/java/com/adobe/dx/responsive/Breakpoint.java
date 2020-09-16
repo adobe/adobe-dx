@@ -32,9 +32,9 @@ public @interface Breakpoint {
     @Property(label = "media Query", description = "media query that defines this breakpoint")
     String mediaQuery();
 
-    @Property(label = "inherit property", description = "if, for a given breakpoint, for a given resource, this property is set to true,"
-        + "this gives the green light to fetch the value to next breakpoint")
-    String inheritProperty();
+    @Property(label = "inheritance behaviour property", description = "name of the property that defines wether "
+        + "current breakpoint should 'override' or 'inherit' previous breakpoint")
+    String inheritBehaviourProp();
 
     @Property(label = "start", description = "screen width from which this breakpoint is set")
     int start();

@@ -49,11 +49,11 @@ public class ResponsiveContext implements BeforeEachCallback {
             .resource("2", PROPERTY_SUFFIX, "Tablet",
                 "key", "tablet",
                 "mediaQuery", "@media screen and (min-width: 600px)",
-                "inheritProperty", "inheritTablet")
+                "inheritBehaviourProp", "inheritTablet")
             .resource("3", PROPERTY_SUFFIX, "Desktop",
                 "key", "desktop",
                 "mediaQuery", "@media screen and (min-width: 1200px)",
-                "inheritProperty", "inheritDesktop");
+                "inheritBehaviourProp", "inheritDesktop");
         MockContextAwareConfig.registerAnnotationClasses(context, ResponsiveConfiguration.class);
         MockContextAwareConfig.registerAnnotationClasses(context, Breakpoint.class);
         if (context.resourceResolver().getResource(CONTENT_ROOT) == null) {

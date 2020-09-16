@@ -41,7 +41,7 @@ class FlexItemsDefinitionsTest  extends AbstractInlineStyleWorkerTest {
 
     @Test
     protected void getRule(){
-        context.build().resource(CONTENT_ROOT, "justificationMobile", "someJustification", "sling:resourceType", "dx/components/structure/flex");
+        context.build().resource(CONTENT_ROOT, "justificationMobile", "someJustification", "inheritDesktop", "override", "sling:resourceType", "dx/components/structure/flex");
         context.build().resource(CONTENT_ROOT +"/definitionsMobile")
                 .siblingsMode()
                     .resource("item0", "minHeight", "auto", "minHeightType", "px", "width", "custom",

@@ -50,9 +50,9 @@ public class ResponsivePropertiesImplTest extends AbstractTest {
             .siblingsMode()
             .resource("1","propertySuffix", "Mobile", "key", "mobile")
             .resource("2", "propertySuffix", "Tablet", "key", "tablet", "mediaQuery", "@media screen and (min-width: 600px)",
-                "inheritProperty", "inheritTablet")
+                "inheritBehaviourProp", "inheritTablet")
             .resource("3", "propertySuffix", "Desktop", "key", "desktop", "mediaQuery", "@media screen and (min-width: 1200px)",
-                "inheritProperty", "inheritDesktop");
+                "inheritBehaviourProp", "inheritDesktop");
         MockContextAwareConfig.registerAnnotationClasses(context, ResponsiveConfiguration.class);
         MockContextAwareConfig.registerAnnotationClasses(context, Breakpoint.class);
         if (context.resourceResolver().getResource(CONTENT_ROOT) == null) {
@@ -115,7 +115,7 @@ public class ResponsivePropertiesImplTest extends AbstractTest {
             getProperty( "width", "widthDesktop", 43),
             "mobile", null, "tablet", null, "desktop", 43);
         assertLinkedHashMapEqual("should work with boolean too...",
-            getProperty( "inherit", "inheritMobile", true, "inheritDesktop", false),
+            getProperty( "flag", "flagMobile", true, "flagDesktop", false),
             "mobile", true, "tablet", null, "desktop", false);
         assertNull(new ResponsivePropertiesImpl(breakpoints, ValueMap.EMPTY).get(null));
     }
@@ -136,20 +136,28 @@ public class ResponsivePropertiesImplTest extends AbstractTest {
     void getRawInheritedMap () {
         InheritedMap map = getInheritedMap( "testMobile", "exist");
         assertEquals("exist", map.getInheritedValue("test", breakpoints.get(0), ""));
-        assertEquals("", map.getInheritedValue("test", breakpoints.get(1), ""));
+        map = getInheritedMap( "doesMobile", "notexist");
+        assertEquals("", map.getInheritedValue("test", breakpoints.get(0), ""));
     }
 
     @Test
     void getInheritedValue () {
         Breakpoint tablet = breakpoints.get(1);
         Breakpoint desktop = breakpoints.get(2);
-        assertEquals("", getInheritedMap( "testMobile", "exist")
+        //direct accesses or default behaviour should be inheritance
+        assertEquals("exist", getInheritedMap( "testMobile", "exist")
             .getInheritedValue("test", tablet, ""));
-        assertEquals("exist", getInheritedMap( "testMobile", "exist", "inheritTablet", true)
+        assertEquals("exist", getInheritedMap( "testMobile", "exist")
             .getInheritedValue("test", tablet, ""));
-        assertEquals("exist", getInheritedMap( "testMobile", "exist", "inheritTablet", true, "inheritDesktop", true)
+        assertEquals("exist", getInheritedMap( "testMobile", "exist")
             .getInheritedValue("test", desktop, ""));
-        assertEquals("", getInheritedMap( "testMobile", "exist", "inheritTablet", false, "inheritDesktop", true)
+        //explicit inheritance should work too
+        assertEquals("exist", getInheritedMap( "testMobile", "exist", "inheritTablet", "inherit")
+            .getInheritedValue("test", tablet, ""));
+        assertEquals("exist", getInheritedMap( "testMobile", "exist", "inheritTablet",  "inherit", "inheritDesktop",  "inherit")
+            .getInheritedValue("test", desktop, ""));
+        //override (or anything else) should break inheritance
+        assertEquals("", getInheritedMap( "testMobile", "exist", "inheritTablet", "override", "inheritDesktop", "inherit")
             .getInheritedValue("test", desktop, ""));
     }
 

@@ -38,6 +38,7 @@ public class ResponsivePropertiesImpl implements Map<String, LinkedHashMap<Strin
 
     private final List<Breakpoint> breakpoints;
     private ValueMap properties;
+    private static final String PV_INHERIT = "inherit";
 
     public ResponsivePropertiesImpl(final List<Breakpoint> breakpoints, ValueMap properties) {
         this.breakpoints = breakpoints;
@@ -84,8 +85,8 @@ public class ResponsivePropertiesImpl implements Map<String, LinkedHashMap<Strin
             if (values.get(breakpoint.key()) != null) {
                 return (T) values.get(breakpoint.key());
             }
-            if (StringUtils.isNotBlank(breakpoint.inheritProperty())
-                && properties.get(breakpoint.inheritProperty(), false)) {
+            if (StringUtils.isNotBlank(breakpoint.inheritBehaviourProp())
+                && PV_INHERIT.equals(properties.get(breakpoint.inheritBehaviourProp(), PV_INHERIT))) {
                 Breakpoint previous = getPreviousBreakpoint(breakpoint);
                 if (previous != null) {
                     return getInheritedValue(propertyName, previous, defaultValue);
