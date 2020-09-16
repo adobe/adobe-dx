@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 @Component(configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class Color implements InlineStyleWorker {
-    private final static String KEY = "color";
+    private static final String KEY = "color";
 
-    private final static String PN_COLOR = "foregroundColor";
-    private final static String FORMAT = "color: %s";
+    private static final String PN_COLOR = "foregroundColor";
+    private static final String FORMAT = "color: %s";
 
     @Override
     public String getKey() {
@@ -42,7 +42,7 @@ public class Color implements InlineStyleWorker {
 
     @Override
     public @Nullable String getDeclaration(@Nullable Breakpoint breakpoint, SlingHttpServletRequest request) {
-        String colorKey = getFromRespProps(request, breakpoint, PN_COLOR, String.class);
+        String colorKey = getFromRespProps(request, breakpoint, PN_COLOR);
         String color = StyleGuideUtil.getColor(request, colorKey);
         if (StringUtils.isNotBlank(color)) {
             return String.format(FORMAT, color);

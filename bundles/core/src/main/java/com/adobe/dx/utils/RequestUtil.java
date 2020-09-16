@@ -19,15 +19,15 @@ import com.adobe.dx.bindings.internal.DxBindingsValueProvider;
 import com.adobe.dx.responsive.Breakpoint;
 import com.adobe.dx.responsive.InheritedMap;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.api.scripting.SlingBindings;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Utility class for fetching utility objects from request
@@ -56,8 +56,12 @@ public class RequestUtil {
      * @param request current request
      * @return current list of breakpoints
      */
-    public static final List<Breakpoint> getBreakpoints(SlingHttpServletRequest request) {
-        return (List<Breakpoint>) getBindings(request).get(DxBindingsValueProvider.BP_KEY);
+    public static final @NotNull List<Breakpoint> getBreakpoints(SlingHttpServletRequest request) {
+         List<Breakpoint> breakpoints = (List<Breakpoint>) getBindings(request).get(DxBindingsValueProvider.BP_KEY);
+         if (breakpoints == null) {
+             breakpoints = Collections.emptyList();
+         }
+         return breakpoints;
     }
 
     /**
@@ -82,18 +86,15 @@ public class RequestUtil {
      * @param request current request
      * @param breakpoint current breakpoint
      * @param propertyName required property name
-     * @param requiredClass required class for return value
      * @param <T> type of the value required
      * @return value or null if not found
      */
-    public static final <T> T getFromRespProps(SlingHttpServletRequest request, Breakpoint breakpoint, String propertyName, Class<T> requiredClass) {
+    public static final <T> T getFromRespProps(SlingHttpServletRequest request, Breakpoint breakpoint, String propertyName) {
         Map<String, LinkedHashMap<String, Object>> resprops = RequestUtil.getResponsiveProperties(request);
         if (resprops != null) {
             LinkedHashMap<String, Object> values = resprops.get(propertyName);
-            if (values != null) {
-                if (values.get(breakpoint.key()) != null) {
-                    return (T) values.get(breakpoint.key());
-                }
+            if (values != null && values.get(breakpoint.key()) != null) {
+                return (T) values.get(breakpoint.key());
             }
         }
         return null;

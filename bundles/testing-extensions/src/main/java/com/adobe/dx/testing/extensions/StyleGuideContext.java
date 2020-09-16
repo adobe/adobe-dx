@@ -27,20 +27,24 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 
 public class StyleGuideContext implements BeforeEachCallback {
+    private static final String K = "key";
+    private static final String V = "value";
+    private static final String L = "label";
+    
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
         String confRoot = CONF_ROOT + "/sling:configs/" + StyleGuide.class.getName() + "/";
         AemContext context = ExtensionsUtil.getContext(extensionContext);
         context.build().resource(confRoot + "colors")
             .siblingsMode()
-            .resource("1","key", "red", "value", "#FE0000")
-            .resource("2", "key", "white", "value", "#FEFEFE")
-            .resource("3", "key", "blue", "value", "#0000FE");
+            .resource("1",K, "red", V, "#FE0000")
+            .resource("2", K, "white", V, "#FEFEFE")
+            .resource("3", K, "blue", V, "#0000FE");
         context.build().resource(confRoot + "gradients")
             .siblingsMode()
-            .resource("1","label", "Adobe Red", "key", "red", "value", "linear-gradient(180deg, rgba(0, 0, 0, 0.5) 36.8%,rgba(255, 0, 0, 0.78) 95.0%)")
-            .resource("2", "label", "Fade to black", "key", "wb", "value", "linear-gradient(180deg, rgba(0, 0, 0, 0.5) 50.0%,rgba(0, 0, 0, 1) 95.0%)")
-            .resource("3", "label", "Rainbow bars", "key", "rainbow", "value", "linear-gradient(90deg, rgba(255, 0, 0, 0.41) 20.0%,rgba(255, 165, 0, 0.41) 20.0%,rgba(255, 165, 0, 0.41) 40.0%,rgba(255, 255, 0, 0.41) 40.0%,rgba(255, 255, 0, 0.41) 60.0%,rgba(0, 128, 0, 0.41) 60.0%,rgba(0, 128, 0, 0.41) 80.0%,rgba(0, 0, 255, 0.4) 80.0%)");
+            .resource("1",L, "Adobe Red", K, "red", V, "linear-gradient(180deg, rgba(0, 0, 0, 0.5) 36.8%,rgba(255, 0, 0, 0.78) 95.0%)")
+            .resource("2", L, "Fade to black", K, "wb", V, "linear-gradient(180deg, rgba(0, 0, 0, 0.5) 50.0%,rgba(0, 0, 0, 1) 95.0%)")
+            .resource("3", L, "Rainbow bars", K, "rainbow", V, "linear-gradient(90deg, rgba(255, 0, 0, 0.41) 20.0%,rgba(255, 165, 0, 0.41) 20.0%,rgba(255, 165, 0, 0.41) 40.0%,rgba(255, 255, 0, 0.41) 40.0%,rgba(255, 255, 0, 0.41) 60.0%,rgba(0, 128, 0, 0.41) 60.0%,rgba(0, 128, 0, 0.41) 80.0%,rgba(0, 0, 255, 0.4) 80.0%)");
         MockContextAwareConfig.registerAnnotationClasses(context, StyleGuide.class);
         MockContextAwareConfig.registerAnnotationClasses(context, StyleGuideItem.class);
     }

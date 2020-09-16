@@ -31,7 +31,6 @@ public class FlexModel {
 
     public static final String PN_MINHEIGHT = "minHeight";
     public static final String PN_MINHEIGHT_TYPE = PN_MINHEIGHT + "Type";
-    private static final String ID_PREFIX = "flex-";
 
     @SlingObject
     protected SlingHttpServletRequest request;
@@ -49,7 +48,7 @@ public class FlexModel {
     @PostConstruct
     void init() {
         if (idTagger != null) {
-            id = ID_PREFIX + idTagger.computeComponentId(request, null);
+            id = idTagger.computeComponentId(request, null);
         }
         if (styleService != null) {
             style = styleService.getInlineStyle(getId(), request);

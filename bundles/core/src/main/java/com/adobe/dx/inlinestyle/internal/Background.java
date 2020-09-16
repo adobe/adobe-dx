@@ -85,8 +85,8 @@ public class Background implements InlineStyleWorker {
 
     private String generatePosition(String image, @Nullable Breakpoint breakpoint, SlingHttpServletRequest request) {
         if (StringUtils.isNotBlank(image)) {
-            Long focusX = getFromRespProps(request, breakpoint, PN_FOCUSX, Long.class);
-            Long focusY = getFromRespProps(request, breakpoint, PN_FOCUSY, Long.class);
+            Long focusX = getFromRespProps(request, breakpoint, PN_FOCUSX);
+            Long focusY = getFromRespProps(request, breakpoint, PN_FOCUSY);
             if (focusX != null && focusY != null) {
                 return POSITION_PREFIX + focusX + POSITION_UNIT + focusY + POSITION_UNIT;
             }
@@ -96,11 +96,11 @@ public class Background implements InlineStyleWorker {
 
     @Override
     public @Nullable String getDeclaration(@Nullable Breakpoint breakpoint, SlingHttpServletRequest request) {
-        String bgColorKey = getFromRespProps(request, breakpoint, PN_BACKGROUNDCOLOR, String.class);
+        String bgColorKey = getFromRespProps(request, breakpoint, PN_BACKGROUNDCOLOR);
         String bgColor = StyleGuideUtil.getColor(request, bgColorKey);
-        String gradientKey = getFromRespProps(request, breakpoint, PN_GRADIENT, String.class);
+        String gradientKey = getFromRespProps(request, breakpoint, PN_GRADIENT);
         String gradient = StyleGuideUtil.getGradient(request, gradientKey);
-        String image = getFromRespProps(request, breakpoint, PN_IMAGE, String.class);
+        String image = getFromRespProps(request, breakpoint, PN_IMAGE);
         if (bgColor != null || gradient != null || image != null) {
             List<String> declarations = new ArrayList<>();
             declarations.add(generateColorDeclaration(bgColor));

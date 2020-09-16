@@ -58,9 +58,28 @@ public class InlineStyleServiceImpl implements InlineStyleService {
         cardinality= ReferenceCardinality.MULTIPLE,
         policy= ReferencePolicy.DYNAMIC, policyOption= ReferencePolicyOption.GREEDY,
         bind = "bindWorker", unbind = "unbindWorker")
-    volatile List<InlineStyleWorker> workers = new ArrayList<>();
+    final List<InlineStyleWorker> workers = new ArrayList<>();
 
     Map<String, InlineStyleWorker> workerMap = MapUtils.EMPTY_MAP;
+
+    @FunctionalInterface
+    private interface StyleFunction<T1, T2, T3> {
+        T3 apply(T1 t1, T2 t2, T3 t3);
+    }
+
+    List<String> generateAndAppend(List<String> existing,
+                                   Breakpoint breakpoint, SlingHttpServletRequest request, String id,
+                                   StyleFunction<SlingHttpServletRequest, Breakpoint, String> function) {
+        String styleString = function.apply(request, breakpoint, id);
+        if (StringUtils.isNotBlank(styleString)) {
+            logger.debug("generated {}", styleString);
+            if (existing == null) {
+                existing = new ArrayList<>();
+            }
+            existing.add(styleString);
+        }
+        return existing;
+    }
 
     String getStylePerBreakpoint(String id, Breakpoint breakpoint, String[] keys, SlingHttpServletRequest request) {
         String returnValue = EMPTY;
@@ -70,22 +89,10 @@ public class InlineStyleServiceImpl implements InlineStyleService {
             InlineStyleWorker worker = workerMap.get(workerKey);
             if (worker != null) {
                 logger.debug("found {}", worker);
-                String declaration = worker.getDeclaration(breakpoint, request);
-                if (StringUtils.isNotBlank(declaration)) {
-                    logger.debug("generated {}", declaration);
-                    if (declarations == null) {
-                        declarations = new ArrayList<>();
-                    }
-                    declarations.add(declaration);
-                }
-                String rule = worker.getRule(breakpoint, id, request);
-                if (StringUtils.isNotBlank(rule)) {
-                    logger.debug("generated {}", rule);
-                    if (rules == null) {
-                        rules = new ArrayList<>();
-                    }
-                    rules.add(rule);
-                }
+                declarations = generateAndAppend(declarations, breakpoint, request, id,
+                    (r, b, i) -> worker.getDeclaration(b, r));
+                rules = generateAndAppend(rules, breakpoint, request, id,
+                    (r, b, i) -> worker.getRule(b, i, r));
             }
         }
         if (declarations != null && !declarations.isEmpty()) {
@@ -105,15 +112,12 @@ public class InlineStyleServiceImpl implements InlineStyleService {
         String[] keys = getWorkerKeys(resource);
         if (keys.length > 0) {
             StringBuilder style = new StringBuilder();
-            List<Breakpoint> breakpoints = RequestUtil.getBreakpoints(request);
-            if (breakpoints != null) {
-                for (Breakpoint breakpoint : breakpoints) {
-                    String bpStyle = getStylePerBreakpoint(id, breakpoint, keys, request);
-                    if (StringUtils.isNotBlank(bpStyle)) {
-                        style.append(StringUtils.isNotBlank(breakpoint.mediaQuery()) ?
-                            String.format(FORMAT_BP, breakpoint.mediaQuery(), bpStyle):
-                            bpStyle);
-                    }
+            for (Breakpoint breakpoint :  RequestUtil.getBreakpoints(request)) {
+                String bpStyle = getStylePerBreakpoint(id, breakpoint, keys, request);
+                if (StringUtils.isNotBlank(bpStyle)) {
+                    style.append(StringUtils.isNotBlank(breakpoint.mediaQuery()) ?
+                        String.format(FORMAT_BP, breakpoint.mediaQuery(), bpStyle):
+                        bpStyle);
                 }
             }
             if (style.length() > 0) {

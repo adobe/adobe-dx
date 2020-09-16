@@ -59,9 +59,9 @@ public class FlexGeneralStyle implements InlineStyleWorker {
     }
 
     String computeMinHeight(Breakpoint breakpoint, SlingHttpServletRequest request) {
-        Long minHeight = RequestUtil.getFromRespProps(request, breakpoint, PN_MINHEIGHT, Long.class);
+        Long minHeight = RequestUtil.getFromRespProps(request, breakpoint, PN_MINHEIGHT);
         if ( minHeight != null) {
-            String minHeightType = RequestUtil.getFromRespProps(request, breakpoint, PN_MINHEIGHT_TYPE, String.class);
+            String minHeightType = RequestUtil.getFromRespProps(request, breakpoint, PN_MINHEIGHT_TYPE);
             if (minHeightType != null) {
                 return MIN_HEIGHT_PREFIX + minHeight.toString() + minHeightType;
             }
@@ -81,7 +81,7 @@ public class FlexGeneralStyle implements InlineStyleWorker {
                                     SlingHttpServletRequest request) {
         List<String> rules = null;
         String minHeight = computeMinHeight(breakpoint, request);
-        Long gap = RequestUtil.getFromRespProps(request, breakpoint, PN_GAP, Long.class);
+        Long gap = RequestUtil.getFromRespProps(request, breakpoint, PN_GAP);
         gap = gap != null ? gap / 2 : null;
         String gapContainer = computeGapContainer(gap);
         if (StringUtils.isNotBlank(minHeight) || StringUtils.isNotBlank(gapContainer)) {

@@ -25,7 +25,6 @@ import static com.adobe.dx.utils.RequestUtil.getPolicy;
 import com.adobe.dx.responsive.Breakpoint;
 import com.adobe.dx.inlinestyle.InlineStyleWorker;
 import com.adobe.dx.styleguide.StyleGuideUtil;
-import com.adobe.dx.utils.RequestUtil;
 
 import java.util.ArrayList;
 import java.util.List;

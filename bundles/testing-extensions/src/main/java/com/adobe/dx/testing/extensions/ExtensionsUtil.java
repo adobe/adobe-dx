@@ -18,12 +18,20 @@ package com.adobe.dx.testing.extensions;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import io.wcm.testing.mock.aem.junit5.AemContext;
 
 public class ExtensionsUtil {
+
+    private static final String CONTEXT_FIELD = "context";
+
+    private ExtensionsUtil() {
+
+    }
+
     private static void putAllFields(Map<String, Field> fields, Class<?> type) {
         for (Field field : type.getDeclaredFields()) {
             fields.put(field.getName(), field);
@@ -41,8 +49,15 @@ public class ExtensionsUtil {
      */
     static AemContext getContext(ExtensionContext extensionContext) throws IllegalAccessException {
         Map<String, Field> map = new HashMap<>();
-        putAllFields(map, extensionContext.getTestClass().get());
-        return (AemContext)map.get("context").get(extensionContext.getTestInstance().get());
+        Optional<Class<?>> type = extensionContext.getTestClass();
+        if (type.isPresent()) {
+            putAllFields(map, type.get());
+        }
+        Optional<Object> optObject = extensionContext.getTestInstance();
+        if (optObject.isPresent() && map.containsKey(CONTEXT_FIELD)) {
+            return (AemContext) map.get(CONTEXT_FIELD).get(optObject.get());
+        }
+        return null;
     }
 
 }

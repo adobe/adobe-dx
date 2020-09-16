@@ -169,7 +169,7 @@ public class FlexItemsDefinitions implements InlineStyleWorker {
     }
 
     private String buildCustomWidth(ValueMap properties, String width) {
-        if (StringUtils.equals(width, "custom")) {
+        if (StringUtils.equals(width, PV_CUSTOM)) {
             long value = properties.get(PN_WIDTH_CUSTOMVALUE, 0L);
             String type = properties.get(PN_WIDTH_CUSTOMTYPE, String.class);
             if (value > 0 && StringUtils.isNotEmpty(type)) {
@@ -193,9 +193,6 @@ public class FlexItemsDefinitions implements InlineStyleWorker {
         if (StringUtils.equals(minHeight, PV_CUSTOM)) {
             long value = properties.get(PN_MINHEIGHT_VALUE, 0L);
             String type = properties.get(PN_MINHEIGHT_TYPE, String.class);
-            /*if (wcmModeEnabled) {
-                authorItemVh = StringUtils.equals("vh", type) ? Long.toString(value) : "0";
-            }*/
             if (value > 0 && StringUtils.isNotEmpty(type)) {
                 return CSS_MIN_HEIGHT + value + type;
             }

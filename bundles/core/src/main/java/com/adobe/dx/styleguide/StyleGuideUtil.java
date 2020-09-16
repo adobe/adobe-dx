@@ -22,7 +22,6 @@ import org.apache.sling.caconfig.ConfigurationBuilder;
 
 public class StyleGuideUtil {
     private StyleGuideUtil() {
-
     }
 
     private static StyleGuideItem get(StyleGuideItem[] items, String key) {
@@ -49,18 +48,10 @@ public class StyleGuideUtil {
     }
 
     public static String getColor(SlingHttpServletRequest request, String key) {
-        StyleGuide guide = getGuide(request);
-        if (guide != null) {
-            return getValue(guide.colors(), key);
-        }
-        return null;
+        return getValue(getGuide(request).colors(), key);
     }
 
     public static String getGradient(SlingHttpServletRequest request,  String key) {
-        StyleGuide guide = getGuide(request);
-        if (guide != null) {
-            return getValue(guide.gradients(), key);
-        }
-        return null;
+        return getValue(getGuide(request).gradients(), key);
     }
 }

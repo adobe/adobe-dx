@@ -25,12 +25,10 @@ import com.adobe.dx.responsive.ResponsiveConfiguration;
 import com.adobe.dx.responsive.internal.ResponsivePropertiesImpl;
 import com.adobe.dx.testing.AbstractTest;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.scripting.SlingBindings;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.testing.mock.caconfig.MockContextAwareConfig;
@@ -40,18 +38,19 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 
 public class ResponsiveContext implements BeforeEachCallback {
+    private static final String PROPERTY_SUFFIX = "propertySuffix";
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
         AemContext context = getContext(extensionContext);
         context.build().resource(CONF_ROOT + "/sling:configs/" + ResponsiveConfiguration.class.getName() + "/breakpoints")
             .siblingsMode()
-            .resource("1","propertySuffix", "Mobile", "key", "mobile")
-            .resource("2", "propertySuffix", "Tablet",
+            .resource("1", PROPERTY_SUFFIX, "Mobile", "key", "mobile")
+            .resource("2", PROPERTY_SUFFIX, "Tablet",
                 "key", "tablet",
                 "mediaQuery", "@media screen and (min-width: 600px)",
                 "inheritProperty", "inheritTablet")
-            .resource("3", "propertySuffix", "Desktop",
+            .resource("3", PROPERTY_SUFFIX, "Desktop",
                 "key", "desktop",
                 "mediaQuery", "@media screen and (min-width: 1200px)",
                 "inheritProperty", "inheritDesktop");
@@ -61,14 +60,17 @@ public class ResponsiveContext implements BeforeEachCallback {
             context.create().resource(CONTENT_ROOT);
         }
         context.build().resource(CONTENT_ROOT, "sling:configRef", CONF_ROOT);
-        ResponsiveConfiguration configuration =  context.resourceResolver()
-            .getResource(CONTENT_ROOT)
-            .adaptTo(ConfigurationBuilder.class)
-            .as(ResponsiveConfiguration.class);
-        SlingBindings bindings = (SlingBindings)context.request().getAttribute(SlingBindings.class.getName());
-        List<Breakpoint> breakpoints = Arrays.asList(configuration.breakpoints());
-        ResponsivePropertiesImpl responsiveProperties = new ResponsivePropertiesImpl(breakpoints, AbstractTest.getVM(context, CONTENT_ROOT));
-        bindings.put(DxBindingsValueProvider.RESP_PROPS_KEY, responsiveProperties);
-        bindings.put(DxBindingsValueProvider.BP_KEY, breakpoints);
+        Resource resource = context.resourceResolver().getResource(CONTENT_ROOT);
+        if (resource != null) {
+            ConfigurationBuilder builder = resource.adaptTo(ConfigurationBuilder.class);
+            if (builder != null) {
+                ResponsiveConfiguration configuration = builder.as(ResponsiveConfiguration.class);
+                SlingBindings bindings = (SlingBindings) context.request().getAttribute(SlingBindings.class.getName());
+                List<Breakpoint> breakpoints = Arrays.asList(configuration.breakpoints());
+                ResponsivePropertiesImpl responsiveProperties = new ResponsivePropertiesImpl(breakpoints, AbstractTest.getVM(context, CONTENT_ROOT));
+                bindings.put(DxBindingsValueProvider.RESP_PROPS_KEY, responsiveProperties);
+                bindings.put(DxBindingsValueProvider.BP_KEY, breakpoints);
+            }
+        }
     }
 }
