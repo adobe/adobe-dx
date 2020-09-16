@@ -72,7 +72,7 @@
                         <embedded>
                             <groupId>com.adobe.dx</groupId>
                             <artifactId>admin</artifactId>
-                            <target>/apps/dx-docs-packages/application/install</target>
+                            <target>/apps/dx-docs-packages/application/install.author</target>
                             <filter>true</filter>
                         </embedded>
                         <embedded>
