@@ -35,6 +35,8 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -51,8 +53,8 @@ public class InlineStyleServiceImpl implements InlineStyleService {
     private static final String FORMAT_ID = "#%s {%s}";
     private static final String FORMAT_BP = "\n%s {\n%s\n}";
     private static final String SLASH = "/";
-    private static final String TYPE_PREFIX = "/apps/";
-    private static final String STYLEWORKERS_SUFFIX = "/styleWorkers";
+    private static final String TYPE_PREFIX = "apps/";
+    private static final String PN_STYLEWORKERS = "styleWorkers";
 
     @Reference(service= InlineStyleWorker.class,
         cardinality= ReferenceCardinality.MULTIPLE,
@@ -132,10 +134,11 @@ public class InlineStyleServiceImpl implements InlineStyleService {
      */
     @NotNull String[] getWorkerKeys(Resource resource) {
         String type = resource.getResourceType();
-        String typePath = (type.startsWith(SLASH) ? type : TYPE_PREFIX + type) + STYLEWORKERS_SUFFIX;
-        Resource keys = resource.getResourceResolver().getResource(typePath);
+        String typePath = (type.startsWith(SLASH) ? type : TYPE_PREFIX + type);
+        ValueMap props = resource.adaptTo(ConfigurationBuilder.class).name(typePath).asValueMap();
+        String[] keys = props.get(PN_STYLEWORKERS, String[].class);
         if (keys != null) {
-            return keys.adaptTo(String[].class);
+            return keys;
         }
         return EMPTY_STRING_ARRAY;
     }

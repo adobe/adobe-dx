@@ -105,7 +105,7 @@ class InlineStyleServiceImplTest extends AbstractTest {
         List<Breakpoint> breakpoints = ResponsivePropertiesImplTest.initResponsiveConfiguration(context);
         String someComp = CONTENT_ROOT + "/comp";
         final String[] array = new String[] {"worker1", "worker2"};
-        context.build().resource("/apps/foo/bar", "styleWorkers", array);
+        context.build().resource(CONF_ROOT + "/sling:configs/apps/foo/bar",  "styleWorkers", array);
         context.build().resource(someComp, "sling:resourceType", "foo/bar",
             "color", "blue",
             "minheightTablet", "200px",
@@ -161,7 +161,7 @@ class InlineStyleServiceImplTest extends AbstractTest {
 
     @Test
     void getWorkerKeysFullPath() {
-        final String[] array = new String[] {"workers1", "workers2"};
+        final String[] array = new String[] {"worker1", "worker2"};
         context.build().resource("/apps/foo/bar", "styleWorkers", array);
         context.build().resource(CONTENT_ROOT, "sling:resourceType", "foo/bar");
         assertArrayEquals(array, new InlineStyleServiceImpl().getWorkerKeys(context.currentResource(CONTENT_ROOT)));
