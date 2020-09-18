@@ -15,7 +15,7 @@
       "jcr:content": {
         "jcr:primaryType": "cq:PageContent",
         "jcr:title": "Some Random page",
-        "sling:configRef": "/conf/foo"
+        "sling:configRef": "/conf/foo/bar"
       }
     }
   }

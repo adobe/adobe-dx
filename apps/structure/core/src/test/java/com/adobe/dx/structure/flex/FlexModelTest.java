@@ -17,9 +17,12 @@ package com.adobe.dx.structure.flex;
 
 import static org.junit.jupiter.api.Assertions.*;
 import com.adobe.dx.testing.AbstractRequestModelTest;
+import com.adobe.dx.testing.extensions.WCMModeDisabledContext;
+import com.adobe.dx.testing.extensions.WCMModeEditContext;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 class FlexModelTest extends AbstractRequestModelTest {
 
@@ -38,6 +41,12 @@ class FlexModelTest extends AbstractRequestModelTest {
     @Test
     public void testStyle() {
         assertNotNull(model.getStyle());
+    }
+
+    @ExtendWith(WCMModeDisabledContext.class)
+    @Test
+    public void testAuthorVH() {
+        assertNull(model.getAttributes());
     }
 
 }

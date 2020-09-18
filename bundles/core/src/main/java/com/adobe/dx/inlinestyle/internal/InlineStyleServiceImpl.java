@@ -18,26 +18,21 @@ package com.adobe.dx.inlinestyle.internal;
 
 import static com.adobe.dx.inlinestyle.Constants.DECLARATION_DELIMITER;
 import static com.adobe.dx.inlinestyle.Constants.RULE_DELIMITER;
-import static com.day.cq.wcm.commons.Constants.EMPTY_STRING_ARRAY;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import com.adobe.dx.responsive.Breakpoint;
 import com.adobe.dx.inlinestyle.InlineStyleWorker;
 import com.adobe.dx.inlinestyle.InlineStyleService;
+import com.adobe.dx.utils.AbstractWorkerManager;
 import com.adobe.dx.utils.RequestUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.caconfig.ConfigurationBuilder;
-import org.jetbrains.annotations.NotNull;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
@@ -48,12 +43,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Component(configurationPolicy = ConfigurationPolicy.REQUIRE)
-public class InlineStyleServiceImpl implements InlineStyleService {
+public class InlineStyleServiceImpl extends AbstractWorkerManager<InlineStyleWorker> implements InlineStyleService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final String FORMAT_ID = "#%s {%s}";
     private static final String FORMAT_BP = "\n%s {\n%s\n}";
-    private static final String SLASH = "/";
-    private static final String TYPE_PREFIX = "apps/";
     private static final String PN_STYLEWORKERS = "styleWorkers";
 
     @Reference(service= InlineStyleWorker.class,
@@ -61,8 +54,6 @@ public class InlineStyleServiceImpl implements InlineStyleService {
         policy= ReferencePolicy.DYNAMIC, policyOption= ReferencePolicyOption.GREEDY,
         bind = "bindWorker", unbind = "unbindWorker")
     final List<InlineStyleWorker> workers = new ArrayList<>();
-
-    Map<String, InlineStyleWorker> workerMap = MapUtils.EMPTY_MAP;
 
     @FunctionalInterface
     private interface StyleFunction<T1, T2, T3> {
@@ -88,13 +79,17 @@ public class InlineStyleServiceImpl implements InlineStyleService {
         List<String> declarations = null;
         List<String> rules = null;
         for (String workerKey : keys) {
-            InlineStyleWorker worker = workerMap.get(workerKey);
+            InlineStyleWorker worker = workersMap.get(workerKey);
             if (worker != null) {
                 logger.debug("found {}", worker);
-                declarations = generateAndAppend(declarations, breakpoint, request, id,
-                    (r, b, i) -> worker.getDeclaration(b, r));
-                rules = generateAndAppend(rules, breakpoint, request, id,
-                    (r, b, i) -> worker.getRule(b, i, r));
+                try {
+                    declarations = generateAndAppend(declarations, breakpoint, request, id,
+                        (r, b, i) -> worker.getDeclaration(b, r));
+                    rules = generateAndAppend(rules, breakpoint, request, id,
+                        (r, b, i) -> worker.getRule(b, i, r));
+                } catch (Exception e) {
+                    logger.error("unable to process style for worker {}", worker.getKey(), e);
+                }
             }
         }
         if (declarations != null && !declarations.isEmpty()) {
@@ -129,35 +124,23 @@ public class InlineStyleServiceImpl implements InlineStyleService {
         return EMPTY;
     }
 
-    /**
-     * returns ordered list of workers for that given resource (or null)
-     */
-    @NotNull String[] getWorkerKeys(Resource resource) {
-        String type = resource.getResourceType();
-        String typePath = (type.startsWith(SLASH) ? type : TYPE_PREFIX + type);
-        ValueMap props = resource.adaptTo(ConfigurationBuilder.class).name(typePath).asValueMap();
-        String[] keys = props.get(PN_STYLEWORKERS, String[].class);
-        if (keys != null) {
-            return keys;
-        }
-        return EMPTY_STRING_ARRAY;
+    @Override
+    protected List<InlineStyleWorker> getWorkers() {
+        return workers;
     }
 
-    void refreshWorkers() {
-        Map<String, InlineStyleWorker> map = new HashMap<>();
-        for (InlineStyleWorker worker : workers) {
-            map.put(worker.getKey(), worker);
-        }
-        workerMap = map;
+    @Override
+    protected String getProperty() {
+        return PN_STYLEWORKERS;
     }
 
-    void bindWorker(InlineStyleWorker worker) {
-        workers.add(worker);
-        refreshWorkers();
+    @Override
+    protected void bindWorker(InlineStyleWorker worker) {
+        super.bindWorker(worker);
     }
 
-    void unbindWorker(InlineStyleWorker worker) {
-        workers.remove(worker);
-        refreshWorkers();
+    @Override
+    protected void unbindWorker(InlineStyleWorker worker) {
+        super.unbindWorker(worker);
     }
 }

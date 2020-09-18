@@ -26,11 +26,12 @@ import org.junit.jupiter.api.Test;
 class TagImplTest extends AbstractRequestModelTest {
     @BeforeEach
     private void setup() {
-        context.load().json("/mocks/admin.adobefonts/configuration-tree.json", CONF_ROOT);
-        context.load().json("/mocks/admin.adobefonts/content-tree.json", CONTENT_ROOT);
+        context.load().json("/mocks/admin.adobefonts/configuration-tree.json", CONF_ROOT + "/bar");
+        final String path = CONTENT_ROOT + "/bar";
+        context.load().json("/mocks/admin.adobefonts/content-tree.json", path);
         context.addModelsForPackage(TagImpl.class.getPackage().getName());
         context.registerInjectActivateService(new SettingsProviderImpl());
-        context.currentResource(CONTENT_ROOT + "/us/en");
+        context.currentResource(path + "/us/en");
     }
 
     @Test

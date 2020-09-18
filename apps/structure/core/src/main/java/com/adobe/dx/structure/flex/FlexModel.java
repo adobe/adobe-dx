@@ -15,8 +15,11 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.structure.flex;
 
+import com.adobe.dx.domtagging.AttributeService;
 import com.adobe.dx.domtagging.IDTagger;
 import com.adobe.dx.inlinestyle.InlineStyleService;
+
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -30,6 +33,7 @@ import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 public class FlexModel {
 
     public static final String PN_MINHEIGHT = "minHeight";
+    public static final String PN_MINHEIGHT_VALUE = PN_MINHEIGHT + "Value";
     public static final String PN_MINHEIGHT_TYPE = PN_MINHEIGHT + "Type";
 
     @SlingObject
@@ -41,9 +45,14 @@ public class FlexModel {
     @OSGiService
     InlineStyleService styleService;
 
+    @OSGiService
+    AttributeService attributeService;
+
     String id;
 
     String style;
+
+    Map<String, String> attributes;
 
     @PostConstruct
     void init() {
@@ -52,6 +61,9 @@ public class FlexModel {
         }
         if (styleService != null) {
             style = styleService.getInlineStyle(getId(), request);
+        }
+        if (attributeService != null) {
+            attributes = attributeService.getAttributes(request);
         }
     }
 
@@ -62,4 +74,6 @@ public class FlexModel {
     public String getStyle() {
         return style;
     }
+
+    public Map<String, String> getAttributes() { return attributes; }
 }

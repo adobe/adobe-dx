@@ -19,6 +19,7 @@ import static com.adobe.dx.inlinestyle.Constants.DEL_SPACE;
 import static com.adobe.dx.inlinestyle.Constants.RULE_DELIMITER;
 import static com.adobe.dx.structure.flex.FlexModel.PN_MINHEIGHT;
 import static com.adobe.dx.structure.flex.FlexModel.PN_MINHEIGHT_TYPE;
+import static com.adobe.dx.structure.flex.FlexModel.PN_MINHEIGHT_VALUE;
 
 import com.adobe.dx.inlinestyle.InlineStyleWorker;
 import com.adobe.dx.responsive.Breakpoint;
@@ -59,7 +60,7 @@ public class FlexGeneralStyle implements InlineStyleWorker {
     }
 
     String computeMinHeight(Breakpoint breakpoint, SlingHttpServletRequest request) {
-        Long minHeight = RequestUtil.getFromRespProps(request, breakpoint, PN_MINHEIGHT);
+        Long minHeight = RequestUtil.getFromRespProps(request, breakpoint, PN_MINHEIGHT_VALUE);
         if ( minHeight != null) {
             String minHeightType = RequestUtil.getFromRespProps(request, breakpoint, PN_MINHEIGHT_TYPE);
             if (minHeightType != null) {

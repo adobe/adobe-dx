@@ -16,6 +16,7 @@
 package com.adobe.dx.inlinestyle;
 
 import com.adobe.dx.responsive.Breakpoint;
+import com.adobe.dx.utils.Worker;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.jetbrains.annotations.Nullable;
@@ -25,12 +26,7 @@ import org.jetbrains.annotations.Nullable;
  * for very specific usage in a style tag or attribute,
  * fed in the component context
  */
-public interface InlineStyleWorker {
-
-    /**
-     * @return key with which the worker can be identified
-     */
-    String getKey();
+public interface InlineStyleWorker extends Worker {
 
     /**
      * Generates a declaration specific to that generator

@@ -46,6 +46,7 @@ public class ResponsivePropertiesImplTest extends AbstractTest {
     List<Breakpoint> breakpoints;
 
     public static List<Breakpoint> initResponsiveConfiguration(AemContext context) {
+        AbstractTest.initContentRoots(context);
         context.build().resource(CONF_ROOT + "/sling:configs/" + ResponsiveConfiguration.class.getName() + "/breakpoints")
             .siblingsMode()
             .resource("1","propertySuffix", "Mobile", "key", "mobile")
@@ -55,10 +56,6 @@ public class ResponsivePropertiesImplTest extends AbstractTest {
                 "inheritBehaviourProp", "inheritDesktop");
         MockContextAwareConfig.registerAnnotationClasses(context, ResponsiveConfiguration.class);
         MockContextAwareConfig.registerAnnotationClasses(context, Breakpoint.class);
-        if (context.resourceResolver().getResource(CONTENT_ROOT) == null) {
-            context.create().resource(CONTENT_ROOT);
-        }
-        context.build().resource(CONTENT_ROOT, "sling:configRef", CONF_ROOT);
         ResponsiveConfiguration configuration =  context.resourceResolver()
             .getResource(CONTENT_ROOT)
             .adaptTo(ConfigurationBuilder.class)
