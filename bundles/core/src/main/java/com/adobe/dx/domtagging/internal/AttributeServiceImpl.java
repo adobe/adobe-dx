@@ -21,12 +21,9 @@ import com.adobe.dx.domtagging.AttributeWorker;
 import com.adobe.dx.utils.AbstractWorkerManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.lucene.util.CollectionUtil;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
