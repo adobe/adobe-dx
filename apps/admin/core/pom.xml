@@ -89,7 +89,6 @@ Bundle-DocURL:
             <groupId>com.adobe.dx</groupId>
             <artifactId>testing-extensions</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>
@@ -97,17 +96,9 @@ Bundle-DocURL:
             <version>0.0.13-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>javax.jcr</groupId>
-            <artifactId>jcr</artifactId>
-            <version>2.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>uber-jar</artifactId>
-            <version>${aem.version}</version>
             <classifier>apis</classifier>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>

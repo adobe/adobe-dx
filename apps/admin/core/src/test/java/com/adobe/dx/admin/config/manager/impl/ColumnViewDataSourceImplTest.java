@@ -21,6 +21,7 @@ import com.adobe.dx.admin.config.manager.ColumnViewDataSource;
 import com.adobe.dx.admin.config.manager.ColumnViewItem;
 import com.adobe.dx.admin.config.manager.internal.ColumnViewDataSourceImpl;
 import com.adobe.dx.testing.AbstractTest;
+import com.adobe.dx.testing.extensions.ResponsiveContext;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,11 +29,14 @@ import java.util.stream.Collectors;
 import org.apache.sling.models.factory.ModelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(ResponsiveContext.class)
 class ColumnViewDataSourceImplTest extends AbstractTest {
     @BeforeEach
     private void setup() {
-        context.load().json("/mocks/admin.configmanager/configuration-tree.json", CONF_ROOT);
+        context.load().json("/mocks/admin.configmanager/configuration-tree-another.json", CONF_ROOT + "/anotherPage");
+        context.load().json("/mocks/admin.configmanager/configuration-tree-whatever.json", CONF_ROOT + "/whatever");
         context.currentResource(CONF_ROOT);
         context.addModelsForClasses(ColumnViewItem.class, ColumnViewDataSourceImpl.class, ColumnViewDataSource.class);
     }
@@ -44,17 +48,19 @@ class ColumnViewDataSourceImplTest extends AbstractTest {
         assertNotNull(firstChildren);
         assertEquals(1, firstChildren.size());
         ColumnViewItem root = firstChildren.get(0);
-        assertEquals("folder", root.getIconType());
+        assertEquals("config", root.getIconType());
         assertNotNull(root.getChildren());
         List<ColumnViewItem> children = root.getChildren();
-        assertArrayEquals(new String[] {"whatever", "anotherPage"},
+        assertArrayEquals(new String[] {"sling:configs", "anotherPage", "whatever"},
             children.stream()
             .map(ColumnViewItem::getName)
             .collect(Collectors.toList()).toArray());
         ColumnViewItem pageItem = children.get(1);
+        assertEquals("folder", children.get(2).getIconType());
         assertTrue(pageItem.getIsPage());
         assertEquals(CONF_ROOT + "/anotherPage", pageItem.getPath());
         assertEquals("Some Random page", pageItem.getLabel());
         assertEquals("config", pageItem.getIconType());
+        pageItem = children.get(0).getChildren().get(0);
     }
 }
