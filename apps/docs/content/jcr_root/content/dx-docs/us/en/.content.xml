@@ -21,6 +21,9 @@
                     shadowColor="red"
                     gapMobile="{Long}2"
                     focusXMobile="{Long}30"
+                    minHeightMobile="custom"
+                    minHeightTypeMobile="vh"
+                    minHeightValueMobile="{Long}60"
                     focusYMobile="{Long}30"
                     foregroundColorMobile="white"
                     gradientMobile="red"
@@ -57,7 +60,7 @@
                         <item1 jcr:primaryType="nt:unstructured"
                                minHeight="custom"
                                minHeightValue="60"
-                               minHeightType="%"
+                               minHeightType="vh"
                                width="custom"
                                customWidthValue="60"
                                customWidthType="%"/>

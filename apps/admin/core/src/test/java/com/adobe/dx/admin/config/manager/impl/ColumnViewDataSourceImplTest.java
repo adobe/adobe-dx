@@ -20,25 +20,26 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.adobe.dx.admin.config.manager.ColumnViewDataSource;
 import com.adobe.dx.admin.config.manager.ColumnViewItem;
 import com.adobe.dx.admin.config.manager.internal.ColumnViewDataSourceImpl;
-import com.adobe.dx.testing.AbstractRequestModelTest;
+import com.adobe.dx.testing.AbstractTest;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.sling.models.factory.ModelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ColumnViewDataSourceImplTest extends AbstractRequestModelTest {
+class ColumnViewDataSourceImplTest extends AbstractTest {
     @BeforeEach
     private void setup() {
         context.load().json("/mocks/admin.configmanager/configuration-tree.json", CONF_ROOT);
         context.currentResource(CONF_ROOT);
-        context.addModelsForClasses(ColumnViewItem.class, ColumnViewDataSourceImpl.class);
+        context.addModelsForClasses(ColumnViewItem.class, ColumnViewDataSourceImpl.class, ColumnViewDataSource.class);
     }
 
     @Test
     public void testBrowsing() throws ReflectiveOperationException {
-        ColumnViewDataSource ds = getModel(ColumnViewDataSource.class);
+        ColumnViewDataSource ds = context.getService(ModelFactory.class).createModel(context.request(), ColumnViewDataSource.class);
         List<ColumnViewItem> firstChildren = ds.getItems();
         assertNotNull(firstChildren);
         assertEquals(1, firstChildren.size());

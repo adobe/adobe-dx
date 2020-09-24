@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.adobe.dx.admin.servlet.EncryptionServlet" configuration-policy="ignore">
+    <implementation class="com.adobe.dx.admin.authorvh.AuthorVh"/>
+    <service>
+        <provide interface="com.adobe.dx.domtagging.AttributeWorker"/>
+    </service>
+</scr:component>

@@ -29,7 +29,6 @@ public class ExtensionsUtil {
     private static final String CONTEXT_FIELD = "context";
 
     private ExtensionsUtil() {
-
     }
 
     private static void putAllFields(Map<String, Field> fields, Class<?> type) {
