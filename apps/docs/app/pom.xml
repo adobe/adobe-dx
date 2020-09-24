@@ -134,7 +134,7 @@
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>admin</artifactId>
-            <version>0.1.0</version>
+            <version>0.1.1-SNAPSHOT</version>
             <type>zip</type>
         </dependency>
         <dependency>

@@ -18,7 +18,7 @@ package com.adobe.dx.styleguide;
 import org.apache.sling.caconfig.annotation.Configuration;
 import org.apache.sling.caconfig.annotation.Property;
 
-@Configuration(description = "holds all style guide configurations")
+@Configuration(label = "Style Guide", description = "holds all style guide configurations")
 public @interface StyleGuide {
     /**
      * @return all gradients configured
