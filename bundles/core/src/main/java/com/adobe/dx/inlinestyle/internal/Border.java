@@ -28,7 +28,7 @@ import static com.adobe.dx.utils.CSSConstants.RIGHT;
 import static com.adobe.dx.utils.CSSConstants.SPACE;
 import static com.adobe.dx.utils.CSSConstants.PN_TOP;
 import static com.adobe.dx.utils.CSSConstants.TOP;
-import static com.adobe.dx.utils.RequestUtil.getPolicy;
+import static com.adobe.dx.utils.RequestUtil.getFromRespProps;
 
 import com.adobe.dx.responsive.Breakpoint;
 import com.adobe.dx.inlinestyle.InlineStyleWorker;
@@ -39,7 +39,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -76,20 +75,16 @@ public class Border implements InlineStyleWorker {
 
     @Override
     public @Nullable String getDeclaration(Breakpoint breakpoint, SlingHttpServletRequest request) {
-        if (StringUtils.isBlank(breakpoint.mediaQuery())) {
-            //we only do border for all
-            ValueMap dxPolicy = getPolicy(request);
-            String border = buildBorder(request, dxPolicy);
-            String radius = buildRadius(dxPolicy);
-            if (border != null) {
-                if (radius != null) {
-                    return border + DEL_SPACE + radius;
-                } else {
-                    return border;
-                }
-            } else if (radius != null) {
-                return radius;
+        String border = buildBorder(breakpoint, request);
+        String radius = buildRadius(breakpoint, request);
+        if (border != null) {
+            if (radius != null) {
+                return border + DEL_SPACE + radius;
+            } else {
+                return border;
             }
+        } else if (radius != null) {
+            return radius;
         }
         return null;
     }
@@ -100,26 +95,26 @@ public class Border implements InlineStyleWorker {
         return null;
     }
 
-    private String buildBorder(SlingHttpServletRequest request, ValueMap policy) {
-        String borderSides = policy.get(PN_SIDES, String.class);
+    private String buildBorder(Breakpoint breakpoint, SlingHttpServletRequest request) {
+        String borderSides = getFromRespProps(request, breakpoint,PN_SIDES);
         if (StringUtils.equals(ALL, borderSides)) {
-            return getAllBorders(request, policy);
+            return getAllBorders(breakpoint, request);
         } else if (StringUtils.equals(EACH, borderSides)) {
-            return getEachBorder(request, policy);
+            return getEachBorder(breakpoint, request);
         }
         return null;
     }
 
-    private String getAllBorders(SlingHttpServletRequest request, ValueMap policy) {
-        return getBorderStyle(request, policy, ALL_CAP, DECL_PREFIX);
+    private String getAllBorders(Breakpoint breakpoint, SlingHttpServletRequest request) {
+        return getBorderStyle(breakpoint, request, ALL_CAP, DECL_PREFIX);
     }
 
-    private String getEachBorder(SlingHttpServletRequest request, ValueMap policy) {
+    private String getEachBorder(Breakpoint breakpoint, SlingHttpServletRequest request) {
         List<String> borders = new ArrayList<>();
-        final String topBorder = getBorderStyle(request, policy, PN_TOP, DECL_TOP);
-        final String rightBorder = getBorderStyle(request, policy, PN_RIGHT, DECL_RIGHT);
-        final String bottomBorder = getBorderStyle(request, policy, PN_BOTTOM, DECL_BOTTOM);
-        final String leftBorder = getBorderStyle(request, policy, PN_LEFT, DECL_LEFT);
+        final String topBorder = getBorderStyle(breakpoint, request, PN_TOP, DECL_TOP);
+        final String rightBorder = getBorderStyle(breakpoint, request, PN_RIGHT, DECL_RIGHT);
+        final String bottomBorder = getBorderStyle(breakpoint, request, PN_BOTTOM, DECL_BOTTOM);
+        final String leftBorder = getBorderStyle(breakpoint, request, PN_LEFT, DECL_LEFT);
         if (topBorder != null) {
             borders.add(topBorder);
         }
@@ -135,10 +130,10 @@ public class Border implements InlineStyleWorker {
         return borders.isEmpty() ? null : String.join(DEL_SPACE, borders);
     }
 
-    private String getBorderStyle(SlingHttpServletRequest request, ValueMap policy, String side, String propertyName) {
-        String borderStyle = policy.get(PREFIX + side + STYLE_SUFFIX, String.class);
-        long borderThickness = policy.get(PREFIX + side + WIDTH_SUFFIX, 0L);
-        String borderColorKey = policy.get(PREFIX + side + COLOR_SUFFIX, String.class);
+    private String getBorderStyle(Breakpoint breakpoint, SlingHttpServletRequest request, String side, String propertyName) {
+        String borderStyle = getFromRespProps(request, breakpoint, PREFIX + side + STYLE_SUFFIX);
+        long borderThickness = getFromRespProps(request, breakpoint,PREFIX + side + WIDTH_SUFFIX, 0L);
+        String borderColorKey = getFromRespProps(request, breakpoint,PREFIX + side + COLOR_SUFFIX);
         String borderColor = StyleGuideUtil.getColor(request, borderColorKey);
         if (borderStyle != null && borderThickness > 0 && borderColor != null) {
             return propertyName + DECLARATION + borderStyle + SPACE + borderThickness + PX_SPACE + borderColor;
@@ -146,29 +141,29 @@ public class Border implements InlineStyleWorker {
         return null;
     }
 
-    private String buildRadius(ValueMap policy) {
-        String borderRadius = policy.get(PN_BORDERRADIUS, String.class);
+    private String buildRadius(Breakpoint breakpoint, SlingHttpServletRequest request) {
+        String borderRadius = getFromRespProps(request, breakpoint, PN_BORDERRADIUS);
         if (StringUtils.equals(ALL, borderRadius)) {
-            return getAllBorderRadius(policy);
+            return getAllBorderRadius(breakpoint, request);
         } else if (StringUtils.equals(EACH, borderRadius)) {
-            return getEachBorderRadius(policy);
+            return getEachBorderRadius(breakpoint, request);
         }
         return null;
     }
 
-    private String getAllBorderRadius(ValueMap policy) {
-        long borderRadius = policy.get(PN_ALLRADIUS, 0L);
+    private String getAllBorderRadius(Breakpoint breakpoint, SlingHttpServletRequest request) {
+        long borderRadius = getFromRespProps(request, breakpoint, PN_ALLRADIUS, 0L);
         if (borderRadius > 0) {
             return DECL_RADIUS + borderRadius + PX;
         }
         return null;
     }
 
-    private String getEachBorderRadius(ValueMap policy) {
-        long radiusTopLeft = policy.get(PN_RADIUS_TOPLEFT, 0L);
-        long radiusTopRight = policy.get(PN_RADIUS_TOPRIGHT, 0L);
-        long radiusBottomRight = policy.get(PN_RADIUS_BOTTOMRIGHT, 0L);
-        long radiusBottomLeft = policy.get(PN_RADIUS_BOTTOMLEFT, 0L);
+    private String getEachBorderRadius(Breakpoint breakpoint, SlingHttpServletRequest request) {
+        long radiusTopLeft = getFromRespProps(request, breakpoint, PN_RADIUS_TOPLEFT, 0L);
+        long radiusTopRight = getFromRespProps(request, breakpoint, PN_RADIUS_TOPRIGHT, 0L);
+        long radiusBottomRight = getFromRespProps(request, breakpoint, PN_RADIUS_BOTTOMRIGHT, 0L);
+        long radiusBottomLeft = getFromRespProps(request, breakpoint, PN_RADIUS_BOTTOMLEFT, 0L);
 
         if (radiusTopLeft > 0 || radiusTopRight > 0 || radiusBottomLeft > 0 || radiusBottomRight > 0) {
             return DECL_RADIUS
