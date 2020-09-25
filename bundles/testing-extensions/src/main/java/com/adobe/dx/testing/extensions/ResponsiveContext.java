@@ -45,7 +45,7 @@ public class ResponsiveContext implements BeforeEachCallback {
         AemContext context = getContext(extensionContext);
         context.build().resource(AbstractTest.CONFIG_ROOTS + "/" + ResponsiveConfiguration.class.getName() + "/breakpoints")
             .siblingsMode()
-            .resource("1", PROPERTY_SUFFIX, "Mobile", "key", "mobile")
+            .resource("1", PROPERTY_SUFFIX, "", "key", "mobile")
             .resource("2", PROPERTY_SUFFIX, "Tablet",
                 "key", "tablet",
                 "mediaQuery", "@media screen and (min-width: 600px)",

@@ -11,28 +11,28 @@
             <content jcr:primaryType="nt:unstructured"
                      sling:resourceType="wcm/foundation/components/responsivegrid">
                 <flex jcr:primaryType="nt:unstructured"
-                    borderAllColorMobile="red"
-                    borderAllStyleMobile="solid"
-                    borderAllRadiusMobile="{Long}3"
-                    borderRadiusMobile="all"
-                    borderSidesMobile="all"
+                    borderAllColor="red"
+                    borderAllStyle="solid"
+                    borderAllRadius="{Long}3"
+                    borderRadius="all"
+                    borderSides="all"
                     sling:resourceType="dx/structure/components/flex"
                     inheritDesktop="{Boolean}true"
                     inheritTablet="{Boolean}true"
-                    shadowColorMobile="red"
+                    shadowColor="red"
                     marginLeftDesktop="{Long}100"
                     marginRightDesktop="{Long}100"
-                    gapMobile="{Long}2"
-                    focusXMobile="{Long}30"
-                    minHeightMobile="custom"
-                    minHeightTypeMobile="vh"
-                    minHeightValueMobile="{Long}60"
-                    focusYMobile="{Long}30"
-                    foregroundColorMobile="white"
-                    gradientMobile="red"
+                    gap="{Long}2"
+                    focusX="{Long}30"
+                    minHeight="custom"
+                    minHeightType="vh"
+                    minHeightValue="{Long}60"
+                    focusY="{Long}30"
+                    foregroundColor="white"
+                    gradient="red"
                     gradientDesktop="another"
                     foregroundColorDesktop="blue"
-                    justificationMobile="JustifyStretch">
+                    justification="JustifyStretch">
                     <items jcr:primaryType="nt:unstructured"
                            sling:resourceType="dx/structure/components/parlite">
                         <text jcr:primaryType="nt:unstructured"
@@ -44,7 +44,7 @@
                               text="&lt;h1&gt;World!&lt;/h1&gt;"
                               textIsRich="true"/>
                     </items>
-                    <definitionsMobile jcr:primaryType="nt:unstructured">
+                    <definitions jcr:primaryType="nt:unstructured">
                         <item0 jcr:primaryType="nt:unstructured"
                                minHeight="custom"
                                minHeightValue="60"
@@ -55,7 +55,7 @@
                         <item1 jcr:primaryType="nt:unstructured"
                                minHeight="auto"
                                width="auto"/>
-                    </definitionsMobile>
+                    </definitions>
                     <definitionsDesktop jcr:primaryType="nt:unstructured">
                         <item0 jcr:primaryType="nt:unstructured"
                                minHeight="auto"

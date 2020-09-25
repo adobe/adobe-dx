@@ -43,7 +43,7 @@ class AuthorVhTest extends AbstractTest {
             "propertyMatching", new String[] { "minHeightType:vh:minHeightValue"},
             "itemParents", new String[] { "definitions" });
         context.build().resource(CONTENT_ROOT, "minHeightTypeTablet","vh","minHeightValueTablet", 51L, "sling:resourceType", "dx/some/component");
-        context.build().resource(CONTENT_ROOT +"/definitionsMobile")
+        context.build().resource(CONTENT_ROOT +"/definitions")
             .siblingsMode()
             .resource("item0", "minHeight", "custom", "minHeightType", "vh", "minHeightValue", 12L, "width", "custom", "widthCustomValue", 200L, "widthCustomType", "px")
             .resource("item1", "minHeight", "custom", "minHeightValue", 92L, "minHeightType", "px", "width", "auto")

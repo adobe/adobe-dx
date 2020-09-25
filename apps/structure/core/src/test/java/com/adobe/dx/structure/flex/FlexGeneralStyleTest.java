@@ -11,9 +11,9 @@ class FlexGeneralStyleTest extends AbstractInlineStyleWorkerTest {
 
     @Test
     public void testRule() {
-        context.build().resource(CONTENT_ROOT, "minHeightValueMobile",
-            20L, "minHeightTypeMobile", "px",
-            "gapMobile", 30L);
+        context.build().resource(CONTENT_ROOT, "minHeightValue",
+            20L, "minHeightType", "px",
+            "gap", 30L);
         assertEquals("#this-is-my-flex > .dx-flex-items {\n"
             + "min-height: 20px; margin: -15px\n"
             + "}\n"
@@ -24,8 +24,8 @@ class FlexGeneralStyleTest extends AbstractInlineStyleWorkerTest {
 
     @Test
     public void testRuleNoGap() {
-        context.build().resource(CONTENT_ROOT, "minHeightValueMobile",
-            30L, "minHeightTypeMobile", "%");
+        context.build().resource(CONTENT_ROOT, "minHeightValue",
+            30L, "minHeightType", "%");
         assertEquals("#this-is-my-flex > .dx-flex-items {\n"
             + "min-height: 30%\n"
             + "}", getRule("mobile", "this-is-my-flex"));
@@ -33,9 +33,9 @@ class FlexGeneralStyleTest extends AbstractInlineStyleWorkerTest {
 
     @Test
     public void testNothing() {
-        context.build().resource(CONTENT_ROOT, "minHeightValueMobile",
-            20L, "minHeightTypeMobile", "px",
-            "gapMobile", 30L);
+        context.build().resource(CONTENT_ROOT, "minHeightValue",
+            20L, "minHeightType", "px",
+            "gap", 30L);
         assertNull(getRule("tablet", "this-is-my-flex"));
     }
 
