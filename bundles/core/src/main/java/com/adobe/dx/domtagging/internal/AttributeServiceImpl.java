@@ -24,6 +24,7 @@ import com.adobe.dx.utils.AbstractWorkerManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,9 +59,10 @@ public class AttributeServiceImpl extends AbstractWorkerManager<AttributeWorker>
             if (worker != null) {
                 logger.debug("get attributes from worker {}", worker.getKey());
                 Map<String, String> workerMap = worker.getAttributes(request);
-                if (attributes == null) {
-                    attributes = workerMap;
-                } else {
+                if (workerMap != null){
+                    if (attributes == null) {
+                        attributes = new HashMap<>();
+                    }
                     attributes.putAll(workerMap);
                 }
             }
@@ -76,10 +78,12 @@ public class AttributeServiceImpl extends AbstractWorkerManager<AttributeWorker>
             if (worker != null) {
                 logger.debug("get classes from worker {}", worker.getKey());
                 Collection<String> workerClasses = worker.getClasses(request);
-                if (classes == null) {
-                    classes = new ArrayList<>();
+                if (workerClasses != null) {
+                    if (classes == null) {
+                        classes = new ArrayList<>();
+                    }
+                    classes.addAll(workerClasses);
                 }
-                classes.addAll(workerClasses);
             }
         }
         return classes != null ? String.join(SPACE, classes) : null;

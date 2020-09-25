@@ -84,7 +84,7 @@ class AttributeServiceImplTest extends AbstractTest {
     void setup() {
         List<Breakpoint> breakpoints = ResponsivePropertiesImplTest.initResponsiveConfiguration(context);
         String someComp = CONTENT_ROOT + "/comp";
-        final String[] array = new String[] {"worker1", "worker2"};
+        final String[] array = new String[] {"worker1", "worker2", "workerNull"};
         context.build().resource(CONFIG_ROOTS  + "/apps/foo/bar",  "attributeWorkers", array);
         context.build().resource(someComp, "sling:resourceType", "foo/bar");
         context.currentResource(someComp);
@@ -113,5 +113,27 @@ class AttributeServiceImplTest extends AbstractTest {
         service.bindWorker(worker2);
         assertTrue(CollectionUtils.isEqualCollection(Arrays.asList("11", "12", "21", "22"), service.getAttributes(context.request()).keySet()));
         assertEquals("c1 c2", service.getClassesString(context.request()));
+    }
+
+    @Test
+    public void testNullWorker() {
+        service.bindWorker(new AttributeWorker() {
+            @Override
+            public Map<String, String> getAttributes(SlingHttpServletRequest request) {
+                return null;
+            }
+
+            @Override
+            public Collection<String> getClasses(SlingHttpServletRequest request) {
+                return null;
+            }
+
+            @Override
+            public String getKey() {
+                return "workerNull";
+            }
+        });
+        assertNull(service.getClassesString(context.request()));
+        assertNull(service.getAttributes(context.request()));
     }
 }
