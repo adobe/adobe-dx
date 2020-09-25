@@ -18,6 +18,7 @@ package com.adobe.dx.domtagging;
 
 import com.adobe.dx.utils.Worker;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -25,7 +26,14 @@ import org.apache.sling.api.SlingHttpServletRequest;
 public interface AttributeWorker extends Worker {
 
     /**
-     * @return
+     * @param request current component request
+     * @return map of attributes from that worker
      */
     Map<String, String> getAttributes(SlingHttpServletRequest request);
+
+    /**
+     * @param request current component request
+     * @return collection of classes from that worker
+     */
+    Collection<String> getClasses(SlingHttpServletRequest request);
 }

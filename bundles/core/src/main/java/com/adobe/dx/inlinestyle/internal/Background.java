@@ -15,7 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.inlinestyle.internal;
 
-import static com.adobe.dx.inlinestyle.Constants.DEL_SPACE;
+import static com.adobe.dx.utils.CSSConstants.DEL_SPACE;
 import static com.adobe.dx.utils.RequestUtil.getFromRespProps;
 
 import com.adobe.dx.responsive.Breakpoint;

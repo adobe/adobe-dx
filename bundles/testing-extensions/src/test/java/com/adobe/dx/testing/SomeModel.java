@@ -15,7 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.testing;
 
+import com.adobe.dx.domtagging.AttributeService;
 import com.adobe.dx.domtagging.IDTagger;
+import com.adobe.dx.inlinestyle.InlineStyleService;
 
 import javax.annotation.PostConstruct;
 
@@ -31,13 +33,25 @@ public class SomeModel {
     SlingHttpServletRequest request;
 
     @OSGiService
-    IDTagger idTaggerService;
+    IDTagger idTagger;
+
+    @OSGiService
+    AttributeService attributeService;
+
+    @OSGiService
+    InlineStyleService inlineStyleService;
 
     String id;
 
+    String classes;
+
+    String style;
+
     @PostConstruct
     void init() {
-        id = idTaggerService.computeComponentId(request, "idProperty");
+        id = idTagger.computeComponentId(request, "idProperty");
+        classes = attributeService.getClassesString(request);
+        style = inlineStyleService.getInlineStyle(id, request);
     }
 
     String getId() {

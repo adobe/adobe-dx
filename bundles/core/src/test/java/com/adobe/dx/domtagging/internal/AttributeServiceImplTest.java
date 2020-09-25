@@ -26,6 +26,7 @@ import com.adobe.dx.testing.AbstractTest;
 import com.adobe.dx.utils.RequestUtil;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,11 @@ class AttributeServiceImplTest extends AbstractTest {
         }
 
         @Override
+        public Collection<String> getClasses(SlingHttpServletRequest request) {
+            return Arrays.asList("c1");
+        }
+
+        @Override
         public String getKey() {
             return "worker1";
         }
@@ -59,6 +65,11 @@ class AttributeServiceImplTest extends AbstractTest {
             map.put("21", "21");
             map.put("22", "22");
             return map;
+        }
+
+        @Override
+        public Collection<String> getClasses(SlingHttpServletRequest request) {
+            return Arrays.asList("c2");
         }
 
         @Override
@@ -101,5 +112,6 @@ class AttributeServiceImplTest extends AbstractTest {
         service.bindWorker(worker1);
         service.bindWorker(worker2);
         assertTrue(CollectionUtils.isEqualCollection(Arrays.asList("11", "12", "21", "22"), service.getAttributes(context.request()).keySet()));
+        assertEquals("c1 c2", service.getClassesString(context.request()));
     }
 }

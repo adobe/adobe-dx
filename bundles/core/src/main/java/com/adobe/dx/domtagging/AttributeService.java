@@ -33,4 +33,12 @@ public interface AttributeService {
      */
     @Nullable Map<String, String> getAttributes(SlingHttpServletRequest request);
 
+    /**
+     * Specific case for the "class" attribute as several workers can want to add their contribution here
+     *
+     * @param request current component request context
+     * @return list of classes separated by space, corresponding to current request context
+     */
+    @Nullable String getClassesString(SlingHttpServletRequest request);
+
 }

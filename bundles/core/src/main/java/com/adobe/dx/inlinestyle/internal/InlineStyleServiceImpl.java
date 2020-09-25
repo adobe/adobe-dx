@@ -16,8 +16,8 @@
 
 package com.adobe.dx.inlinestyle.internal;
 
-import static com.adobe.dx.inlinestyle.Constants.DECLARATION_DELIMITER;
-import static com.adobe.dx.inlinestyle.Constants.RULE_DELIMITER;
+import static com.adobe.dx.utils.CSSConstants.DECLARATION_DELIMITER;
+import static com.adobe.dx.utils.CSSConstants.RULE_DELIMITER;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import com.adobe.dx.responsive.Breakpoint;

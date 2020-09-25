@@ -13,24 +13,23 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 package com.adobe.dx.testing.extensions;
 
 import static com.adobe.dx.testing.extensions.ExtensionsUtil.getContext;
 
+import com.adobe.dx.domtagging.internal.AttributeServiceImpl;
 import com.adobe.dx.domtagging.internal.IDTaggerImpl;
-import com.adobe.dx.inlinestyle.internal.InlineStyleServiceImpl;
 
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import io.wcm.testing.mock.aem.junit5.AemContext;
 
-public class InlineStyleContext implements BeforeEachCallback {
-
+public class DomTaggingContext implements BeforeEachCallback {
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
         AemContext context = getContext(extensionContext);
-        context.registerInjectActivateService(new InlineStyleServiceImpl());
+        context.registerInjectActivateService(new IDTaggerImpl());
+        context.registerInjectActivateService(new AttributeServiceImpl());
     }
 }

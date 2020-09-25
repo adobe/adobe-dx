@@ -13,14 +13,14 @@
                     end="{Long}1199"
                     key="tablet"
                     label="Tablet"
-                    inheritBehaviourProp="inheritTablet"
+                    inherit="inheritTablet"
                     mediaQuery="@media only screen and (min-width: 600px)"
                     propertySuffix="Tablet"
                     start="{Long}600"/>
             <desktop jcr:primaryType="nt:unstructured"
                      key="desktop"
                      label="Desktop"
-                     inheritBehaviourProp="inheritDesktop"
+                     inherit="inheritDesktop"
                      mediaQuery="@media only screen and (min-width: 1200px)"
                      propertySuffix="Desktop"
                      start="{Long}1200"/>

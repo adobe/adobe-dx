@@ -15,11 +15,19 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.inlinestyle.internal;
 
-import static com.adobe.dx.inlinestyle.Constants.DECLARATION;
-import static com.adobe.dx.inlinestyle.Constants.DEL_SPACE;
-import static com.adobe.dx.inlinestyle.Constants.PX;
-import static com.adobe.dx.inlinestyle.Constants.PX_SPACE;
-import static com.adobe.dx.inlinestyle.Constants.SPACE;
+import static com.adobe.dx.utils.CSSConstants.BOTTOM;
+import static com.adobe.dx.utils.CSSConstants.LEFT;
+import static com.adobe.dx.utils.CSSConstants.PN_BOTTOM;
+import static com.adobe.dx.utils.CSSConstants.DECLARATION;
+import static com.adobe.dx.utils.CSSConstants.DEL_SPACE;
+import static com.adobe.dx.utils.CSSConstants.PN_LEFT;
+import static com.adobe.dx.utils.CSSConstants.PX;
+import static com.adobe.dx.utils.CSSConstants.PX_SPACE;
+import static com.adobe.dx.utils.CSSConstants.PN_RIGHT;
+import static com.adobe.dx.utils.CSSConstants.RIGHT;
+import static com.adobe.dx.utils.CSSConstants.SPACE;
+import static com.adobe.dx.utils.CSSConstants.PN_TOP;
+import static com.adobe.dx.utils.CSSConstants.TOP;
 import static com.adobe.dx.utils.RequestUtil.getPolicy;
 
 import com.adobe.dx.responsive.Breakpoint;
@@ -45,24 +53,20 @@ public class Border implements InlineStyleWorker {
     private static final String STYLE_SUFFIX = "Style";
     private static final String WIDTH_SUFFIX = "Width";
     private static final String RADIUS = "Radius";
-    private static final String TOP = "Top";
-    private static final String RIGHT = "Right";
-    private static final String LEFT = "Left";
-    private static final String BOTTOM = "Bottom";
     private static final String DECL_RADIUS = "border-radius: ";
-    private static final String DECL_TOP = DECL_PREFIX + "-top";
-    private static final String DECL_BOTTOM = DECL_PREFIX + "-bottom";
-    private static final String DECL_RIGHT = DECL_PREFIX + "-right";
-    private static final String DECL_LEFT = DECL_PREFIX + "-left";
+    private static final String DECL_TOP = DECL_PREFIX + TOP;
+    private static final String DECL_BOTTOM = DECL_PREFIX + BOTTOM;
+    private static final String DECL_RIGHT = DECL_PREFIX + RIGHT;
+    private static final String DECL_LEFT = DECL_PREFIX + LEFT;
     private static final String ALL = "all";
     private static final String EACH = "each";
     private static final String ALL_CAP = "All";
     private static final String PN_BORDERRADIUS = PREFIX + RADIUS;
     private static final String PN_ALLRADIUS = PREFIX + ALL_CAP + RADIUS;
-    private static final String PN_RADIUS_TOPLEFT = PREFIX + RADIUS + TOP + LEFT;
-    private static final String PN_RADIUS_TOPRIGHT = PREFIX + RADIUS + TOP + RIGHT;
-    private static final String PN_RADIUS_BOTTOMLEFT = PREFIX + RADIUS + BOTTOM + LEFT;
-    private static final String PN_RADIUS_BOTTOMRIGHT = PREFIX + RADIUS + BOTTOM + RIGHT;
+    private static final String PN_RADIUS_TOPLEFT = PREFIX + RADIUS + PN_TOP + PN_LEFT;
+    private static final String PN_RADIUS_TOPRIGHT = PREFIX + RADIUS + PN_TOP + PN_RIGHT;
+    private static final String PN_RADIUS_BOTTOMLEFT = PREFIX + RADIUS + PN_BOTTOM + PN_LEFT;
+    private static final String PN_RADIUS_BOTTOMRIGHT = PREFIX + RADIUS + PN_BOTTOM + PN_RIGHT;
     private static final String PN_SIDES = PREFIX + "Sides";
 
     @Override
@@ -112,10 +116,10 @@ public class Border implements InlineStyleWorker {
 
     private String getEachBorder(SlingHttpServletRequest request, ValueMap policy) {
         List<String> borders = new ArrayList<>();
-        final String topBorder = getBorderStyle(request, policy, TOP, DECL_TOP);
-        final String rightBorder = getBorderStyle(request, policy, RIGHT, DECL_RIGHT);
-        final String bottomBorder = getBorderStyle(request, policy, BOTTOM, DECL_BOTTOM);
-        final String leftBorder = getBorderStyle(request, policy, LEFT, DECL_LEFT);
+        final String topBorder = getBorderStyle(request, policy, PN_TOP, DECL_TOP);
+        final String rightBorder = getBorderStyle(request, policy, PN_RIGHT, DECL_RIGHT);
+        final String bottomBorder = getBorderStyle(request, policy, PN_BOTTOM, DECL_BOTTOM);
+        final String leftBorder = getBorderStyle(request, policy, PN_LEFT, DECL_LEFT);
         if (topBorder != null) {
             borders.add(topBorder);
         }

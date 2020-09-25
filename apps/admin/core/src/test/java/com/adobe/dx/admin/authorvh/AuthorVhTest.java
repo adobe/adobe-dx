@@ -61,6 +61,11 @@ class AuthorVhTest extends AbstractTest {
         assertEquals("authorvh", authorvh.getKey());
     }
 
+    @Test
+    public void lockClasses() {
+        assertNull(authorvh.getClasses(context.request()));
+    }
+
     @ExtendWith(WCMModeEditContext.class)
     @Test
     public void testGetAttributes() {

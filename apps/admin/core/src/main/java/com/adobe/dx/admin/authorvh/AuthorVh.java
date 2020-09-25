@@ -23,6 +23,7 @@ import com.adobe.dx.utils.RequestUtil;
 import com.day.cq.wcm.api.WCMMode;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -148,6 +149,11 @@ public class AuthorVh implements AttributeWorker {
             }
         }
         return attributes;
+    }
+
+    @Override
+    public Collection<String> getClasses(SlingHttpServletRequest request) {
+        return null;
     }
 
     @Override

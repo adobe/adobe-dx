@@ -34,7 +34,7 @@ public @interface Breakpoint {
 
     @Property(label = "inheritance behaviour property", description = "name of the property that defines wether "
         + "current breakpoint should 'override' or 'inherit' previous breakpoint")
-    String inheritBehaviourProp();
+    String inherit();
 
     @Property(label = "start", description = "screen width from which this breakpoint is set")
     int start();

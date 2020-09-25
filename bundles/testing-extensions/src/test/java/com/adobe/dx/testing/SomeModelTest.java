@@ -19,6 +19,9 @@ package com.adobe.dx.testing;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.adobe.dx.domtagging.AttributeService;
+import com.adobe.dx.domtagging.IDTagger;
+import com.adobe.dx.inlinestyle.InlineStyleService;
 import com.adobe.dx.testing.extensions.WCMModeDisabledContext;
 import com.adobe.dx.testing.extensions.WCMModeEditContext;
 import com.day.cq.wcm.api.WCMMode;

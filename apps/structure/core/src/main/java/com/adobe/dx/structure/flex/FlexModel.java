@@ -52,6 +52,8 @@ public class FlexModel {
 
     String style;
 
+    String additionalClasses;
+
     Map<String, String> attributes;
 
     @PostConstruct
@@ -64,6 +66,7 @@ public class FlexModel {
         }
         if (attributeService != null) {
             attributes = attributeService.getAttributes(request);
+            additionalClasses = attributeService.getClassesString(request);
         }
     }
 
@@ -73,6 +76,10 @@ public class FlexModel {
 
     public String getStyle() {
         return style;
+    }
+
+    public String getAdditionalClasses() {
+        return additionalClasses;
     }
 
     public Map<String, String> getAttributes() { return attributes; }

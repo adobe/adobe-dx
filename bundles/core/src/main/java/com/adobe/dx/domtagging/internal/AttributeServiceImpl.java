@@ -16,11 +16,14 @@
 
 package com.adobe.dx.domtagging.internal;
 
+import static com.adobe.dx.utils.CSSConstants.SPACE;
+
 import com.adobe.dx.domtagging.AttributeService;
 import com.adobe.dx.domtagging.AttributeWorker;
 import com.adobe.dx.utils.AbstractWorkerManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +56,7 @@ public class AttributeServiceImpl extends AbstractWorkerManager<AttributeWorker>
         for (String key : getWorkerKeys(request.getResource())) {
             AttributeWorker worker = workersMap.get(key);
             if (worker != null) {
-                logger.debug("found worker {}", worker.getKey());
+                logger.debug("get attributes from worker {}", worker.getKey());
                 Map<String, String> workerMap = worker.getAttributes(request);
                 if (attributes == null) {
                     attributes = workerMap;
@@ -63,6 +66,23 @@ public class AttributeServiceImpl extends AbstractWorkerManager<AttributeWorker>
             }
         }
         return attributes;
+    }
+
+    @Override
+    public @Nullable String getClassesString(SlingHttpServletRequest request) {
+        Collection<String> classes = null;
+        for (String key : getWorkerKeys(request.getResource())) {
+            AttributeWorker worker = workersMap.get(key);
+            if (worker != null) {
+                logger.debug("get classes from worker {}", worker.getKey());
+                Collection<String> workerClasses = worker.getClasses(request);
+                if (classes == null) {
+                    classes = new ArrayList<>();
+                }
+                classes.addAll(workerClasses);
+            }
+        }
+        return classes != null ? String.join(SPACE, classes) : null;
     }
 
     @Override

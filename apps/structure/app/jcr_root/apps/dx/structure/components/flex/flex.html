@@ -15,7 +15,7 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.model="com.adobe.dx.structure.flex.FlexModel"></sly>
 <style data-sly-test="${model.style}">${model.style @ context='unsafe'}</style>
-<div id="${model.id}" class="dx-flex">
+<div id="${model.id}" class="dx-flex ${model.additionalClasses}">
     <div data-sly-element="${dxPolicy.elementName}"
          aria-label="${dxPolicy.ariaLabel}"
          data-sly-attribute="${model.attributes}"

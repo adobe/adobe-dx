@@ -19,6 +19,8 @@
                     inheritDesktop="{Boolean}true"
                     inheritTablet="{Boolean}true"
                     shadowColor="red"
+                    marginLeftDesktop="{Long}100"
+                    marginRightDesktop="{Long}100"
                     gapMobile="{Long}2"
                     focusXMobile="{Long}30"
                     minHeightMobile="custom"

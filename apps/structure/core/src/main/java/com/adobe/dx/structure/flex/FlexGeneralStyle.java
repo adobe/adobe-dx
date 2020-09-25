@@ -15,9 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.structure.flex;
 
-import static com.adobe.dx.inlinestyle.Constants.DEL_SPACE;
-import static com.adobe.dx.inlinestyle.Constants.RULE_DELIMITER;
-import static com.adobe.dx.structure.flex.FlexModel.PN_MINHEIGHT;
+import static com.adobe.dx.utils.CSSConstants.DEL_SPACE;
+import static com.adobe.dx.utils.CSSConstants.RULE_DELIMITER;
 import static com.adobe.dx.structure.flex.FlexModel.PN_MINHEIGHT_TYPE;
 import static com.adobe.dx.structure.flex.FlexModel.PN_MINHEIGHT_VALUE;
 

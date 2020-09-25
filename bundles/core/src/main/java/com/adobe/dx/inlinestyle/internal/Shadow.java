@@ -15,7 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.inlinestyle.internal;
 
-import static com.adobe.dx.inlinestyle.Constants.PX_SPACE;
+import static com.adobe.dx.utils.CSSConstants.PX_SPACE;
 import static com.adobe.dx.utils.RequestUtil.getPolicy;
 
 import com.adobe.dx.responsive.Breakpoint;

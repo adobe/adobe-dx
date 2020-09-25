@@ -51,9 +51,9 @@ public class ResponsivePropertiesImplTest extends AbstractTest {
             .siblingsMode()
             .resource("1","propertySuffix", "Mobile", "key", "mobile")
             .resource("2", "propertySuffix", "Tablet", "key", "tablet", "mediaQuery", "@media screen and (min-width: 600px)",
-                "inheritBehaviourProp", "inheritTablet")
+                "inherit", "inheritTablet")
             .resource("3", "propertySuffix", "Desktop", "key", "desktop", "mediaQuery", "@media screen and (min-width: 1200px)",
-                "inheritBehaviourProp", "inheritDesktop");
+                "inherit", "inheritDesktop");
         MockContextAwareConfig.registerAnnotationClasses(context, ResponsiveConfiguration.class);
         MockContextAwareConfig.registerAnnotationClasses(context, Breakpoint.class);
         ResponsiveConfiguration configuration =  context.resourceResolver()
@@ -155,6 +155,9 @@ public class ResponsivePropertiesImplTest extends AbstractTest {
             .getInheritedValue("test", desktop, ""));
         //override (or anything else) should break inheritance
         assertEquals("", getInheritedMap( "testMobile", "exist", "inheritTablet", "override", "inheritDesktop", "inherit")
+            .getInheritedValue("test", desktop, ""));
+        //inheritance on a given property should work
+        assertEquals("exist", getInheritedMap( "testMobile", "exist", "inheritTablet", "override", "inheritTabletTest", "inherit")
             .getInheritedValue("test", desktop, ""));
     }
 
