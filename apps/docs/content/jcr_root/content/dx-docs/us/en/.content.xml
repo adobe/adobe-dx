@@ -18,7 +18,7 @@
                     sling:resourceType="dx/structure/components/flex"
                     inheritDesktop="{Boolean}true"
                     inheritTablet="{Boolean}true"
-                    shadowColor="red"
+                    shadowColorMobile="red"
                     marginLeftDesktop="{Long}100"
                     marginRightDesktop="{Long}100"
                     gapMobile="{Long}2"
