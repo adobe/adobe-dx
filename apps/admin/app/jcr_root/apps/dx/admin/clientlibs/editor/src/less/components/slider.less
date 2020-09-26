@@ -1,0 +1,70 @@
+.cq-Dialog.cq-dialog-floating[trackingfeature="aem:sites:components:dialogs:dx-structure:flex:v1"] {
+    coral-slider {
+        &[name *= 'padding'],
+        &[name *= 'margin'] {
+            coral-tooltip-content:after {
+                content: 'px';
+            }
+        }
+    
+        &[name *= 'Flex'] {
+            coral-tooltip-content:after {
+                content: '%';
+            }
+        }
+    
+        &[name = './mobileColWidth'] {
+            coral-tooltip-content:after {
+                content: 'Cols';
+            }
+        }
+    
+        coral-tooltip {
+            word-break: normal;
+        }
+    }
+    
+    .dexter-Form-fieldwrapper--slider {
+        position: relative;
+        display: flex;
+        align-content: stretch;
+    }
+    
+    .dexter-SliderTooltip {
+        flex: 0 0 50px;
+        padding-left: 5px;
+        background: #f0f0f0;
+        color: #707070;
+        font-size: 0.8rem;
+        position: relative;
+        margin-right: 16px;
+        height: 24px;
+        margin-top: 7px;
+        border: none;
+        border-radius: 4px 0 0 4px;
+    
+        &.dexter-SliderTooltip--enabled {
+            background: #326ec8;
+            color: #fff;
+    
+            &:after {
+                border-left-color: #326ec8;
+            }
+        }
+    
+        &:after {
+            content: "";
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-left: 6px solid #f0f0f0;
+            position: absolute;
+            top: 50%;
+            right: -6px;
+            transform: translateY(-12px);
+        }
+    
+        & + .coral3-Slider {
+            flex: 1 1 auto;
+        }
+    }
+}

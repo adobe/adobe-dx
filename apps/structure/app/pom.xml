@@ -63,6 +63,12 @@
                     <embeddeds>
                         <embedded>
                             <groupId>com.adobe.dx</groupId>
+                            <artifactId>structure-content</artifactId>
+                            <target>/apps/dx/install</target>
+                            <filter>true</filter>
+                        </embedded>
+                        <embedded>
+                            <groupId>com.adobe.dx</groupId>
                             <artifactId>structure.core</artifactId>
                             <target>/apps/dx/install</target>
                             <filter>true</filter>
@@ -144,6 +150,12 @@
             <groupId>com.adobe.dx</groupId>
             <artifactId>structure.core</artifactId>
             <version>0.0.7-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.dx</groupId>
+            <artifactId>structure-content</artifactId>
+            <version>0.0.7-SNAPSHOT</version>
+            <type>zip</type>
         </dependency>
         <dependency>
             <groupId>com.adobe.dx</groupId>

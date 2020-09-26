@@ -45,7 +45,7 @@ const getVhAsPx = (viewHeight, vhValue) => {
 
 const mergeArrays = (arr, mergeArr) => {
     if (!arr || arr.length === 0) return mergeArr ? [...mergeArr] : [];
-    if (!mergeArr || mergeArr.length === 0) return arr ? [...arr] : [];
+    if (!mergeArr || mergeArr.length === 0) return [];
 
     let merged = [...arr].map((val, i) => {
         if (!(val || val === 0) && mergeArr[i]) {

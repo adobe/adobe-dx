@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root
-    xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+    xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0"
     xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
     xmlns:cq="http://www.day.com/jcr/cq/1.0"
-    xmlns:jcr="http://www.jcp.org/jcr/1.0"
-    xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
     jcr:primaryType="nt:unstructured"
     jcr:title="Flex Container"
-    sling:resourceType="cq/gui/components/authoring/dialog"
-    helpPath="https://github.com/adobe/adobe-dx/wiki/Flex-Container">
+    trackingFeature="dx-structure:flex:v1"
+    sling:resourceType="cq/gui/components/authoring/dialog">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
@@ -17,15 +17,520 @@
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="granite/ui/components/coral/foundation/tabs">
                 <items jcr:primaryType="nt:unstructured">
-                    <general
+                    <mobile
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="General"
+                        jcr:title="Mobile"
                         sling:resourceType="granite/ui/components/coral/foundation/container"
                         margin="{Boolean}false">
                         <items jcr:primaryType="nt:unstructured">
-
+                            <mobileTabs
+                                jcr:primaryType="nt:unstructured"
+                                orientation="vertical"
+                                santosh="is-awesome"
+                                sling:resourceType="granite/ui/components/coral/foundation/tabs">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <flexLayout
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Layout"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            
+                                        </items>
+                                    </flexLayout>
+                                    <flexItems
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Items"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <items
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                composite="{Boolean}true"
+                                                renderReadOnly="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    name="./mobileDefinitions"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                    <items
+                                                        jcr:primaryType="nt:unstructured">
+                                                        <definitions
+                                                            jcr:primaryType="nt:unstructured"
+                                                            path="fakedx/components/flex/cq:dialog_definitions"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/include"/>
+                                                    </items>
+                                                </field>
+                                            </items>
+                                        </items>
+                                    </flexItems>
+                                    <spacing
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Spacing"
+                                        granite:class="dexter-Spacing--twoColumn"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <padding
+                                                jcr:primaryType="nt:unstructured"
+                                                granite:class="dexter-Spacing--column"
+                                                jcr:title="Padding"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                                margin="{Boolean}false">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <paddingTop
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="dx/admin/components/authoring/slider"
+                                                        fieldLabel="Top"
+                                                        fieldDescription="Enable/disable the slider by clicking the button to the left of the slider."
+                                                        step="4"
+                                                        min="0"
+                                                        max="100"
+                                                        buttonSuffix="px"
+                                                        name="./mobilePaddingTop"/>
+                                                    <paddingTopTypeHint
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                        value="Long"
+                                                        name="./mobilePaddingTop@TypeHint"/>
+                                                    <paddingRight
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="dx/admin/components/authoring/slider"
+                                                        fieldLabel="Right"
+                                                        fieldDescription="Enable/disable the slider by clicking the button to the left of the slider."
+                                                        step="4"
+                                                        min="0"
+                                                        max="100"
+                                                        buttonSuffix="px"
+                                                        name="./mobilePaddingRight"/>
+                                                    <paddingRightTypeHint
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                        value="Long"
+                                                        name="./mobilePaddingRight@TypeHint"/>
+                                                    <paddingBottom
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="dx/admin/components/authoring/slider"
+                                                        fieldLabel="Bottom"
+                                                        fieldDescription="Enable/disable the slider by clicking the button to the left of the slider."
+                                                        step="4"
+                                                        min="0"
+                                                        max="100"
+                                                        buttonSuffix="px"
+                                                        name="./mobilePaddingBottom"/>
+                                                    <paddingBottomTypeHint
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                        value="Long"
+                                                        name="./mobilePaddingBottom@TypeHint"/>
+                                                    <paddingLeft
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="dx/admin/components/authoring/slider"
+                                                        fieldLabel="Left"
+                                                        fieldDescription="Enable/disable the slider by clicking the button to the left of the slider."
+                                                        step="4"
+                                                        min="0"
+                                                        max="100"
+                                                        buttonSuffix="px"
+                                                        name="./mobilePaddingLeft"/>
+                                                    <paddingLeftTypeHint
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                        value="Long"
+                                                        name="./mobilePaddingLeft@TypeHint"/>
+                                                </items>
+                                            </padding>
+                                            <margin
+                                                jcr:primaryType="nt:unstructured"
+                                                granite:class="dexter-Spacing--column"
+                                                jcr:title="Margin"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                                margin="{Boolean}false">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <marginTop
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="dx/admin/components/authoring/slider"
+                                                        fieldLabel="Top Margin"
+                                                        fieldDescription="Enable/disable the slider by clicking the button to the left of the slider."
+                                                        step="4"
+                                                        min="0"
+                                                        max="100"
+                                                        buttonSuffix="px"
+                                                        name="./mobileMarginTop">
+                                                        <granite:rendercondition
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="dexter/components/author/renderConditions/parent"
+                                                            hideIfParent="items" />
+                                                    </marginTop>
+                                                    <marginTopTypeHint
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                        value="Long"
+                                                        name="./mobileMarginTop@TypeHint"/>
+                                                    <marginRight
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="dx/admin/components/authoring/slider"
+                                                        fieldLabel="Right Margin"
+                                                        fieldDescription="Enable/disable the slider by clicking the button to the left of the slider."
+                                                        step="4"
+                                                        min="0"
+                                                        max="100"
+                                                        buttonSuffix="px"
+                                                        name="./mobileMarginRight"/>
+                                                    <marginRightTypeHint
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                        value="Long"
+                                                        name="./mobileMarginRight@TypeHint"/>
+                                                    <marginBottom
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="dx/admin/components/authoring/slider"
+                                                        fieldLabel="Bottom Margin"
+                                                        fieldDescription="Enable/disable the slider by clicking the button to the left of the slider."
+                                                        step="4"
+                                                        min="0"
+                                                        max="100"
+                                                        buttonSuffix="px"
+                                                        name="./mobileMarginBottom">
+                                                        <granite:rendercondition
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="dexter/components/author/renderConditions/parent"
+                                                            hideIfParent="items" />
+                                                    </marginBottom>
+                                                    <marginBottomTypeHint
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                        value="Long"
+                                                        name="./mobileMarginBottom@TypeHint"/>
+                                                    <marginLeft
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="dx/admin/components/authoring/slider"
+                                                        fieldLabel="Left Margin"
+                                                        fieldDescription="Enable/disable the slider by clicking the button to the left of the slider."
+                                                        step="4"
+                                                        min="0"
+                                                        max="100"
+                                                        buttonSuffix="px"
+                                                        name="./mobileMarginLeft"/>
+                                                    <marginLeftTypeHint
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                        value="Long"
+                                                        name="./mobileMarginLeft@TypeHint"/>
+                                                </items>
+                                            </margin>
+                                        </items>
+                                    </spacing>
+                                    <foreground
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Foreground"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <color
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="dx/admin/components/authoring/colorfield"
+                                                fieldLabel="Text Color"
+                                                showDefaultColors="{Boolean}false"
+                                                name="./foregroundColorMobile">
+                                                    <datasource
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
+                                                        confName="com.adobe.dx.styleguide.StyleGuide/jcr:content/colors"/>
+                    
+                                            </color>
+                                        </items>
+                                    </foreground>
+                                    <background
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Background"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <color
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                                                fieldLabel="Color"
+                                                showDefaultColors="{Boolean}false"
+                                                name="./backgroundColorMobile">
+                                                    <datasource
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
+                                                        confName="com.adobe.dx.styleguide.StyleGuide/jcr:content/colors"/>
+                                            </color>
+                                            <gradient
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                                                fieldDescription="Pick a gradient to use as background.  Will be placed over a background image."
+                                                fieldLabel="Gradient"
+                                                name="./gradientMobile">
+                                                <datasource
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
+                                                    confName="com.adobe.dx.styleguide.StyleGuide/jcr:content/gradients"/>
+                                                    <options
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+                                            </gradient>
+                                            <videoURL
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Video"
+                                                fieldDescription="Must be an MP4 file."
+                                                name="./videoURL"
+                                                rootPath="/content/dam">
+                                            </videoURL>
+                                            <videoLoop
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Loop Video"
+                                                checked="{Boolean}true"
+                                                value="true"
+                                                uncheckedValue="{Boolean}false"
+                                                name="./videoLoop">
+                                            </videoLoop>
+                                            <videoLoopTypeHint
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                value="Boolean"
+                                                name="./videoLoop@TypeHint"/>
+                                            <videoPlayOnEnterView
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Play video when it enters the view."
+                                                checked="{Boolean}true"
+                                                value="true"
+                                                uncheckedValue="{Boolean}false"
+                                                name="./videoPlayOnEnterView">
+                                            </videoPlayOnEnterView>
+                                            <videoPlayOnEnterViewTypeHint
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                value="Boolean"
+                                                name="./videoPlayOnEnterView@TypeHint"/>
+                                            <videoPlayOnHover
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Play video when a cursor hovers over it."
+                                                checked="{Boolean}true"
+                                                value="true"
+                                                uncheckedValue="{Boolean}false"
+                                                name="./videoPlayOnHover">
+                                            </videoPlayOnHover>
+                                            <videoPlayOnHoverTypeHint
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                value="Boolean"
+                                                name="./videoPlayOnHover@TypeHint"/>
+                                            <videoCrop
+                                                jcr:primaryType="nt:unstructured"
+                                                granite:class="cq-dialog-dropdown-showhide"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Cropping"
+                                                name="./videoCrop">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cq-dialog-dropdown-showhide-target=".list-option-video-crop"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <video
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Crop Video"
+                                                        value="crop-video"/>
+                                                    <content
+                                                        granite:hide="${cqDesign.disableMobileAbsolute}"
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Crop Content"
+                                                        value="crop-content"/>
+                                                </items>
+                                            </videoCrop>
+                                            <cropVideoContainer
+                                                granite:class="hide list-option-video-crop"
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    showhidetargetvalue="crop-video"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <note
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/alert"
+                                                        size="S"
+                                                        jcr:title="This will crop the video to fit the size of the component."/>
+                                                </items>
+                                            </cropVideoContainer>
+                                            <cropContentContainer
+                                                granite:class="hide list-option-video-crop"
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    showhidetargetvalue="crop-content"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <note
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/alert"
+                                                        size="S"
+                                                        jcr:title="Video will be full-size. If contents go beyond this size, they will be cropped."/>
+                                                    <videoControls
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                        text="Show Controls"
+                                                        fieldDescription="If checked, content on top of video will not be selectable so controls can be used by the visitor."
+                                                        value="true"
+                                                        name="./videoControls"/>
+                                                    <videoControlsTypeHint
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                        value="Boolean"
+                                                        name="./videoControls@TypeHint"/>
+                                                </items>
+                                            </cropContentContainer>
+                                        </items>
+                                    </background>
+                                </items>
+                            </mobileTabs>
                         </items>
-                    </general>
+                    </mobile>
+                    <tablet
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Tablet"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}false">
+                        <items jcr:primaryType="nt:unstructured">
+                            <mobileTabs
+                                jcr:primaryType="nt:unstructured"
+                                orientation="vertical"
+                                santosh="is-awesome"
+                                sling:resourceType="granite/ui/components/coral/foundation/tabs">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <flexItems
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Items"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <items
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                fieldLabel="Items"
+                                                composite="{Boolean}true"
+                                                renderReadOnly="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    name="./mobileDefinitions"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                    <items
+                                                        jcr:primaryType="nt:unstructured">
+                                                        <definitions
+                                                            jcr:primaryType="nt:unstructured"
+                                                            path="fakedx/components/flex/cq:dialog_definitions"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/include"/>
+                                                    </items>
+                                                </field>
+                                            </items>
+                                        </items>
+                                    </flexItems>
+                                    <flexLayout
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Layout"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+
+                                        </items>
+                                    </flexLayout>
+                                    <foreground
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Foreground"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+
+                                        </items>
+                                    </foreground>
+                                    <background
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Background"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+
+                                        </items>
+                                    </background>
+                                </items>
+                            </mobileTabs>
+                        </items>
+                    </tablet>
+                    <desktop
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Desktop"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}false">
+                        <items jcr:primaryType="nt:unstructured">
+                            <mobileTabs
+                                jcr:primaryType="nt:unstructured"
+                                orientation="vertical"
+                                santosh="is-awesome"
+                                sling:resourceType="granite/ui/components/coral/foundation/tabs">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <flexItems
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Items"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <items
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                fieldLabel="Items"
+                                                composite="{Boolean}true"
+                                                renderReadOnly="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    name="./mobileDefinitions"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                    <items
+                                                        jcr:primaryType="nt:unstructured">
+                                                        <definitions
+                                                            jcr:primaryType="nt:unstructured"
+                                                            path="fakedx/components/flex/cq:dialog_definitions"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/include"/>
+                                                    </items>
+                                                </field>
+                                            </items>
+                                        </items>
+                                    </flexItems>
+                                    <flexLayout
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Layout"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+
+                                        </items>
+                                    </flexLayout>
+                                    <foreground
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Foreground"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+
+                                        </items>
+                                    </foreground>
+                                    <background
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Background"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        margin="{Boolean}false">
+                                        <items jcr:primaryType="nt:unstructured">
+
+                                        </items>
+                                    </background>
+                                </items>
+                            </mobileTabs>
+                        </items>
+                    </desktop>
                 </items>
             </tabs>
         </items>

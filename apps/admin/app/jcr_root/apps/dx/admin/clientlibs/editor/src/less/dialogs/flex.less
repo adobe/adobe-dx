@@ -1,0 +1,46 @@
+.cq-Dialog.cq-dialog-floating[trackingfeature="aem:sites:components:dialogs:dx-structure:flex:v1"] {
+
+    form[coral-dialog-size] {
+        min-width: 760px;
+        height: 700px;
+        overflow-y: scroll;
+    }
+
+    coral-tabview[orientation="vertical"] {
+        position: relative;
+        padding-top: 30px;
+        min-height: 418px;
+
+        > coral-tablist {
+            min-width: 180px;
+        }
+
+        &:after {
+            content: '';
+            top: 0;
+            left: 0;
+            width: 160px;
+            position: absolute;
+            background-color: #EFEFEF;
+            bottom: 0;
+            z-index: -1;
+        }
+    }
+
+    .coral-Form-fieldset:first-of-type .coral-Form-fieldset-legend {
+        margin-top: 0px;
+    }
+
+    .dexter-Spacing--twoColumn {
+        display: flex;
+    
+        .dexter-Spacing--column.coral-Form-fieldset {
+            flex: 1 1 1%;
+            max-width: 100%;
+
+            .coral-Form-fieldset-legend {
+                margin-top: 0px;
+            }
+        }
+    }
+}
