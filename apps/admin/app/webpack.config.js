@@ -57,6 +57,10 @@ module.exports = {
             `${PROJECT_PATH}/manager/src/less/app.less`,
         ],
         author: [`${PROJECT_PATH}/author/src/js/app.js`],
+        editor: [
+            `${PROJECT_PATH}/editor/src/js/app.js`,
+            `${PROJECT_PATH}/editor/src/less/app.less`,
+        ],
     },
     output: {
         path: `${PROJECT_PATH}`,

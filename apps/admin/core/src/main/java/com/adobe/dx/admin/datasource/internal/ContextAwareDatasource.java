@@ -19,6 +19,7 @@ package com.adobe.dx.admin.datasource.internal;
 import com.adobe.granite.ui.components.Config;
 import com.adobe.granite.ui.components.ds.DataSource;
 import com.adobe.granite.ui.components.ds.SimpleDataSource;
+import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
@@ -29,7 +30,9 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceMetadata;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.SyntheticResource;
 import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
@@ -97,8 +100,34 @@ public class ContextAwareDatasource {
             Collection<Resource> configResources =
                 configurationResolver.getResourceCollection(contentResource, bucketName, confName);
 
-            List<Resource> resourceList = new ArrayList<>(configResources);
-            DataSource dataSource = new SimpleDataSource(resourceList.iterator());
+            List<Resource> rawResourceList = new ArrayList<>(configResources);
+            List<Resource> modifiedResourceList = new ArrayList<Resource>();
+            for (Resource resource : rawResourceList) {
+                String name = resource.getName();
+                ModifiableValueMap props = resource.adaptTo(ModifiableValueMap.class);
+
+                // Store the initial value in case it's needed.
+                props.put("initialValue", props.get("value"));
+
+                // Reset the value to the CA-Config name for retrieval on render
+                props.remove("value");
+                props.put("value", name);
+
+                // Ensure the is text property exists
+                String text = props.get("text", String.class);
+                if (text == null) {
+                    text = props.get("label", String.class);
+                    if (text == null) {
+                        text = name;
+                    }
+                    props.put("text", text);
+                }
+                Resource modifiedResource = new ValueMapResource(resourceResolver, new ResourceMetadata(), "nt:unstructured", props);
+
+                modifiedResourceList.add(modifiedResource);
+            }
+
+            DataSource dataSource = new SimpleDataSource(modifiedResourceList.iterator());
             request.setAttribute(DataSource.class.getName(), dataSource);
         }
     }

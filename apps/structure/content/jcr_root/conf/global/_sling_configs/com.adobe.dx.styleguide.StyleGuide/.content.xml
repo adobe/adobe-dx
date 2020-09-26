@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured">
+    <jcr:content jcr:primaryType="nt:unstructured">
+        <components jcr:primaryType="nt:unstructured">
+            <flexContainer jcr:primaryType="nt:unstructured">
+                  <widths jcr:primaryType="nt:unstructured">
+                        <auto
+                              jcr:primaryType="nt:unstructured"
+                              text="Auto"
+                              value="auto"/>
+                        <custom
+                              jcr:primaryType="nt:unstructured"
+                              text="Custom"
+                              value="custom"/>
+                        <fullWidth
+                              jcr:primaryType="nt:unstructured"
+                              text="Full Width"
+                              value="100%"/>
+                        <oneColumn
+                              jcr:primaryType="nt:unstructured"
+                              text="1 Column"
+                              value="8.333333%"/>
+                        <twoColumn
+                              jcr:primaryType="nt:unstructured"
+                              text="2 Columns"
+                              value="16.666667%"/>
+                        <threeColumn
+                              jcr:primaryType="nt:unstructured"
+                              text="3 Columns"
+                              value="25%"/>
+                        <fourColumn
+                              jcr:primaryType="nt:unstructured"
+                              text="4 Columns"
+                              value="33.333333%"/>
+                        <fiveColumn
+                              jcr:primaryType="nt:unstructured"
+                              text="5 Columns"
+                              value="41.666667%"/>
+                        <sixColumn
+                              jcr:primaryType="nt:unstructured"
+                              text="6 Columns"
+                              value="50%"/>
+                        <sevenColumn
+                              jcr:primaryType="nt:unstructured"
+                              text="7 Columns"
+                              value="58.333333%"/>
+                        <eightColumn
+                              jcr:primaryType="nt:unstructured"
+                              text="8 Columns"
+                              value="66.666667%"/>
+                        <nineColumn
+                              jcr:primaryType="nt:unstructured"
+                              text="9 Columns"
+                              value="75%"/>
+                        <tenColumn
+                              jcr:primaryType="nt:unstructured"
+                              text="10 Columns"
+                              value="83.333333%"/>
+                        <elevenColumn
+                              jcr:primaryType="nt:unstructured"
+                              text="11 Columns"
+                              value="91.666667%"/>
+                  </widths>
+                  <height jcr:primaryType="nt:unstructured">
+                        <auto
+                              jcr:primaryType="nt:unstructured"
+                              text="Auto"
+                              value="auto"/>
+                        <custom
+                              jcr:primaryType="nt:unstructured"
+                              text="Custom"
+                              value="custom"/>
+                  </height>
+                  <justification jcr:primaryType="nt:unstructured">
+                        <stretch
+                              jcr:primaryType="nt:unstructured"
+                              text="Stretch"
+                              value="JustifyStretch"/>
+                        <start
+                              jcr:primaryType="nt:unstructured"
+                              text="Start"
+                              value="JustifyStart"/>
+                        <center
+                              jcr:primaryType="nt:unstructured"
+                              text="Center"
+                              value="JustifyCenter"/>
+                        <end
+                              jcr:primaryType="nt:unstructured"
+                              text="End"
+                              value="JustifyEnd"/>
+                        <spaceBetween
+                              jcr:primaryType="nt:unstructured"
+                              text="Space Between"
+                              value="JustifySpaceBetween"/>
+                  </justification>
+                  <itemAlignment jcr:primaryType="nt:unstructured">
+                        <stretch
+                              jcr:primaryType="nt:unstructured"
+                              text="Stretch"
+                              value="AlignAlignmentStretch"/>
+                        <start
+                              jcr:primaryType="nt:unstructured"
+                              text="Start"
+                              value="AlignItemStart"/>
+                        <center
+                              jcr:primaryType="nt:unstructured"
+                              text="Center"
+                              value="AlignItemCenter"/>
+                        <end
+                              jcr:primaryType="nt:unstructured"
+                              text="End"
+                              value="AlignItemEnd"/>
+                  </itemAlignment>
+                  <contentAlignment
+                        jcr:primaryType="nt:unstructured">
+                        <stretch
+                              jcr:primaryType="nt:unstructured"
+                              text="Stretch"
+                              value="AlignContentStretch"/>
+                        <start
+                              jcr:primaryType="nt:unstructured"
+                              text="Start"
+                              value="AlignContentStart"/>
+                        <center
+                              jcr:primaryType="nt:unstructured"
+                              text="Center"
+                              value="AlignContentCenter"/>
+                        <end
+                              jcr:primaryType="nt:unstructured"
+                              text="End"
+                              value="AlignContentEnd"/>
+                        <spaceBetween
+                              jcr:primaryType="nt:unstructured"
+                              text="Space Between"
+                              value="AlignContentSpaceBetween"/>
+                  </contentAlignment>
+                  <itemContentAlignment jcr:primaryType="nt:unstructured">
+                        <start
+                              jcr:primaryType="nt:unstructured"
+                              text="Start"
+                              value="AlignItemContentStart"/>
+                        <center
+                              jcr:primaryType="nt:unstructured"
+                              text="Center"
+                              value="AlignItemContentCenter"/>
+                        <end
+                              jcr:primaryType="nt:unstructured"
+                              text="End"
+                              value="AlignItemContentEnd"/>
+                  </itemContentAlignment>
+            </flexContainer>
+        </components>
+    </jcr:content>
+</jcr:root>

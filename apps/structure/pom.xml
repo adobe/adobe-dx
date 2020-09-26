@@ -39,6 +39,7 @@
     <modules>
         <module>core</module>
         <module>app</module>
+        <module>content</module>
     </modules>
 
 </project>

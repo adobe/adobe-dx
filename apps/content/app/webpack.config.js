@@ -70,7 +70,3 @@ module.exports = {
     performance,
     stats,
 };
-
-// if (isProduction) {
-//     module.exports.optimization = optimization;
-// }
