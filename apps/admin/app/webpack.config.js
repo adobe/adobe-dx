@@ -37,7 +37,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 // Project Setup
 const PROJECT_NAME = 'dx/admin';
 const PROJECT_PATH = `${__dirname}/jcr_root/apps/${PROJECT_NAME}/clientlibs`;
-const ROOT_DIR = `${__dirname}/../../..`;
 
 // Production Detection
 const isProduction = process.env.NODE_ENV === 'production';
