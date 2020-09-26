@@ -1,13 +1,26 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ~ Copyright 2020 Adobe
+ ~
+ ~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~ you may not use this file except in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~     http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing, software
+ ~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~ See the License for the specific language governing permissions and
+ ~ limitations under the License.
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.admin.components.cacolorfield;
 
 import com.adobe.dx.admin.datasource.internal.ContextAwareDatasource;
 import com.adobe.granite.ui.components.Config;
 import com.adobe.granite.ui.components.ds.DataSource;
-import com.day.cq.wcm.api.components.ComponentContext;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -22,7 +35,6 @@ import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 
@@ -47,10 +59,7 @@ public class CaColorfieldModel {
     private String configValue;
     private String fieldLabel;
     private String fieldDesc;
-    private String placeholder;
-    private boolean required;
-    private String labelId;
-    private String descriptionId;
+    private String placeholder = "#";
 
     @PostConstruct
     private void init() {
@@ -66,25 +75,25 @@ public class CaColorfieldModel {
 
         // Get individual component props
         name = cfg.get("name", String.class);
-        String propName = name.replace("./", "");
-        
-        // Setup content & config values
-        ValueMap contentVm = getContentValueMap();
-        contentValue = contentVm.get(propName, String.class);
-        configValue = setupConfigValue();
-        
-        required = cfg.get("required", false);
+        if (name != null) {
+            String propName = name.replace("./", "");
+            // Setup content & config values
+            ValueMap contentVm = getContentValueMap();
+            contentValue = contentVm.get(propName, String.class);
+            configValue = setupConfigValue();
+        }
+        boolean required = cfg.get("required", false);
         String requiredAsterisk = required ? " *" : "";
         fieldLabel = cfg.get("fieldLabel", String.class);
 
         fieldLabel = fieldLabel + requiredAsterisk;
         fieldDesc = cfg.get("fieldDescription", String.class);
         
-        labelId = "label_" + uuid;
-        descriptionId = "description_" + uuid;
+        String labelId = "label_" + uuid;
+        String descriptionId = "description_" + uuid;
 
         // Build attributes to lessen manual HTL work
-        attrs = new HashMap<String, Object>();
+        attrs = new HashMap<>();
         attrs.put("placeholder", cfg.get("emptyText", String.class));
         attrs.put("disabled", cfg.get("disabled", false));
         attrs.put("required", required);
@@ -121,19 +130,14 @@ public class CaColorfieldModel {
     private List<Resource> getDataSourceItems() {
         DataSource ds = (DataSource) request.getAttribute(DataSource.class.getName());
         if (ds != null) {
-            Iterator<Resource> is = ds.iterator();
-            if (is != null) {
-                return IteratorUtils.toList(is);
-            }
+            return IteratorUtils.toList(ds.iterator());
         }
         return Collections.emptyList();
     }
 
     private String setupConfigValue() {
-        if (contentValue != null && items.size() > 0) {
-            Resource configRes = items.stream().filter(item -> {
-                return item.getValueMap().get("value", String.class).equals(contentValue);
-            }).findFirst().orElse(null);
+        if (contentValue != null && !items.isEmpty()) {
+            Resource configRes = items.stream().filter(item -> item.getValueMap().get("value", String.class).equals(contentValue)).findFirst().orElse(null);
             if (configRes != null) {
                 return configRes.getValueMap().get("initialValue", String.class);
             }
