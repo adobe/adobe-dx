@@ -27,7 +27,7 @@ const DESKTOP_QUERY = `(min-width: ${DESKTOP_MIN}px)`;
 
 const AUTHOR_VH_SELECTOR = '.has-AuthorVh';
 const FLEX_CLASS = 'flex';
-const FLEX_CONTAINER_SELECTOR = '.dexter-FlexContainer';
+const FLEX_CONTAINER_SELECTOR = '.dx-Flex';
 const AEM_TOOLBAR_HEIGHT = 110;
 
 /**
@@ -45,7 +45,7 @@ const getVhAsPx = (viewHeight, vhValue) => {
 
 const mergeArrays = (arr, mergeArr) => {
     if (!arr || arr.length === 0) return mergeArr ? [...mergeArr] : [];
-    if (!mergeArr || mergeArr.length === 0) return [];
+    if (!mergeArr || mergeArr.length === 0) return arr ? [...arr] : [];
 
     let merged = [...arr].map((val, i) => {
         if (!(val || val === 0) && mergeArr[i]) {
@@ -71,9 +71,9 @@ const mergeArrays = (arr, mergeArr) => {
  */
 const getVhPxArray = (mediaName, viewHeight, dataset) => {
     // If any array slots are empty, need to inherit the values from smaller screen size if defined
-    const mobile = dataset.authorMobileItemsVh && dataset.authorMobileItemsVh.split(',');
-    const tablet = dataset.authorTabletItemsVh && dataset.authorTabletItemsVh.split(',');
-    const desktop = dataset.authorDesktopItemsVh && dataset.authorDesktopItemsVh.split(',');
+    const mobile = dataset.authorVhItemMobile && dataset.authorVhItemMobile.split(',');
+    const tablet = dataset.authorVhItemTablet && dataset.authorVhItemTablet.split(',');
+    const desktop = dataset.authorVhItemDesktop && dataset.authorVhItemDesktop.split(',');
 
     let vhValues = [];
     switch (mediaName) {
@@ -95,17 +95,17 @@ const breakpointSwitch = (mediaName, viewHeight, dataset) => {
     switch (mediaName) {
         case DESKTOP:
             vhValue =
-                getVhAsPx(viewHeight, dataset.authorDesktopVh) ||
-                getVhAsPx(viewHeight, dataset.authorTabletVh) ||
-                getVhAsPx(viewHeight, dataset.authorMobileVh);
+                getVhAsPx(viewHeight, dataset.authorVhDesktop) ||
+                getVhAsPx(viewHeight, dataset.authorVhTablet) ||
+                getVhAsPx(viewHeight, dataset.authorVhMobile);
             break;
         case TABLET:
             vhValue =
-                getVhAsPx(viewHeight, dataset.authorTabletVh) ||
-                getVhAsPx(viewHeight, dataset.authorMobileVh);
+                getVhAsPx(viewHeight, dataset.authorVhTablet) ||
+                getVhAsPx(viewHeight, dataset.authorVhMobile);
             break;
         default:
-            vhValue = getVhAsPx(viewHeight, dataset.authorMobileVh);
+            vhValue = getVhAsPx(viewHeight, dataset.authorVhMobile);
     }
     return vhValue;
 };
