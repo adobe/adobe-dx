@@ -58,7 +58,7 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
  *         name="./style">
  *         <datasource
  *             jcr:primaryType="nt:unstructured"
- *             sling:resourceType="/apps/dexter/components/author/datasource/contextAwareDataSource"
+ *             sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
  *             sling:bucketName="cq:styleguide"
  *             confName="components/button"/>
  *     </style>

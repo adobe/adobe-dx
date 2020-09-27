@@ -147,13 +147,13 @@
                                     <spacing
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Spacing"
-                                        granite:class="dexter-Spacing--twoColumn"
+                                        granite:class="dx-Spacing--twoColumn"
                                         sling:resourceType="granite/ui/components/coral/foundation/container"
                                         margin="{Boolean}false">
                                         <items jcr:primaryType="nt:unstructured">
                                             <padding
                                                 jcr:primaryType="nt:unstructured"
-                                                granite:class="dexter-Spacing--column"
+                                                granite:class="dx-Spacing--column"
                                                 jcr:title="Padding"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
                                                 margin="{Boolean}false">
@@ -222,7 +222,7 @@
                                             </padding>
                                             <margin
                                                 jcr:primaryType="nt:unstructured"
-                                                granite:class="dexter-Spacing--column"
+                                                granite:class="dx-Spacing--column"
                                                 jcr:title="Margin"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
                                                 margin="{Boolean}false">
@@ -239,7 +239,7 @@
                                                         name="./mobileMarginTop">
                                                         <granite:rendercondition
                                                             jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="dexter/components/author/renderConditions/parent"
+                                                            sling:resourceType="dx/components/author/renderConditions/parent"
                                                             hideIfParent="items" />
                                                     </marginTop>
                                                     <marginTopTypeHint
@@ -274,7 +274,7 @@
                                                         name="./mobileMarginBottom">
                                                         <granite:rendercondition
                                                             jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="dexter/components/author/renderConditions/parent"
+                                                            sling:resourceType="dx/components/author/renderConditions/parent"
                                                             hideIfParent="items" />
                                                     </marginBottom>
                                                     <marginBottomTypeHint

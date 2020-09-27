@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 const CORAL_SLIDER = 'coral-slider';
-const SLIDER_WRAPPER = '.dexter-Form-fieldwrapper.dexter-Form-fieldwrapper--slider';
-const DX_TOOLTIP = '.dexter-SliderTooltip';
-const DX_TOOLTIP_ENABLED = 'dexter-SliderTooltip--enabled';
-const DX_HIDDEN_FIELD = '.dexter-SliderHiddenField';
+const SLIDER_WRAPPER = '.dx-Form-fieldwrapper.dx-Form-fieldwrapper--slider';
+const DX_TOOLTIP = '.dx-SliderTooltip';
+const DX_TOOLTIP_ENABLED = 'dx-SliderTooltip--enabled';
+const DX_HIDDEN_FIELD = '.dx-SliderHiddenField';
 
 export default class RangeSlider {
     constructor($dialog) {

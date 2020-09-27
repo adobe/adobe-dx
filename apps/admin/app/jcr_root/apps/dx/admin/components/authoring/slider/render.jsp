@@ -81,8 +81,8 @@ Slider
     attrs.add("data-foundation-validation", validation);
     attrs.add("data-validation", validation); // Compatibility
 
-%><div class="dexter-Form-fieldwrapper dexter-Form-fieldwrapper--slider">
-    <button type="button" class="dexter-SliderTooltip" data-disabled-text="<%=xssAPI.encodeForHTMLAttr(disabledText)%>" data-button-suffix="<%=xssAPI.encodeForHTMLAttr(buttonSuffix)%>"><%=xssAPI.encodeForHTMLAttr(disabledText)%></button>
+%><div class="dx-Form-fieldwrapper dx-Form-fieldwrapper--slider">
+    <button type="button" class="dx-SliderTooltip" data-disabled-text="<%=xssAPI.encodeForHTMLAttr(disabledText)%>" data-button-suffix="<%=xssAPI.encodeForHTMLAttr(buttonSuffix)%>"><%=xssAPI.encodeForHTMLAttr(disabledText)%></button>
     <coral-slider <%= attrs.build() %> data-default-value="<%=xssAPI.encodeForHTMLAttr(defaultValue)%>" filled></coral-slider>
-    <input class="dexter-SliderHiddenField" type="hidden" name="<%=xssAPI.encodeForHTMLAttr(name)%>" value="<%=xssAPI.encodeForHTMLAttr(value)%>"/>
+    <input class="dx-SliderHiddenField" type="hidden" name="<%=xssAPI.encodeForHTMLAttr(name)%>" value="<%=xssAPI.encodeForHTMLAttr(value)%>"/>
 </div>
