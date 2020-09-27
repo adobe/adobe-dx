@@ -1,0 +1,46 @@
+.dx-Authoring--twoColumn {
+    display: flex;
+    width: auto;
+
+    > div {
+        flex: 1 1 50%;
+
+        // Prevent un-intended effects of flex on non-single.
+        &.coral-Form-fieldwrapper--singleline {
+            display: flex;
+
+            .coral3-Checkbox,
+            .coral-Form-fieldinfo.coral3-Icon {
+                align-self: flex-end;
+                padding-bottom: 1.125rem;
+            }
+
+            .coral-Form-fieldinfo.coral3-Icon {
+                padding-bottom: 0.5rem;
+            }
+
+            .coral3-Tooltip--arrowRight:after {
+                top: 0.875rem;
+            }
+        }
+
+        &.coral-Form-fieldwrapper {
+            .coral3-Tooltip--arrowLeft {
+                left: -30px !important;
+                width: 100%;
+            }
+        }
+
+        &:first-child {
+            margin-right: 0.625rem;
+        }
+
+        &:last-child {
+            margin-left: 0.625rem;
+        }
+    }
+
+    &.dx-Authoring--spaceBetween {
+        justify-content: space-between;
+    }
+}
