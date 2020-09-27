@@ -56,22 +56,22 @@ class FlexItemsDefinitionsTest  extends AbstractInlineStyleWorkerTest {
                     .resource("item2", "minHeight", "auto", "minHeightType", "px", "width", "33.33%", "widthCustomType", "px");
         context.currentResource(CONTENT_ROOT);
         assertNull(getRule("tablet", "a-flex"));
-        assertEquals("#a-flex > .dx-flex-items > *:nth-child(1) {\n"
+        assertEquals("#a-flex > .dx-Flex-items > *:nth-child(1) {\n"
             + "width: 200px; max-width: 200px; min-height: auto\n"
             + "}\n"
-            + "#a-flex > .dx-flex-items > *:nth-child(2) {\n"
+            + "#a-flex > .dx-Flex-items > *:nth-child(2) {\n"
             + "flex: 0 0 auto; max-width: 100%; width: auto; min-height: 92px\n"
             + "}\n"
-            + "#a-flex > .dx-flex-items > *:nth-child(3) {\n"
+            + "#a-flex > .dx-Flex-items > *:nth-child(3) {\n"
             + "width: 100%; max-width: 100%; flex: 1 1 auto; min-height: auto\n"
             + "}", getRule("mobile","a-flex"));
-        assertEquals("#a-flex > .dx-flex-items > *:nth-child(1) {\n"
+        assertEquals("#a-flex > .dx-Flex-items > *:nth-child(1) {\n"
             + "flex: 1 1 1%; max-width: 100%; min-height: auto; order: 1\n"
             + "}\n"
-            + "#a-flex > .dx-flex-items > *:nth-child(2) {\n"
+            + "#a-flex > .dx-Flex-items > *:nth-child(2) {\n"
             + "width: 33.33%; max-width: 33.33%; flex: 1 1 auto; min-height: auto\n"
             + "}\n"
-            + "#a-flex > .dx-flex-items > *:nth-child(3) {\n"
+            + "#a-flex > .dx-Flex-items > *:nth-child(3) {\n"
             + "width: 33.33%; max-width: 33.33%; flex: 1 1 auto; min-height: auto\n"
             + "}", getRule("desktop","a-flex"));
     }

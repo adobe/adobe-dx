@@ -29,10 +29,10 @@ class FlexGeneralStyleTest extends AbstractInlineStyleWorkerTest {
         context.build().resource(CONTENT_ROOT, "minHeightValue",
             20L, "minHeightType", "px",
             "gap", 30L);
-        assertEquals("#this-is-my-flex > .dx-flex-items {\n"
+        assertEquals("#this-is-my-flex > .dx-Flex-items {\n"
             + "min-height: 20px; margin: -15px\n"
             + "}\n"
-            + "#this-is-my-flex > .dx-flex-items > * {\n"
+            + "#this-is-my-flex > .dx-Flex-items > * {\n"
             + "border: 0 solid transparent; border-width: 15px\n"
             + "}", getRule("mobile", "this-is-my-flex"));
     }
@@ -41,7 +41,7 @@ class FlexGeneralStyleTest extends AbstractInlineStyleWorkerTest {
     public void testRuleNoGap() {
         context.build().resource(CONTENT_ROOT, "minHeightValue",
             30L, "minHeightType", "%");
-        assertEquals("#this-is-my-flex > .dx-flex-items {\n"
+        assertEquals("#this-is-my-flex > .dx-Flex-items {\n"
             + "min-height: 30%\n"
             + "}", getRule("mobile", "this-is-my-flex"));
     }

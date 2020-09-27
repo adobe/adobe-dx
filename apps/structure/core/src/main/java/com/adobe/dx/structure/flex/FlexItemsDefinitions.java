@@ -69,7 +69,7 @@ public class FlexItemsDefinitions implements InlineStyleWorker {
 
     private static final String FORMAT_WIDTH = CSS_WIDTH + "%s; max-width: %s";
     private static final String FORMAT_COLUMNWIDTH = FORMAT_WIDTH + "; flex: 1 1 auto";
-    private static final String FORMAT_RULE_DEFINITIONS = "#%s > .dx-flex-items > *:nth-child(%s) {\n%s\n}";
+    private static final String FORMAT_RULE_DEFINITIONS = "#%s > .dx-Flex-items > *:nth-child(%s) {\n%s\n}";
 
     @Override
     public String getKey() {

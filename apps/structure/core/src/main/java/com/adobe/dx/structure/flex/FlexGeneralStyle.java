@@ -41,8 +41,8 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 @Component(configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class FlexGeneralStyle implements InlineStyleWorker {
     private static final String FLEX_GENERAL = "flex-general";
-    private static final String RULE_CONTAINER = "#%s > .dx-flex-items {\n%s\n}";
-    private static final String RULE_ITEM = "#%s > .dx-flex-items > * {\n%s\n}";
+    private static final String RULE_CONTAINER = "#%s > .dx-Flex-items {\n%s\n}";
+    private static final String RULE_ITEM = "#%s > .dx-Flex-items > * {\n%s\n}";
     private static final String PN_GAP = "gap";
     private static final String MIN_HEIGHT_PREFIX  = "min-height: ";
     private static final String GAP_CONTAINER = "margin: -%spx";
