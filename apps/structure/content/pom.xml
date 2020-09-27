@@ -45,7 +45,7 @@
                     </properties>
                     <filters>
                         <filter>
-                            <root>/conf/global/sling:configs/com.adobe.dx.styleguide.StyleGuide</root>
+                            <root>/conf/global/sling:configs</root>
                             <mode>update</mode>
                         </filter>
                     </filters>

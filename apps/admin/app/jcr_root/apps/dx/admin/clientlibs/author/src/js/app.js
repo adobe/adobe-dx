@@ -9,4 +9,6 @@ initAuthorVh(document);
 
 // Register functions
 const toWatch = [initAuthorVh];
-window.dx.author.watch.registerFunction(toWatch);
+toWatch.forEach((func) => {
+    window.dx.author.watch.registerFunction(func);
+});
