@@ -30,8 +30,6 @@
                     focusY="{Long}30"
                     foregroundColor="white"
                     gradient="red"
-                    gradientDesktop="another"
-                    foregroundColorDesktop="blue"
                     justification="JustifyStretch">
                     <items jcr:primaryType="nt:unstructured"
                            sling:resourceType="dx/structure/components/parlite">

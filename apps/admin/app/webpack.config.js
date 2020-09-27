@@ -47,6 +47,8 @@ if (!isProduction) {
     rules.push(prettierLoader);
 }
 
+console.log(devtool());
+
 module.exports = {
     entry: {
         registry: [`${PROJECT_PATH}/registry/src/js/app.js`],
@@ -70,7 +72,6 @@ module.exports = {
         react: 'React',
         'react-dom': 'ReactDOM',
     },
-    devtool: devtool(),
     optimization,
     plugins: [
         new webpack.DefinePlugin(spectrumConfig),

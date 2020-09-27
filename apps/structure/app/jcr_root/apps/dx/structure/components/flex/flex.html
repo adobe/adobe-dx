@@ -15,12 +15,12 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.model="com.adobe.dx.structure.flex.FlexModel"></sly>
 <style data-sly-test="${model.style}">${model.style @ context='unsafe'}</style>
-<div id="${model.id}" class="dx-flex ${model.additionalClasses}">
+<div id="${model.id}" class="dx-Flex ${model.additionalClasses}">
     <div data-sly-element="${dxPolicy.elementName}"
          aria-label="${dxPolicy.ariaLabel}"
          data-sly-attribute="${model.attributes}"
          role="${(!dxPolicy.elementName || dxPolicy.elementName == 'div') && dxPolicy.ariaLandmarkRole}"
-         class="dx-flex-items"
+         class="dx-Flex-items has-AuthorVh"
          data-sly-resource="${'./items' @ resourceType='dx/structure/components/parlite'}"></div>
          <h1>Flex Container</h1>
 </div>
