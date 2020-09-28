@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Get a list of workers depending on the resource type, and the bound workers
- * @param <T>
+ * @param <T> worker interface that will be used here, must have a key, can have as many specific "work" APIs
  */
 public abstract class AbstractWorkerManager <T extends Worker> {
 
@@ -44,7 +44,8 @@ public abstract class AbstractWorkerManager <T extends Worker> {
     protected Map<String, T> workersMap = MapUtils.EMPTY_MAP;
 
     /**
-     * returns ordered list of workers for that given resource (or null)
+     * @param resource context resource out of which workers will be computed
+     * @return ordered list of workers for that given resource (or null)
      */
     protected @NotNull String[] getWorkerKeys(Resource resource) {
         String type = resource.getResourceType();
