@@ -117,7 +117,7 @@ Bundle-DocURL:
         <dependency>
             <groupId>com.adobe.dx</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.13-SNAPSHOT</version>
+            <version>0.1.0</version>
         </dependency>
     </dependencies>
 </project>
