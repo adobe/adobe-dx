@@ -23,13 +23,13 @@
     </parent>
     <artifactId>testing-extensions</artifactId>
     <name>${project.prefix} - Testing Extensions</name>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <description>Test Extension with dx core features</description>
     <scm>
         <connection>scm:git:https://github.com/adobe/adobe-dx.git</connection>
         <developerConnection>scm:git:git@github.com:adobe/adobe-dx.git</developerConnection>
         <url>https://github.com/adobe/adobe-dx/bundles/base-tests/tree/master</url>
-      <tag>HEAD</tag>
+      <tag>testing-extensions-0.0.1</tag>
     </scm>
     
     <build>
