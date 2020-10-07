@@ -16,10 +16,10 @@
 <sly data-sly-use.model="com.adobe.dx.structure.flex.FlexModel"></sly>
 <style data-sly-test="${model.style}">${model.style @ context='unsafe'}</style>
 <div id="${model.id}" class="dx-Flex ${model.additionalClasses}">
-    <div data-sly-element="${dxPolicy.elementName}"
-         aria-label="${dxPolicy.ariaLabel}"
+    <div data-sly-element="${dxProps.elementName}"
+         aria-label="${dxProps.ariaLabel}"
          data-sly-attribute="${model.attributes}"
-         role="${(!dxPolicy.elementName || dxPolicy.elementName == 'div') && dxPolicy.ariaLandmarkRole}"
+         role="${(!dxProps.elementName || dxProps.elementName == 'div') && dxProps.ariaLandmarkRole}"
          class="dx-Flex-items"
          data-sly-resource="${'./items' @ resourceType='dx/structure/components/parlite'}"></div>
 </div>
