@@ -9,22 +9,41 @@
     jcr:title="Flex Container"
     trackingFeature="dx-structure:flex:v1"
     sling:resourceType="cq/gui/components/authoring/dialog">
-    <content
-        jcr:primaryType="nt:unstructured"
+    <content jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
-            <tabs
-                jcr:primaryType="nt:unstructured"
-                sling:resourceType="granite/ui/components/coral/foundation/tabs">
+            <tabs jcr:primaryType="nt:unstructured"
+                  sling:resourceType="dx/admin/responsive/include"
+                  resourceType="granite/ui/components/coral/foundation/tabs">
                 <items jcr:primaryType="nt:unstructured">
-                    <mobile
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Mobile"
+                    <general jcr:primaryType="nt:unstructured"
+                        jcr:title="General"
                         sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <enableContainer
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                text="Enable Container"
+                                checked="{Boolean}true"
+                                value="true"
+                                uncheckedValue="{Boolean}false"
+                                name="./container">
+                            </enableContainer>
+                            <enableContainerType
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                value="Boolean"
+                                name="./container@TypeHint"/>
+                        </items>
+                    </general>
+                    <tab
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        dxResponsiveItem="{Boolean}true"
                         margin="{Boolean}false">
                         <items jcr:primaryType="nt:unstructured">
-                            <mobileTabs
-                                jcr:primaryType="nt:unstructured"
+                            <tabs jcr:primaryType="nt:unstructured"
                                 orientation="vertical"
                                 sling:resourceType="granite/ui/components/coral/foundation/tabs">
                                 <items jcr:primaryType="nt:unstructured">
@@ -34,17 +53,14 @@
                                         sling:resourceType="granite/ui/components/coral/foundation/container"
                                         margin="{Boolean}false">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <items
-                                                jcr:primaryType="nt:unstructured"
+                                            <items jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                 composite="{Boolean}true"
                                                 renderReadOnly="{Boolean}true">
-                                                <field
-                                                    jcr:primaryType="nt:unstructured"
+                                                <field jcr:primaryType="nt:unstructured"
                                                     name="./definitions"
                                                     sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                    <items
-                                                        jcr:primaryType="nt:unstructured">
+                                                    <items jcr:primaryType="nt:unstructured">
                                                         <definitions
                                                             jcr:primaryType="nt:unstructured"
                                                             path="dx/structure/components/flex/cq:dialog_definitions"
@@ -54,37 +70,31 @@
                                             </items>
                                         </items>
                                     </flexItems>
-                                    <flexLayout
-                                        jcr:primaryType="nt:unstructured"
+                                    <flexLayout jcr:primaryType="nt:unstructured"
                                         jcr:title="Layout"
                                         sling:resourceType="granite/ui/components/coral/foundation/container"
                                         margin="{Boolean}false">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <minHeightContainer
+                                            <minHeightContainer jcr:primaryType="nt:unstructured"
                                                 granite:class="dx-Authoring--twoColumn"
-                                                jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/container">
                                                 <items jcr:primaryType="nt:unstructured">
-                                                    <minHeight
-                                                        jcr:primaryType="nt:unstructured"
+                                                    <minHeight jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                                         typeHint="Long"
                                                         fieldLabel="Min Height"
                                                         fieldDescription="Define the minimum height of the component."
                                                         min="0"
                                                         name="./minHeightValue"/>
-                                                    <type
-                                                        jcr:primaryType="nt:unstructured"
+                                                    <type jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                         fieldLabel="Type"
                                                         name="./minHeightType">
                                                         <items jcr:primaryType="nt:unstructured">
-                                                            <pixels
-                                                                jcr:primaryType="nt:unstructured"
+                                                            <pixels jcr:primaryType="nt:unstructured"
                                                                 text="Pixels"
                                                                 value="px"/>
-                                                            <viewport
-                                                                jcr:primaryType="nt:unstructured"
+                                                            <viewport jcr:primaryType="nt:unstructured"
                                                                 text="% of viewport"
                                                                 value="vh"/>
                                                         </items>
@@ -103,18 +113,18 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                 fieldDescription="Define left to right item orientation."
                                                 fieldLabel="Item Justification"
-                                                name="./mobileJustification">
-                                            <datasource
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
-                                                confName="com.adobe.dx.styleguide.StyleGuide/jcr:content/components/flexContainer/justification"/>
+                                                name="./justification">
+                                                <datasource
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
+                                                    confName="com.adobe.dx.styleguide.StyleGuide/jcr:content/components/flexContainer/justification"/>
                                             </justification>
                                             <itemAlignment
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                 fieldDescription="How items are aligned on the row they sit on."
                                                 fieldLabel="Item Alignment"
-                                                name="./mobileItemAlignment">
+                                                name="./itemAlignment">
                                                 <datasource
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
@@ -125,7 +135,7 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                 fieldDescription="How entire rows are aligned in the flex container."
                                                 fieldLabel="Row Alignment"
-                                                name="./mobileContentAlignment">
+                                                name="./contentAlignment">
                                                 <datasource
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
@@ -136,7 +146,7 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                 fieldDescription="Define how the items content is aligned vertically."
                                                 fieldLabel="Item Content Alignment"
-                                                name="./mobileItemContentAlignment">
+                                                name="./itemContentAlignment">
                                                 <datasource
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
@@ -167,12 +177,12 @@
                                                         min="0"
                                                         max="100"
                                                         buttonSuffix="px"
-                                                        name="./mobilePaddingTop"/>
+                                                        name="./paddingTop"/>
                                                     <paddingTopTypeHint
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                         value="Long"
-                                                        name="./mobilePaddingTop@TypeHint"/>
+                                                        name="./paddingTop@TypeHint"/>
                                                     <paddingRight
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="dx/admin/components/authoring/slider"
@@ -182,12 +192,12 @@
                                                         min="0"
                                                         max="100"
                                                         buttonSuffix="px"
-                                                        name="./mobilePaddingRight"/>
+                                                        name="./paddingRight"/>
                                                     <paddingRightTypeHint
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                         value="Long"
-                                                        name="./mobilePaddingRight@TypeHint"/>
+                                                        name="./paddingRight@TypeHint"/>
                                                     <paddingBottom
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="dx/admin/components/authoring/slider"
@@ -197,12 +207,12 @@
                                                         min="0"
                                                         max="100"
                                                         buttonSuffix="px"
-                                                        name="./mobilePaddingBottom"/>
+                                                        name="./paddingBottom"/>
                                                     <paddingBottomTypeHint
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                         value="Long"
-                                                        name="./mobilePaddingBottom@TypeHint"/>
+                                                        name="./paddingBottom@TypeHint"/>
                                                     <paddingLeft
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="dx/admin/components/authoring/slider"
@@ -212,12 +222,12 @@
                                                         min="0"
                                                         max="100"
                                                         buttonSuffix="px"
-                                                        name="./mobilePaddingLeft"/>
+                                                        name="./paddingLeft"/>
                                                     <paddingLeftTypeHint
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                         value="Long"
-                                                        name="./mobilePaddingLeft@TypeHint"/>
+                                                        name="./paddingLeft@TypeHint"/>
                                                 </items>
                                             </padding>
                                             <margin
@@ -236,7 +246,7 @@
                                                         min="0"
                                                         max="100"
                                                         buttonSuffix="px"
-                                                        name="./mobileMarginTop">
+                                                        name="./marginTop">
                                                         <granite:rendercondition
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="dx/components/author/renderConditions/parent"
@@ -246,7 +256,7 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                         value="Long"
-                                                        name="./mobileMarginTop@TypeHint"/>
+                                                        name="./marginTop@TypeHint"/>
                                                     <marginRight
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="dx/admin/components/authoring/slider"
@@ -256,12 +266,12 @@
                                                         min="0"
                                                         max="100"
                                                         buttonSuffix="px"
-                                                        name="./mobileMarginRight"/>
+                                                        name="./marginRight"/>
                                                     <marginRightTypeHint
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                         value="Long"
-                                                        name="./mobileMarginRight@TypeHint"/>
+                                                        name="./marginRight@TypeHint"/>
                                                     <marginBottom
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="dx/admin/components/authoring/slider"
@@ -271,7 +281,7 @@
                                                         min="0"
                                                         max="100"
                                                         buttonSuffix="px"
-                                                        name="./mobileMarginBottom">
+                                                        name="./marginBottom">
                                                         <granite:rendercondition
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="dx/components/author/renderConditions/parent"
@@ -281,7 +291,7 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                         value="Long"
-                                                        name="./mobileMarginBottom@TypeHint"/>
+                                                        name="./marginBottom@TypeHint"/>
                                                     <marginLeft
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="dx/admin/components/authoring/slider"
@@ -291,12 +301,12 @@
                                                         min="0"
                                                         max="100"
                                                         buttonSuffix="px"
-                                                        name="./mobileMarginLeft"/>
+                                                        name="./marginLeft"/>
                                                     <marginLeftTypeHint
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                         value="Long"
-                                                        name="./mobileMarginLeft@TypeHint"/>
+                                                        name="./marginLeft@TypeHint"/>
                                                 </items>
                                             </margin>
                                         </items>
@@ -313,11 +323,11 @@
                                                 fieldLabel="Text Color"
                                                 showDefaultColors="{Boolean}false"
                                                 name="./foregroundColor">
-                                                    <datasource
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
-                                                        confName="com.adobe.dx.styleguide.StyleGuide/jcr:content/colors"/>
-                    
+                                                <datasource
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
+                                                    confName="com.adobe.dx.styleguide.StyleGuide/jcr:content/colors"/>
+
                                             </color>
                                         </items>
                                     </foreground>
@@ -333,10 +343,10 @@
                                                 fieldLabel="Color"
                                                 showDefaultColors="{Boolean}false"
                                                 name="./backgroundColor">
-                                                    <datasource
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
-                                                        confName="com.adobe.dx.styleguide.StyleGuide/jcr:content/colors"/>
+                                                <datasource
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
+                                                    confName="com.adobe.dx.styleguide.StyleGuide/jcr:content/colors"/>
                                             </color>
                                             <gradient
                                                 jcr:primaryType="nt:unstructured"
@@ -348,9 +358,9 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="dx/admin/components/datasource/contextawaredatasource"
                                                     confName="com.adobe.dx.styleguide.StyleGuide/jcr:content/gradients"/>
-                                                    <options
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+                                                <options
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
                                             </gradient>
                                             <videoURL
                                                 jcr:primaryType="nt:unstructured"
@@ -417,7 +427,7 @@
                                                         text="Crop Video"
                                                         value="crop-video"/>
                                                     <content
-                                                        granite:hide="${cqDesign.disableMobileAbsolute}"
+                                                        granite:hide="${cqDesign.disableAbsolute}"
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Crop Content"
                                                         value="crop-content"/>
@@ -468,149 +478,9 @@
                                         </items>
                                     </background>
                                 </items>
-                            </mobileTabs>
+                            </tabs>
                         </items>
-                    </mobile>
-                    <tablet
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Tablet"
-                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                        margin="{Boolean}false">
-                        <items jcr:primaryType="nt:unstructured">
-                            <mobileTabs
-                                jcr:primaryType="nt:unstructured"
-                                orientation="vertical"
-                                santosh="is-awesome"
-                                sling:resourceType="granite/ui/components/coral/foundation/tabs">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <flexItems
-                                        jcr:primaryType="nt:unstructured"
-                                        jcr:title="Items"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                        margin="{Boolean}false">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <items
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                fieldLabel="Items"
-                                                composite="{Boolean}true"
-                                                renderReadOnly="{Boolean}true">
-                                                <field
-                                                    jcr:primaryType="nt:unstructured"
-                                                    name="./definitionsTablet"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                    <items
-                                                        jcr:primaryType="nt:unstructured">
-                                                        <definitions
-                                                            jcr:primaryType="nt:unstructured"
-                                                            path="dx/structure/components/flex/cq:dialog_definitions"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/include"/>
-                                                    </items>
-                                                </field>
-                                            </items>
-                                        </items>
-                                    </flexItems>
-                                    <flexLayout
-                                        jcr:primaryType="nt:unstructured"
-                                        jcr:title="Layout"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                        margin="{Boolean}false">
-                                        <items jcr:primaryType="nt:unstructured">
-
-                                        </items>
-                                    </flexLayout>
-                                    <foreground
-                                        jcr:primaryType="nt:unstructured"
-                                        jcr:title="Foreground"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                        margin="{Boolean}false">
-                                        <items jcr:primaryType="nt:unstructured">
-
-                                        </items>
-                                    </foreground>
-                                    <background
-                                        jcr:primaryType="nt:unstructured"
-                                        jcr:title="Background"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                        margin="{Boolean}false">
-                                        <items jcr:primaryType="nt:unstructured">
-
-                                        </items>
-                                    </background>
-                                </items>
-                            </mobileTabs>
-                        </items>
-                    </tablet>
-                    <desktop
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Desktop"
-                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                        margin="{Boolean}false">
-                        <items jcr:primaryType="nt:unstructured">
-                            <mobileTabs
-                                jcr:primaryType="nt:unstructured"
-                                orientation="vertical"
-                                santosh="is-awesome"
-                                sling:resourceType="granite/ui/components/coral/foundation/tabs">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <flexItems
-                                        jcr:primaryType="nt:unstructured"
-                                        jcr:title="Items"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                        margin="{Boolean}false">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <items
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                fieldLabel="Items"
-                                                composite="{Boolean}true"
-                                                renderReadOnly="{Boolean}true">
-                                                <field
-                                                    jcr:primaryType="nt:unstructured"
-                                                    name="./definitionsDesktop"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                    <items
-                                                        jcr:primaryType="nt:unstructured">
-                                                        <definitions
-                                                            jcr:primaryType="nt:unstructured"
-                                                            path="dx/structure/components/flex/cq:dialog_definitions"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/include"/>
-                                                    </items>
-                                                </field>
-                                            </items>
-                                        </items>
-                                    </flexItems>
-                                    <flexLayout
-                                        jcr:primaryType="nt:unstructured"
-                                        jcr:title="Layout"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                        margin="{Boolean}false">
-                                        <items jcr:primaryType="nt:unstructured">
-
-                                        </items>
-                                    </flexLayout>
-                                    <foreground
-                                        jcr:primaryType="nt:unstructured"
-                                        jcr:title="Foreground"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                        margin="{Boolean}false">
-                                        <items jcr:primaryType="nt:unstructured">
-
-                                        </items>
-                                    </foreground>
-                                    <background
-                                        jcr:primaryType="nt:unstructured"
-                                        jcr:title="Background"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                        margin="{Boolean}false">
-                                        <items jcr:primaryType="nt:unstructured">
-
-                                        </items>
-                                    </background>
-                                </items>
-                            </mobileTabs>
-                        </items>
-                    </desktop>
+                    </tab>
                 </items>
             </tabs>
         </items>

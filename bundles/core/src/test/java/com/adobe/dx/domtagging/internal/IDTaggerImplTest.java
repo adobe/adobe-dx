@@ -23,6 +23,8 @@ import static org.mockito.Mockito.when;
 
 import com.adobe.dx.domtagging.IDTagger;
 import com.adobe.dx.testing.AbstractTest;
+import com.adobe.dx.utils.TypeFilter;
+import com.adobe.dx.utils.TypeIterator;
 import com.day.cq.replication.ReplicationAction;
 import com.day.cq.replication.ReplicationActionType;
 
@@ -31,7 +33,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.IteratorUtils;
@@ -108,10 +109,8 @@ class IDTaggerImplTest extends AbstractTest {
 
     @Test
     public void testComponentIterator() {
-        Pattern dx = Pattern.compile("some/dx/.*");
-        Pattern other = Pattern.compile("some/other/.*");
-        IDTaggerImpl.ComponentIterator iterator = new IDTaggerImpl.ComponentIterator(tagger.getFilter(Arrays.asList(dx, other)),
-            context.resourceResolver().getResource(CONTENT_ROOT + "/jcr:content"));
+        TypeFilter typeFilter = new TypeFilter(new String[]{"some/dx/.*", "some/other/.*"});
+        TypeIterator iterator = new TypeIterator(typeFilter,context.resourceResolver().getResource(CONTENT_ROOT + "/jcr:content"));
         List<String> result = (List<String>) IteratorUtils.toList(iterator).stream()
             .map(r -> ((Resource)r).getPath())
             .collect(Collectors.toList());
