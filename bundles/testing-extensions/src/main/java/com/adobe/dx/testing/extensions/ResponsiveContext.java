@@ -15,7 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.testing.extensions;
 
-import static com.adobe.dx.testing.AbstractTest.CONF_ROOT;
 import static com.adobe.dx.testing.AbstractTest.CONTENT_ROOT;
 import static com.adobe.dx.testing.extensions.ExtensionsUtil.getContext;
 
@@ -45,13 +44,16 @@ public class ResponsiveContext implements BeforeEachCallback {
         AemContext context = getContext(extensionContext);
         context.build().resource(AbstractTest.CONFIG_ROOTS + "/" + ResponsiveConfiguration.class.getName() + "/breakpoints")
             .siblingsMode()
-            .resource("1", PROPERTY_SUFFIX, "", "key", "mobile")
+            .resource("1", PROPERTY_SUFFIX, "", "key", "mobile",
+                "label", "Mobile / Default")
             .resource("2", PROPERTY_SUFFIX, "Tablet",
                 "key", "tablet",
+                "label", "Tablet",
                 "mediaQuery", "@media screen and (min-width: 600px)",
                 "inherit", "inheritTablet")
             .resource("3", PROPERTY_SUFFIX, "Desktop",
                 "key", "desktop",
+                "label", "Desktop",
                 "mediaQuery", "@media screen and (min-width: 1200px)",
                 "inherit", "inheritDesktop");
         MockContextAwareConfig.registerAnnotationClasses(context, ResponsiveConfiguration.class);

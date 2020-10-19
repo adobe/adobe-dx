@@ -21,7 +21,7 @@ import org.apache.sling.caconfig.annotation.Property;
 @Configuration(collection = true)
 public @interface Breakpoint {
     @Property(label = "name")
-    String getLabel();
+    String label();
 
     @Property(label = "property suffix", description = "suffix to append to a property to get the responsive version of it")
     String propertySuffix();
