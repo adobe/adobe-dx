@@ -63,6 +63,8 @@ class ResponsiveIncludeTest extends AbstractOakTest {
         context.registerInjectActivateService(include, "appChange", true,
             "dialogRoots", new String[] {"/apps/dx"},
             "cacheRoot", CACHE_ROOT_TEST);
+        String randomPath = "/some/path/with/an/item/container/anotherText";
+        context.build().resource(randomPath, "sling:resourceType", "text", "name", "./anotherText");
         context.build().resource(INCLUDE_ROOT, "sling:resourceType", ResponsiveInclude.RESOURCE_TYPE, "resourceType","dialog/panel")
             .siblingsMode()
             .resource("items/general", "sling:resourceType", "text", "name","./generalText")
@@ -71,6 +73,7 @@ class ResponsiveIncludeTest extends AbstractOakTest {
             .resource("text", "sling:resourceType", "text", "name", "./respText")
             .resource("check", "sling:resourceType", "check", "name", "./check")
             .resource("checkType", "sling:resourceType", "checkType", "name", "./check@TypeHint")
+            .resource("include", "sling:resourceType","someInclude", "path", "/some/path/with/an/item/container", "dxResponsiveFollow", true)
             .commit();
         context.currentResource(context.resourceResolver().getResource(INCLUDE_ROOT));
         context.requestPathInfo().setSuffix(CONTENT_ROOT);
@@ -82,25 +85,24 @@ class ResponsiveIncludeTest extends AbstractOakTest {
             include.getIncludePath(context.currentResource()));
     }
 
+    void assertField(String path, String field, String value) {
+        ValueMap vm = getVM(path);
+        assertNotNull(vm);
+        assertEquals(value, vm.get(field));
+    }
+
     @Test
     public void testIncludeResourceBuilding() throws LoginException, RepositoryException {
         Resource resource = include.getIncludeResource(include.getBreakpoints(context.request()), context.currentResource());
         assertNotNull(resource);
         assertEquals(CACHE_ROOT, resource.getPath());
         assertEquals("dialog/panel", resource.getValueMap().get("sling:resourceType"));
-        ValueMap generalItem = getVM(CACHE_ROOT + "/items/general");
-        assertNotNull(generalItem);
-        assertEquals("./generalText", generalItem.get("name"));
-        String tabletItem = CACHE_ROOT + "/items/respTablet";
-        ValueMap vmTablet = getVM(tabletItem);
-        assertNotNull(vmTablet);
-        assertEquals("Tablet", vmTablet.get("jcr:title"));
-        ValueMap check = getVM(tabletItem + "/items/check");
-        assertNotNull(check);
-        assertEquals("./checkTablet", check.get("name"));
-        ValueMap checkType = getVM(tabletItem + "/items/checkType");
-        assertNotNull(checkType);
-        assertEquals("./checkTablet@TypeHint", checkType.get("name"));
+        String path = CACHE_ROOT + "/items/";
+        assertField(path + "general","name", "./generalText");
+        assertField(path + "respTablet","jcr:title", "Tablet");
+        assertField(path + "respTablet/items/check","name", "./checkTablet");
+        assertField(path + "respTablet/items/checkType", "name", "./checkTablet@TypeHint");
+        assertField(path + "respDesktop/items/anotherText", "name", "./anotherTextDesktop");
     }
 
     @Test
