@@ -83,14 +83,17 @@ public class ResponsiveInclude extends SlingSafeMethodsServlet implements Resour
     public static final String RESOURCE_TYPE = "dx/admin/responsive/include";
     private static final String PN_TYPE = "resourceType";
     private static final String PN_LOOP = "dxResponsiveItem";
+    private static final String PN_FOLLOW = "dxResponsiveFollow";
     private static final String PN_NAME = "name";
     private static final String PN_TITLE = "jcr:title";
+    private static final String PN_PATH = "path";
     private static final String PN_DESCRIPTION = "jcr:description";
     private static final String PN_INVALID = "invalid";
     private static final String SLING_FOLDER = "sling:Folder";
     private static final String PN_RESOURCE_TYPE = "sling:" + PN_TYPE;
     private static final String MNT_PREFIX = "/mnt/override";
     private static final String CONTENT_ROOT = "/content";
+    private static final String APPS_PREFIX = "/apps/";
     private static final String SLASH = "/";
 
     Configuration configuration;
@@ -289,6 +292,11 @@ public class ResponsiveInclude extends SlingSafeMethodsServlet implements Resour
                     String name = childConf.getName();
                     if (breakpoint == null && childConf.hasProperty(PN_LOOP)) {
                         loopTree(breakpoints, childConf, target);
+                    } else if (breakpoint != null && childConf.hasProperty(PN_FOLLOW) && childConf.hasProperty(PN_PATH)) {
+                        String path = childConf.getProperty(PN_PATH).getString();
+                        path = path.startsWith(SLASH) ? path : APPS_PREFIX + path;
+                        Node followedChildConf = childConf.getSession().getNode(path);
+                        copyTree(breakpoints, followedChildConf, target, breakpoint);
                     } else {
                         Node childTarget = targetNode.hasNode(name) ? targetNode.getNode(name) : targetNode.addNode(name, childConf.getPrimaryNodeType().getName());
                         logger.debug("writing tree {}", childTarget.getPath());
