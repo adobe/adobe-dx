@@ -15,7 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.testing.extensions;
 
-import static com.adobe.dx.testing.AbstractTest.CONF_ROOT;
 import static com.adobe.dx.testing.AbstractTest.CONTENT_ROOT;
 import static com.adobe.dx.testing.extensions.ExtensionsUtil.getContext;
 
@@ -43,23 +42,23 @@ public class ResponsiveContext implements BeforeEachCallback {
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
         AemContext context = getContext(extensionContext);
-        context.build().resource(CONF_ROOT + "/sling:configs/" + ResponsiveConfiguration.class.getName() + "/breakpoints")
+        context.build().resource(AbstractTest.CONFIG_ROOTS + "/" + ResponsiveConfiguration.class.getName() + "/breakpoints")
             .siblingsMode()
-            .resource("1", PROPERTY_SUFFIX, "Mobile", "key", "mobile")
+            .resource("1", PROPERTY_SUFFIX, "", "key", "mobile",
+                "label", "Mobile / Default")
             .resource("2", PROPERTY_SUFFIX, "Tablet",
                 "key", "tablet",
+                "label", "Tablet",
                 "mediaQuery", "@media screen and (min-width: 600px)",
-                "inheritBehaviourProp", "inheritTablet")
+                "inherit", "inheritTablet")
             .resource("3", PROPERTY_SUFFIX, "Desktop",
                 "key", "desktop",
+                "label", "Desktop",
                 "mediaQuery", "@media screen and (min-width: 1200px)",
-                "inheritBehaviourProp", "inheritDesktop");
+                "inherit", "inheritDesktop");
         MockContextAwareConfig.registerAnnotationClasses(context, ResponsiveConfiguration.class);
         MockContextAwareConfig.registerAnnotationClasses(context, Breakpoint.class);
-        if (context.resourceResolver().getResource(CONTENT_ROOT) == null) {
-            context.create().resource(CONTENT_ROOT);
-        }
-        context.build().resource(CONTENT_ROOT, "sling:configRef", CONF_ROOT);
+        AbstractTest.initContentRoots(context);
         Resource resource = context.resourceResolver().getResource(CONTENT_ROOT);
         if (resource != null) {
             ConfigurationBuilder builder = resource.adaptTo(ConfigurationBuilder.class);

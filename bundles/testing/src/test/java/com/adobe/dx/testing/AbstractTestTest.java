@@ -15,8 +15,12 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.testing;
 
+import static com.adobe.dx.testing.AbstractTest.CONF_ROOT;
+import static com.adobe.dx.testing.AbstractTest.CONTENT_ROOT;
 import static com.adobe.dx.testing.AbstractTest.buildContext;
+import static com.adobe.dx.testing.AbstractTest.getVM;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
@@ -45,5 +49,15 @@ class AbstractTestTest {
         ValueMap properties = test.getVM(AbstractTest.CONTENT_ROOT);
         assertEquals("bar", properties.get("foo"));
         assertEquals(2, properties.get("blah"));
+    }
+
+    @Test
+    public void initContentRoot() {
+        AbstractTest.initContentRoots(context);
+        //call twice to ensure it does not fail
+        AbstractTest.initContentRoots(context);
+        assertNotNull(getVM(context, CONF_ROOT));
+        assertNotNull(getVM(context, CONTENT_ROOT));
+        assertEquals(CONF_ROOT, getVM(context, CONTENT_ROOT).get("sling:configRef"));
     }
 }

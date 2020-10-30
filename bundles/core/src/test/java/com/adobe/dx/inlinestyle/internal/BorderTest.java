@@ -33,6 +33,9 @@ public class BorderTest extends AbstractInlineStyleWorkerTest {
         assertEquals(expected, getDeclaration());
     }
 
+    private void assertBorderEquals(String expected, String breakpoint) {
+        assertEquals(expected, getDeclaration(breakpoint));
+    }
 
     @Test
     void assertNoRule() {
@@ -43,49 +46,59 @@ public class BorderTest extends AbstractInlineStyleWorkerTest {
     void getNoBorder() {
         context.build().resource(CONTENT_ROOT, "foo", "bar");
         assertNull(getDeclaration("mobile"));
+        assertNull(getDeclaration("tablet"));
     }
 
     @Test
     void getBorder() {
-        context.build().resource(CONTENT_ROOT, "borderSides", "all","borderAllStyle", "dotted", "borderAllWidth", 4, "borderAllColor", "red");
+        context.build().resource(CONTENT_ROOT, "borderSides", "all",
+            "borderAllStyle", "dotted",
+            "borderAllWidth", 4L,
+            "borderAllColor", "red",
+            "borderSidesTablet", "all",
+            "borderAllStyleTablet", "solid",
+            "borderAllWidthTablet", 2L,
+            "borderAllColorTablet", "blue");
         assertBorderEquals("border: dotted 4px #FE0000");
+        assertBorderEquals("border: solid 2px #0000FE", "tablet");
     }
 
     @Test
     void getRadius() {
-        context.build().resource(CONTENT_ROOT, "borderRadius", "all","borderAllRadius", 3);
+        context.build().resource(CONTENT_ROOT, "borderRadius", "all","borderAllRadius", 3L);
         assertBorderEquals("border-radius: 3px");
     }
 
     @Test
     void getBorderAndRadius() {
-        context.build().resource(CONTENT_ROOT, "borderSides", "all","borderAllStyle", "dotted", "borderAllWidth", 4, "borderAllColor", "red",
-            "borderRadius", "all","borderAllRadius", 3);
+        context.build().resource(CONTENT_ROOT, "borderSides", "all",
+            "borderAllStyle", "dotted", "borderAllWidth", 4L, "borderAllColor", "red",
+            "borderRadius", "all","borderAllRadius", 3L);
         assertBorderEquals("border: dotted 4px #FE0000; border-radius: 3px");
     }
 
     @Test
     void getSomeBorders() {
         context.build().resource(CONTENT_ROOT, "borderSides", "each",
-        "borderLeftStyle", "dotted", "borderLeftWidth", 4, "borderLeftColor", "red",
-        "borderRightStyle", "dotted", "borderRightWidth", 4, "borderRightColor", "red");
+        "borderLeftStyle", "dotted", "borderLeftWidth", 4L, "borderLeftColor", "red",
+        "borderRightStyle", "dotted", "borderRightWidth", 4L, "borderRightColor", "red");
         assertBorderEquals("border-right: dotted 4px #FE0000; border-left: dotted 4px #FE0000");
     }
 
     @Test
     void getSomeRadius() {
         context.build().resource(CONTENT_ROOT, "borderRadius", "each",
-            "borderRadiusTopLeft", 4,
-            "borderRadiusBottomRight", 3);
+            "borderRadiusTopLeft", 4L,
+            "borderRadiusBottomRight", 3L);
         assertBorderEquals("border-radius: 4px 0px 3px 0px");
     }
     
     @Test
     void getSomeBordersAndRadiuses() {
         context.build().resource(CONTENT_ROOT, "borderSides", "each",
-            "borderTopStyle", "dotted", "borderTopWidth", 4, "borderTopColor", "red",
-            "borderBottomStyle", "dotted", "borderBottomWidth", 4, "borderBottomColor", "red",
-            "borderRadius", "each", "borderRadiusBottomLeft", 4, "borderRadiusTopRight", 3);
+            "borderTopStyle", "dotted", "borderTopWidth", 4L, "borderTopColor", "red",
+            "borderBottomStyle", "dotted", "borderBottomWidth", 4L, "borderBottomColor", "red",
+            "borderRadius", "each", "borderRadiusBottomLeft", 4L, "borderRadiusTopRight", 3L);
         assertBorderEquals("border-top: dotted 4px #FE0000; border-bottom: dotted 4px #FE0000; border-radius: 0px 3px 0px 4px");
     }
 

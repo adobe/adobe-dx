@@ -54,7 +54,7 @@ public class ContextAwareDatasourceTest extends AbstractTest {
 
     @Test
     public void getCaDsFromDialog() {
-        context.requestPathInfo().setSuffix("/content/dexter/jcr:content");
+        context.requestPathInfo().setSuffix("/content/dx/jcr:content");
         SimpleDataSource ds = getDataSource(context);
         assertTrue(ds instanceof SimpleDataSource);
 
@@ -70,7 +70,7 @@ public class ContextAwareDatasourceTest extends AbstractTest {
     public void getCaDsFromPage() {
         context.request().setParameterMap(new HashMap<String, Object>(){
             private static final long serialVersionUID = 1L;
-            { put("item", "/content/dexter"); }
+            { put("item", "/content/dx"); }
         });
         SimpleDataSource ds = getDataSource(context);
         assertTrue(ds instanceof SimpleDataSource);
@@ -84,7 +84,7 @@ public class ContextAwareDatasourceTest extends AbstractTest {
 
     @Test
     public void getCaDsFromDialogUsingBadPath() {
-        context.requestPathInfo().setSuffix("/content/dexter/jcr:content/foo");
+        context.requestPathInfo().setSuffix("/content/dx/jcr:content/foo");
         SimpleDataSource ds = getDataSource(context);
         assertTrue(ds instanceof SimpleDataSource);
         Iterator<Resource> dsResources = ds.iterator();
@@ -97,7 +97,7 @@ public class ContextAwareDatasourceTest extends AbstractTest {
 
     @Test
     public void getCaDsFromPolicy() {
-        context.requestPathInfo().setSuffix("/conf/dexter/settings/wcm/policies/wcm/foundation/components/fake-policy");
+        context.requestPathInfo().setSuffix("/conf/dx/settings/wcm/policies/wcm/foundation/components/fake-policy");
         SimpleDataSource ds = getDataSource(context);
         assertTrue(ds instanceof SimpleDataSource);
         Iterator<Resource> dsResources = ds.iterator();

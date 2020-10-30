@@ -100,4 +100,12 @@ public class RequestUtil {
         return null;
     }
 
+    public static final <T> T getFromRespProps(SlingHttpServletRequest request,  Breakpoint breakpoint, String propertyName, T defaultValue) {
+        T value = getFromRespProps(request, breakpoint, propertyName);
+        if (value != null) {
+            return value;
+        }
+        return defaultValue;
+    }
+
 }

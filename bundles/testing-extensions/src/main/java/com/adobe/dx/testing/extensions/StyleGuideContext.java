@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.testing.extensions;
 
+import static com.adobe.dx.testing.AbstractTest.CONFIG_ROOTS;
 import static com.adobe.dx.testing.AbstractTest.CONF_ROOT;
 
 import com.adobe.dx.styleguide.StyleGuide;
@@ -33,7 +34,7 @@ public class StyleGuideContext implements BeforeEachCallback {
     
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
-        String confRoot = CONF_ROOT + "/sling:configs/" + StyleGuide.class.getName() + "/";
+        String confRoot = CONFIG_ROOTS + "/" + StyleGuide.class.getName() + "/";
         AemContext context = ExtensionsUtil.getContext(extensionContext);
         context.build().resource(confRoot + "colors")
             .siblingsMode()

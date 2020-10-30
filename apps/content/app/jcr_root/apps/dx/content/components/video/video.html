@@ -1,0 +1,8 @@
+<div class="video-Wrapper ${properties.videoCrop || 'crop-video'} ${properties.videoPlayOnView ? 'has-playOnView' : ''} ${properties.videoPlayOnHover ? 'has-playOnHover' : ''}"
+     data-sly-list.bp="${breakpoints}">
+    <video data-sly-test.src="${resprops.videoURL[bp.key]}" class="${resprops.videoURL.mobile ? 'video-mobile' : ''} ${!resprops.videoURL.tablet ? 'video-tablet' : ''} ${!resprops.videoURL.tablet && !resprops.videoURL.desktop  ? 'video-desktop' : ''}"
+           preload="${wcmmode.disabled ? 'none' : 'metadata'}"
+           playsinline muted loop="${resprops.videoLoop[bp.key]}" controls="${resprops.videoControls[bp.key]}">
+        <source src="${src}" type="video/mp4">
+    </video>
+</div>

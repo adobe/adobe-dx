@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
  */
 public class DxBindingsValueProvider implements BindingsValuesProvider {
 
-    public static final String POLICY_KEY = "dxPolicy";
+    public static final String POLICY_KEY = "dxProps";
 
     public static final String RESP_PROPS_KEY = "resprops";
 
@@ -65,15 +65,15 @@ public class DxBindingsValueProvider implements BindingsValuesProvider {
             if (resource != null) {
                 ContentPolicy policy = bindings.containsKey(NAME_CURRENT_CONTENT_POLICY)
                     ? (ContentPolicy) bindings.get(NAME_CURRENT_CONTENT_POLICY) : null;
-                ValueMap dxPolicy = policy != null ? new CompositeValueMap(resource.getValueMap(), policy.getProperties()) :
+                ValueMap dxProps = policy != null ? new CompositeValueMap(resource.getValueMap(), policy.getProperties()) :
                     resource.getValueMap();
-                bindings.put(POLICY_KEY, dxPolicy);
+                bindings.put(POLICY_KEY, dxProps);
                 ResponsiveConfiguration configuration = resource
                     .adaptTo(ConfigurationBuilder.class)
                     .as(ResponsiveConfiguration.class);
                 List<Breakpoint> breakpointList = Arrays.asList(configuration.breakpoints());
                 bindings.put(BP_KEY, breakpointList);
-                bindings.put(RESP_PROPS_KEY, new ResponsivePropertiesImpl(breakpointList, dxPolicy));
+                bindings.put(RESP_PROPS_KEY, new ResponsivePropertiesImpl(breakpointList, dxProps));
             }
         }
     }

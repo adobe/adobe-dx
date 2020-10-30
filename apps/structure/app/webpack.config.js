@@ -52,6 +52,18 @@ module.exports = {
             `${PROJECT_PATH}/configs/src/js/app.js`,
             `${PROJECT_PATH}/configs/src/less/app.less`,
         ],
+        author: [
+            `${PROJECT_PATH}/author/src/js/app.js`,
+            `${PROJECT_PATH}/author/src/less/app.less`,
+        ],
+        editor: [
+            `${PROJECT_PATH}/editor/src/js/app.js`,
+            `${PROJECT_PATH}/editor/src/less/app.less`,
+        ],
+        publish: [
+            `${PROJECT_PATH}/publish/src/js/app.js`,
+            `${PROJECT_PATH}/publish/src/less/app.less`,
+        ],
     },
     output: {
         path: `${PROJECT_PATH}`,

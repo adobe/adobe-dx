@@ -41,18 +41,23 @@ class ShadowTest extends AbstractInlineStyleWorkerTest {
 
     @Test
     void getShadow() {
-        context.build().resource(CONTENT_ROOT, "shadowColor", "blue",
+        context.build().resource(CONTENT_ROOT, "shadowColor", "blue", "shadowColorDesktop", "white",
             "shadowOffsetX", 9L,
             "shadowOffsetY", 10L,
             "shadowBlur", 11L,
             "shadowSpread", 12L);
         assertEquals("box-shadow: 9px 10px 11px 12px #0000FE", getDeclaration());
+        assertNull(getDeclaration("tablet"));
+        assertEquals("box-shadow: 0px 0px 0px 0px #FEFEFE", getDeclaration("desktop"));
     }
 
     @Test
     void testInset() {
-        context.build().resource(CONTENT_ROOT, "shadowColor", "red",
-            "shadowInset", true);
+        context.build().resource(CONTENT_ROOT, "shadowColor", "red", "shadowColorTablet", "blue",
+            "shadowInset", true, "shadowInsetTablet", "whatever");
         assertEquals("box-shadow: 0px 0px 0px 0px #FE0000 inset", getDeclaration());
+        assertEquals("box-shadow: 0px 0px 0px 0px #0000FE inset", getDeclaration("tablet"));
+        assertNull(getDeclaration("desktop"));
     }
+
 }

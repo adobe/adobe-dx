@@ -73,7 +73,7 @@ class DxBindingsValueProviderTest extends AbstractTest {
     ValueMap computeVM(Bindings bindings) {
         DxBindingsValueProvider mgr = getProvider();
         mgr.addBindings(bindings);
-        ValueMap vm = (ValueMap)bindings.get("dxPolicy");
+        ValueMap vm = (ValueMap)bindings.get("dxProps");
         assertNotNull(vm);
         return vm;
     }
@@ -92,6 +92,6 @@ class DxBindingsValueProviderTest extends AbstractTest {
         Bindings bindings = new SimpleBindings();
         mockAddContentPolicy(bindings);
         getProvider().addBindings(bindings);
-        assertNull(bindings.get("dxPolicy"));
+        assertNull(bindings.get("dxProps"));
     }
 }

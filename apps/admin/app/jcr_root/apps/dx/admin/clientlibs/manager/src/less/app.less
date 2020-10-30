@@ -23,7 +23,7 @@
 
     &.dx-ActionBar--fixed {
         display: none;
-        z-index: 1;
+        z-index: 100000; /* AEM as a Cloud Service */
         position: fixed;
         top: 0;
         background-color: #FFF;
@@ -73,7 +73,11 @@
     pointer-events: all;
     visibility: visible;
     opacity: 1;
-    z-index: 1;
+    z-index: 100001;
+}
+
+.spectrum-Dialog.is-open {
+    z-index: 100002;
 }
 
 .spectrum-Popover {

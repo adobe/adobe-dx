@@ -28,4 +28,16 @@ public interface InheritedMap {
      * @return value (in given type), or default value
      */
     <T> T getInheritedValue(String propertyName, Breakpoint breakpoint, T defaultValue);
+
+    /**
+     * Get value from current breakpoint, or inherited (if set)
+     *
+     * @param propertyName name of the property fetched
+     * @param inheritPropertyName name of the property to look at for inheritance
+     * @param breakpoint breakpoint for which we do want the value
+     * @param defaultValue default value
+     * @param <T> generic type
+     * @return value (in given type), or default value
+     */
+    <T> T getInheritedValue(String propertyName, String inheritPropertyName, Breakpoint breakpoint, T defaultValue);
 }

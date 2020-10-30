@@ -19,6 +19,8 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.sling.api.resource.ResourceResolverFactory.SUBSERVICE;
 
 import com.adobe.dx.domtagging.IDTagger;
+import com.adobe.dx.utils.TypeFilter;
+import com.adobe.dx.utils.TypeIterator;
 import com.day.cq.replication.Preprocessor;
 import com.day.cq.replication.ReplicationAction;
 import com.day.cq.replication.ReplicationActionType;
@@ -27,20 +29,16 @@ import com.day.cq.replication.ReplicationOptions;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
-import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.AbstractResourceVisitor;
 import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.PersistenceException;
@@ -121,30 +119,9 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
     @Activate
     @Modified
     public void activate(Configuration configuration) {
-        Collection<Pattern> acceptedTypes = new ArrayList<>();
-        for (String regexp : configuration.acceptedTypes()) {
-            acceptedTypes.add(Pattern.compile(regexp));
-        }
-        resourceFilter = getFilter(acceptedTypes);
+        resourceFilter = new TypeFilter(configuration.acceptedTypes());
         this.configuration = configuration;
         referenceTypes = Arrays.asList(configuration.referenceTypes());
-    }
-
-    /**
-     * @param acceptedTypes list of patterns of accepted types for the id
-     * @return filter that use the list
-     */
-    Function<Resource, Boolean> getFilter(Collection<Pattern> acceptedTypes) {
-        return r -> {
-            if (StringUtils.isNotBlank(r.getResourceType())) {
-                for (Pattern pattern: acceptedTypes) {
-                    if (pattern.matcher(r.getResourceType()).matches()) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        };
     }
 
     @Override
@@ -178,7 +155,7 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
      */
     void tagPage(Page currentPage) {
         String pageHash = getUniqueId(currentPage.getContentResource(), false);
-        for (Iterator<Resource> componentIterator = new ComponentIterator(resourceFilter, currentPage.getContentResource());
+        for (Iterator<Resource> componentIterator = new TypeIterator(resourceFilter, currentPage.getContentResource());
              componentIterator.hasNext();) {
             Resource component = componentIterator.next();
             if (needsUpdate(component, pageHash)) {
@@ -366,45 +343,6 @@ public class IDTaggerImpl implements Preprocessor, SlingPostProcessor, IDTagger 
             request.setAttribute(ATT_REFERENCE, refId);
         }
         return id;
-    }
-
-    /**
-     * lists all resource in a resource tree that have resource type corresponding to passed patterns
-     */
-    static class ComponentIterator extends AbstractResourceVisitor implements Iterator<Resource> {
-
-        Function<Resource, Boolean> rFilter;
-        Collection<Resource> internalList = new ArrayList<>();
-        Iterator<Resource> internalIT;
-
-        public ComponentIterator(Function<Resource, Boolean> filter, Resource root) {
-            rFilter = filter;
-            accept(root);
-        }
-
-        @Override
-        protected void visit(@NotNull Resource resource) {
-            if (Boolean.TRUE.equals(rFilter.apply(resource))) {
-                internalList.add(resource);
-            }
-        }
-
-        Iterator<Resource> getIterator() {
-            if (internalIT == null) {
-                internalIT = internalList.iterator();
-            }
-            return internalIT;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return getIterator().hasNext();
-        }
-
-        @Override
-        public Resource next() {
-            return getIterator().next();
-        }
     }
 
     @ObjectClassDefinition(name = "Adobe DX ID Tagger")

@@ -2,6 +2,12 @@
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=com.adobe.dx%3Areactor)](https://sonarcloud.io/dashboard?id=com.adobe.dx%3Areactor) 
 
 ![Build](https://github.com/adobe/adobe-dx/workflows/Build/badge.svg) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.adobe.dx%3Areactor&metric=coverage)](https://sonarcloud.io/dashboard?id=com.adobe.dx%3Areactor)
+- dx core [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.adobe.dx/core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.adobe.dx/core)
+- dx testing extenstion [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.adobe.dx/testing-extensions/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.adobe.dx/testing-extensions)
+- dx admin [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.adobe.dx/admin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.adobe.dx/admin)
+- dx structure components [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.adobe.dx/structure/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.adobe.dx/structure)
+- dx content components [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.adobe.dx/content/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.adobe.dx/content)
+
 
 ### Description 
 
