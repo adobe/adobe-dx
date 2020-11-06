@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="sling:Folder"
+    jcr:description="write / update report node"
+    sling:resourceType="slingPipes/path"
+    expr="/var/pipes/libs/usage/report/${(type['sling:resourceType'].indexOf('/apps')==0?type['sling:resourceType'].substring(5):type['sling:resourceType'])}"/>

@@ -62,7 +62,7 @@
                             <root>/system/sling/permissions/pipes/exec</root>
                         </filter>
                     </filters>
-                    <embeddeds>
+                      <embeddeds>
                         <embedded>
                             <groupId>org.apache.sling</groupId>
                             <artifactId>org.apache.sling.pipes</artifactId>

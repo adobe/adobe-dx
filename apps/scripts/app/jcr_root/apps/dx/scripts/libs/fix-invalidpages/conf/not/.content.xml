@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="sling:OrderedFolder"
+    jcr:description="passes page with no child jcr:content"
+    sling:resourceType="slingPipes/not"
+    expr="/apps/dx/scripts/libs/fix-invalidpages/refs/child"/>
