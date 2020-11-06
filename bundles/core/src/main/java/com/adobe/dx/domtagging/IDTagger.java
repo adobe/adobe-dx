@@ -34,12 +34,12 @@ public interface IDTagger {
      *
      * @param request current component request
      * @param property property that could override any id value, can be null
-     * @return
+     * @return unique (and eventually persistent) component id
      */
     String computeComponentId(final SlingHttpServletRequest request, @Nullable String property);
 
     /**
-     * Tags, if needed and configured, a resource with page & component id
+     * Tags, if needed and configured, a resource with page &amp; component id
      *
      * @param resource resource to tag
      */

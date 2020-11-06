@@ -98,6 +98,7 @@ class InlineStyleServiceImplTest extends AbstractTest {
             return null;
         }
     };
+
     InlineStyleServiceImpl service;
 
     @BeforeEach
@@ -105,7 +106,7 @@ class InlineStyleServiceImplTest extends AbstractTest {
         List<Breakpoint> breakpoints = ResponsivePropertiesImplTest.initResponsiveConfiguration(context);
         String someComp = CONTENT_ROOT + "/comp";
         final String[] array = new String[] {"worker1", "worker2"};
-        context.build().resource(CONF_ROOT + "/sling:configs/apps/foo/bar",  "styleWorkers", array);
+        context.build().resource(CONFIG_ROOTS  + "/apps/foo/bar",  "styleWorkers", array);
         context.build().resource(someComp, "sling:resourceType", "foo/bar",
             "color", "blue",
             "minheightTablet", "200px",
@@ -157,21 +158,5 @@ class InlineStyleServiceImplTest extends AbstractTest {
         assertEquals("@media screen and (min-width: 600px) {\n"
             + "min-height: 200px\n"
             + "}", service.getInlineStyle(null, context.request()));
-    }
-
-    @Test
-    void getWorkerKeysFullPath() {
-        final String[] array = new String[] {"worker1", "worker2"};
-        context.build().resource("/apps/foo/bar", "styleWorkers", array);
-        context.build().resource(CONTENT_ROOT, "sling:resourceType", "foo/bar");
-        assertArrayEquals(array, new InlineStyleServiceImpl().getWorkerKeys(context.currentResource(CONTENT_ROOT)));
-    }
-
-
-    @Test
-    void getWorkerKeysNothing() {
-        context.build().resource("/apps/check/this", "blah", "blah");
-        context.build().resource(CONTENT_ROOT, "sling:resourceType", "check/this");
-        assertEquals(0, new InlineStyleServiceImpl().getWorkerKeys(context.currentResource(CONTENT_ROOT)).length);
     }
 }

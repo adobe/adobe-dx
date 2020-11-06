@@ -31,6 +31,7 @@ public class AbstractTest {
 
     public static final String CONTENT_ROOT = "/content/foo";
     public static final String CONF_ROOT = "/conf/foo";
+    public static final String CONFIG_ROOTS = CONF_ROOT + "/sling:configs";
 
     public AemContext context = buildContext(getType());
 
@@ -42,6 +43,16 @@ public class AbstractTest {
         return new AemContextBuilder(type)
             .plugin(CACONFIG)
             .build();
+    }
+
+    public static void initContentRoots(AemContext context) {
+        if (context.resourceResolver().getResource(CONFIG_ROOTS) == null) {
+            context.create().resource(CONF_ROOT + "/sling:configs");
+        }
+        if (context.resourceResolver().getResource(CONTENT_ROOT) == null) {
+            context.create().resource(CONTENT_ROOT);
+        }
+        context.build().resource(CONTENT_ROOT, "sling:configRef", CONF_ROOT);
     }
 
     public static ValueMap getVM(AemContext context, String path) {

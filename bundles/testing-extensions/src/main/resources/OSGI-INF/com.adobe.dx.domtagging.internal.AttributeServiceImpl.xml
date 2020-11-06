@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.adobe.dx.utils.service.internal.CloudConfigReaderImpl" configuration-policy="ignore">
+    <implementation class="com.adobe.dx.domtagging.internal.AttributeServiceImpl"/>
+    <service>
+        <provide interface="com.adobe.dx.domtagging.AttributeService"/>
+    </service>
+    <reference name="resourceResolverFactory"
+               interface="org.apache.sling.api.resource.ResourceResolverFactory" field="resourceResolverFactory"/>
+</scr:component>

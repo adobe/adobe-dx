@@ -15,16 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.inlinestyle.internal;
 
-import static com.adobe.dx.inlinestyle.Constants.PX_SPACE;
-import static com.adobe.dx.utils.RequestUtil.getPolicy;
+import static com.adobe.dx.utils.CSSConstants.PX_SPACE;
+import static com.adobe.dx.utils.RequestUtil.getFromRespProps;
 
 import com.adobe.dx.responsive.Breakpoint;
 import com.adobe.dx.inlinestyle.InlineStyleWorker;
 import com.adobe.dx.styleguide.StyleGuideUtil;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -50,24 +48,21 @@ public class Shadow implements InlineStyleWorker {
 
     @Override
     public @Nullable String getDeclaration(Breakpoint breakpoint, SlingHttpServletRequest request) {
-        if (StringUtils.isBlank(breakpoint.mediaQuery())) {
-            //we only do border for all
-            ValueMap dxPolicy = getPolicy(request);
-            String colorKey = dxPolicy.get(PN_COLOR, String.class);
-            String color = StyleGuideUtil.getColor(request, colorKey);
-            if (color != null) {
-                StringBuilder sb = new StringBuilder();
-                sb.append(RULE)
-                    .append(dxPolicy.get(PN_OFFSETX, 0L)).append(PX_SPACE)
-                    .append(dxPolicy.get(PN_OFFSETY, 0L)).append(PX_SPACE)
-                    .append(dxPolicy.get(PN_BLUR, 0L)).append(PX_SPACE)
-                    .append(dxPolicy.get(PN_SPREAD, 0L)).append(PX_SPACE)
-                    .append(color);
-                if (dxPolicy.containsKey(PN_INSET)) {
-                    sb.append(INSET_SUFFIX);
-                }
-                return sb.toString();
+        String colorKey = getFromRespProps(request, breakpoint, PN_COLOR);
+        String color = StyleGuideUtil.getColor(request, colorKey);
+        if (color != null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(RULE)
+                .append(getFromRespProps(request, breakpoint, PN_OFFSETX, 0L)).append(PX_SPACE)
+                .append(getFromRespProps(request, breakpoint, PN_OFFSETY, 0L)).append(PX_SPACE)
+                .append(getFromRespProps(request, breakpoint, PN_BLUR, 0L)).append(PX_SPACE)
+                .append(getFromRespProps(request, breakpoint, PN_SPREAD, 0L)).append(PX_SPACE)
+                .append(color);
+            Object inset = getFromRespProps(request, breakpoint, PN_INSET);
+            if (inset != null && inset.toString().length() > 0) {
+                sb.append(INSET_SUFFIX);
             }
+            return sb.toString();
         }
         return null;
     }

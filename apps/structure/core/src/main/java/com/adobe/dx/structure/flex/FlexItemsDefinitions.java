@@ -15,9 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.structure.flex;
 
-import static com.adobe.dx.inlinestyle.Constants.DEL_SPACE;
-import static com.adobe.dx.inlinestyle.Constants.PERCENT;
-import static com.adobe.dx.inlinestyle.Constants.RULE_DELIMITER;
+import static com.adobe.dx.utils.CSSConstants.DEL_SPACE;
+import static com.adobe.dx.utils.CSSConstants.PERCENT;
+import static com.adobe.dx.utils.CSSConstants.RULE_DELIMITER;
 import static com.adobe.dx.structure.flex.FlexModel.PN_MINHEIGHT;
 import static com.adobe.dx.structure.flex.FlexModel.PN_MINHEIGHT_TYPE;
 import static com.adobe.dx.utils.RequestUtil.getInheritedMap;
@@ -69,7 +69,7 @@ public class FlexItemsDefinitions implements InlineStyleWorker {
 
     private static final String FORMAT_WIDTH = CSS_WIDTH + "%s; max-width: %s";
     private static final String FORMAT_COLUMNWIDTH = FORMAT_WIDTH + "; flex: 1 1 auto";
-    private static final String FORMAT_RULE_DEFINITIONS = "#%s > .dx-flex-items > *:nth-child(%s) {\n%s\n}";
+    private static final String FORMAT_RULE_DEFINITIONS = "#%s > .dx-Flex-items > *:nth-child(%s) {\n%s\n}";
 
     @Override
     public String getKey() {

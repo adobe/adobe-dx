@@ -38,11 +38,11 @@ class BackgroundTest extends AbstractInlineStyleWorkerTest {
     @Test
     void getBackgroundImage() {
         context.build().resource(CONTENT_ROOT,
-            "fileReferenceMobile", "/content/dam/mobile.jpg",
+            "fileReference", "/content/dam/mobile.jpg",
             "fileReferenceTablet", "/content/dam/tablet.jpg",
             "fileReferenceDesktop", "/content/dam/desktop.jpg",
-            "focusXMobile", 30L,
-            "focusYMobile", 30L);
+            "focusX", 30L,
+            "focusY", 30L);
         assertEquals("background-image: url(%2fcontent%2fdam%2fmobile.jpg); background-size: cover; background-position: 30% 30% ", getDeclaration("mobile"));
         assertEquals("background-image: url(%2fcontent%2fdam%2fdesktop.jpg); background-size: cover", getDeclaration("desktop"));
     }
@@ -68,11 +68,11 @@ class BackgroundTest extends AbstractInlineStyleWorkerTest {
     @Test
     void getBackgroundCumulate() {
         context.build().resource(CONTENT_ROOT,
-            "fileReferenceMobile", "/content/dam/mobile.jpg",
-            "focusXMobile", 30L,
-            "focusYMobile", 30L,
-            "backgroundColorMobile", "white",
-            "gradientMobile", "red");
+            "fileReference", "/content/dam/mobile.jpg",
+            "focusX", 30L,
+            "focusY", 30L,
+            "backgroundColor", "white",
+            "gradient", "red");
         assertEquals("background-color: #FEFEFE; background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 36.8%,rgba(255, 0, 0, 0.78) 95.0%),url(%2fcontent%2fdam%2fmobile.jpg); background-size: cover; background-position: 30% 30% ",
             getDeclaration("mobile"));
     }

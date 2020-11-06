@@ -16,9 +16,18 @@
 
 package com.adobe.dx.testing;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.adobe.dx.domtagging.AttributeService;
+import com.adobe.dx.domtagging.IDTagger;
+import com.adobe.dx.inlinestyle.InlineStyleService;
+import com.adobe.dx.testing.extensions.WCMModeDisabledContext;
+import com.adobe.dx.testing.extensions.WCMModeEditContext;
+import com.day.cq.wcm.api.WCMMode;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 public class SomeModelTest extends AbstractRequestModelTest {
 
@@ -27,5 +36,17 @@ public class SomeModelTest extends AbstractRequestModelTest {
         context.build().resource(CONTENT_ROOT, "foo", "bar");
         SomeModel model = getModel(SomeModel.class, CONTENT_ROOT);
         assertNotNull(model.getId());
+    }
+
+    @ExtendWith(WCMModeDisabledContext.class)
+    @Test
+    public void testWCMModeDisabled() {
+        assertEquals(WCMMode.DISABLED, WCMMode.fromRequest(context.request()));
+    }
+
+    @ExtendWith(WCMModeEditContext.class)
+    @Test
+    public void testWCMModeEdit() {
+        assertEquals(WCMMode.EDIT, WCMMode.fromRequest(context.request()));
     }
 }

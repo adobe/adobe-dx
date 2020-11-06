@@ -29,18 +29,25 @@ As proposed in the ticket, in order to counter balance this, pls execute followi
 
 For mac users, you can fix it by installing [pinentry-mac](https://github.com/Homebrew/homebrew-core/issues/14737#issuecomment-309547412)
 ## Release
-
-### commands
-
+### pre-checks
 1. check that your local is up to date with origin,
-2. check that a release would work by running a dry run release
+2. (optional) check that a release would work by running a dry run release
 ```mvn release:prepare -Pdx-release -DdryRun=true```
 if things looks good to you, you can rollback all changes
 ```mvn release:rollback -Pdx-release -DdryRun=true```
-3. prepare the release 
-```mvn release:prepare -Pdx-release```
-4. perform the release
+#### pre-checks specific per artifact
+- `core` ensure the version you are about to release points to a released `testing` artifact
+
+- `testing-extensions` ensure the version you are about to release points to released `testing` and `core` artifacts
+
+- `admin`, `structure` and `content` ensure the version you are about to release points to released `core` and `testing-extensions` artifacts
+
+### commands
+1. prepare the release 
+```mvn release:prepare```
+2. perform the release
 ```mvn release:perform -Pdx-release```
+you can have that command run several times in case of a failure that is fixable
 5. (if anything goes wrong) rollback the release
 ```mvn release:rollback -Pdx-release``` 
 6. (if things went well) go to https://repo1.maven.org/maven2/com/adobe/dx 

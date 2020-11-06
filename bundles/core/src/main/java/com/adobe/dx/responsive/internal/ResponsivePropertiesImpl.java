@@ -78,15 +78,37 @@ public class ResponsivePropertiesImpl implements Map<String, LinkedHashMap<Strin
         return previous;
     }
 
+    /**
+     * @param breakpoint current breakpoint
+     * @param properties current values
+     * @param inheritPropertyName property to look for specific inheritance
+     * @return can we access "previous" breakpoint or not, based on general or specific inherit property,
+     * that is <inheritProperty>PropertyName (with capital initial), e.g. inheritDesktopMargin
+     */
+    boolean shouldInherit(Breakpoint breakpoint, ValueMap properties, String inheritPropertyName) {
+        if (StringUtils.isNotBlank(breakpoint.inherit())) {
+            String specificInherit = breakpoint.inherit() + StringUtils.capitalize(inheritPropertyName);
+            String defaultBehaviour = properties.get(breakpoint.inherit(), PV_INHERIT);
+            String behaviour = properties.get(specificInherit, defaultBehaviour);
+            return PV_INHERIT.equals(behaviour);
+        }
+        return false;
+    }
+
     @Override
     public <T> T getInheritedValue(String propertyName, Breakpoint breakpoint, T defaultValue) {
+        return getInheritedValue(propertyName, propertyName, breakpoint, defaultValue);
+    }
+
+    @Override
+    public <T> T getInheritedValue(String propertyName, String inheritPropertyName, Breakpoint breakpoint,
+                                   T defaultValue) {
         LinkedHashMap<String, Object> values = get(propertyName);
         if (values != null) {
             if (values.get(breakpoint.key()) != null) {
                 return (T) values.get(breakpoint.key());
             }
-            if (StringUtils.isNotBlank(breakpoint.inheritBehaviourProp())
-                && PV_INHERIT.equals(properties.get(breakpoint.inheritBehaviourProp(), PV_INHERIT))) {
+            if (shouldInherit(breakpoint, properties, inheritPropertyName)) {
                 Breakpoint previous = getPreviousBreakpoint(breakpoint);
                 if (previous != null) {
                     return getInheritedValue(propertyName, previous, defaultValue);

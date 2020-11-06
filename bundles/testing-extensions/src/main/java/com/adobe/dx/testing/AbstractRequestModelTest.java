@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.testing;
 
+import com.adobe.dx.testing.extensions.DomTaggingContext;
 import com.adobe.dx.testing.extensions.InlineStyleContext;
 import com.adobe.dx.testing.extensions.ResponsiveContext;
 import com.adobe.dx.testing.extensions.StyleGuideContext;
@@ -26,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @ExtendWith(ResponsiveContext.class)
+@ExtendWith(DomTaggingContext.class)
 @ExtendWith(StyleGuideContext.class)
 @ExtendWith(InlineStyleContext.class)
 public class AbstractRequestModelTest extends AbstractTest {

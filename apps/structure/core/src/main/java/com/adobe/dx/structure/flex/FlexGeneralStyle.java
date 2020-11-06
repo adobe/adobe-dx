@@ -15,10 +15,10 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.dx.structure.flex;
 
-import static com.adobe.dx.inlinestyle.Constants.DEL_SPACE;
-import static com.adobe.dx.inlinestyle.Constants.RULE_DELIMITER;
-import static com.adobe.dx.structure.flex.FlexModel.PN_MINHEIGHT;
+import static com.adobe.dx.utils.CSSConstants.DEL_SPACE;
+import static com.adobe.dx.utils.CSSConstants.RULE_DELIMITER;
 import static com.adobe.dx.structure.flex.FlexModel.PN_MINHEIGHT_TYPE;
+import static com.adobe.dx.structure.flex.FlexModel.PN_MINHEIGHT_VALUE;
 
 import com.adobe.dx.inlinestyle.InlineStyleWorker;
 import com.adobe.dx.responsive.Breakpoint;
@@ -41,8 +41,8 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 @Component(configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class FlexGeneralStyle implements InlineStyleWorker {
     private static final String FLEX_GENERAL = "flex-general";
-    private static final String RULE_CONTAINER = "#%s > .dx-flex-items {\n%s\n}";
-    private static final String RULE_ITEM = "#%s > .dx-flex-items > * {\n%s\n}";
+    private static final String RULE_CONTAINER = "#%s > .dx-Flex-items {\n%s\n}";
+    private static final String RULE_ITEM = "#%s > .dx-Flex-items > * {\n%s\n}";
     private static final String PN_GAP = "gap";
     private static final String MIN_HEIGHT_PREFIX  = "min-height: ";
     private static final String GAP_CONTAINER = "margin: -%spx";
@@ -59,7 +59,7 @@ public class FlexGeneralStyle implements InlineStyleWorker {
     }
 
     String computeMinHeight(Breakpoint breakpoint, SlingHttpServletRequest request) {
-        Long minHeight = RequestUtil.getFromRespProps(request, breakpoint, PN_MINHEIGHT);
+        Long minHeight = RequestUtil.getFromRespProps(request, breakpoint, PN_MINHEIGHT_VALUE);
         if ( minHeight != null) {
             String minHeightType = RequestUtil.getFromRespProps(request, breakpoint, PN_MINHEIGHT_TYPE);
             if (minHeightType != null) {

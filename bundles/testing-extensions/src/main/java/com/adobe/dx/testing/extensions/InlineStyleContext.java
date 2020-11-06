@@ -31,7 +31,6 @@ public class InlineStyleContext implements BeforeEachCallback {
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
         AemContext context = getContext(extensionContext);
-        context.registerInjectActivateService(new IDTaggerImpl());
         context.registerInjectActivateService(new InlineStyleServiceImpl());
     }
 }

@@ -37,7 +37,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 // Project Setup
 const PROJECT_NAME = 'dx/admin';
 const PROJECT_PATH = `${__dirname}/jcr_root/apps/${PROJECT_NAME}/clientlibs`;
-const ROOT_DIR = `${__dirname}/../../..`;
 
 // Production Detection
 const isProduction = process.env.NODE_ENV === 'production';
@@ -48,6 +47,8 @@ if (!isProduction) {
     rules.push(prettierLoader);
 }
 
+console.log(devtool());
+
 module.exports = {
     entry: {
         registry: [`${PROJECT_PATH}/registry/src/js/app.js`],
@@ -57,6 +58,10 @@ module.exports = {
             `${PROJECT_PATH}/manager/src/less/app.less`,
         ],
         author: [`${PROJECT_PATH}/author/src/js/app.js`],
+        editor: [
+            `${PROJECT_PATH}/editor/src/js/app.js`,
+            `${PROJECT_PATH}/editor/src/less/app.less`,
+        ],
     },
     output: {
         path: `${PROJECT_PATH}`,
@@ -67,7 +72,6 @@ module.exports = {
         react: 'React',
         'react-dom': 'ReactDOM',
     },
-    devtool: devtool(),
     optimization,
     plugins: [
         new webpack.DefinePlugin(spectrumConfig),
