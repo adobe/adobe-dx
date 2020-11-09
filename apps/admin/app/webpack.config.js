@@ -29,7 +29,6 @@ const {
 } = require(`${monoRoot}webpack-scripts/miniCssExtractWrapper.js`);
 const optimization = require(`${monoRoot}webpack-scripts/optimization.js`);
 const optimizeCssAssets = require(`${monoRoot}webpack-scripts/optimizeCssAssetsWrapper.js`);
-const devtool = require(`${monoRoot}webpack-scripts/devtool.js`);
 const performance = require(`${monoRoot}webpack-scripts/performance.js`);
 const stats = require(`${monoRoot}webpack-scripts/stats.js`);
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -46,8 +45,6 @@ const rules = [eslintLoader, babelLoader, miniCssExtractLoader()];
 if (!isProduction) {
     rules.push(prettierLoader);
 }
-
-console.log(devtool());
 
 module.exports = {
     entry: {
@@ -72,7 +69,8 @@ module.exports = {
         react: 'React',
         'react-dom': 'ReactDOM',
     },
-    optimization,
+    optimization: isProduction ? optimization : { minimize: false },
+    devtool: 'inline-source-map',
     plugins: [
         new webpack.DefinePlugin(spectrumConfig),
         new MiniCssExtractPlugin({ filename: '[name]/dist/css/app.min.css' }),
