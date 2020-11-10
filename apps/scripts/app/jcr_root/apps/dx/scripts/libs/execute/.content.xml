@@ -2,5 +2,5 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="sling:Folder"
     jcr:description="pls use that pipe with additional binding `search` that is the path of a pipe used for searching.
-    It will be execute then `exec` pipe"
+        It will be then execute `exec` pipe on each search result"
     sling:resourceType="slingPipes/container"/>
