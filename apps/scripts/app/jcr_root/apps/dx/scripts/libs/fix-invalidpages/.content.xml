@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="sling:Folder"
+    jcr:description="needs two bindings: `app` and `pageType`. Finds pages in /content/{app} and /content/experience-fragments/{app} that don't have a jcr:content child,
+and fix them with empty jcr:content child, with only `sling:resourceType` property, set to XF generic type or for the pages in the
+content tree, `pageType` that must be added in the bindings"
+    sling:resourceType="slingPipes/container"/>

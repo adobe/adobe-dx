@@ -50,6 +50,7 @@
                 <module>apps/admin</module>
                 <module>apps/structure</module>
                 <module>apps/content</module>
+		        <module>apps/scripts</module>
                 <module>apps/all</module>
                 <module>apps/docs</module>
             </modules>
