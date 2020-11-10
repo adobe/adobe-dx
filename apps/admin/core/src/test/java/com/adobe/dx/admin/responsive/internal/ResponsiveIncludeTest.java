@@ -16,8 +16,8 @@
 package com.adobe.dx.admin.responsive.internal;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 import com.adobe.dx.testing.AbstractOakTest;
 import com.adobe.dx.testing.extensions.ResponsiveContext;
@@ -34,6 +34,7 @@ import javax.servlet.ServletException;
 import org.apache.sling.api.request.RequestDispatcherOptions;
 import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.api.resource.observation.ResourceChange;
 import org.apache.sling.api.scripting.SlingBindings;
@@ -43,6 +44,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.commons.logging.LoggerFactory;
+import org.slf4j.Logger;
 
 @ExtendWith(ResponsiveContext.class)
 class ResponsiveIncludeTest extends AbstractOakTest {
@@ -127,8 +130,18 @@ class ResponsiveIncludeTest extends AbstractOakTest {
     }
 
     @Test
-    @Disabled
-    // we need a suitable dependency on granite ui commons before we activate this again
+    public void exceptionHandling() throws LoginException {
+        ResponsiveInclude failingInclude = mock(ResponsiveInclude.class);
+        failingInclude.logger = mock(Logger.class);
+        failingInclude.factory = mock(ResourceResolverFactory.class);
+        doThrow(new LoginException("something wrong")).when(failingInclude.factory).getServiceResourceResolver(anyMap());
+        when(failingInclude.buildInclude(any(), any())).thenCallRealMethod();
+        Resource resource = failingInclude.buildInclude(include.getBreakpoints(context.currentResource()), context.currentResource());
+        assertNull(resource);
+    }
+
+    @Test
+    @Disabled(value = "we need a suitable dependency on granite ui commons before we activate this again")
     public void testInclude() throws ServletException, IOException {
 
         Bindings bindings = new SimpleBindings();

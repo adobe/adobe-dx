@@ -37,7 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
@@ -79,7 +78,7 @@ import org.slf4j.LoggerFactory;
         SLING_SERVLET_RESOURCE_TYPES + "=" + ResponsiveInclude.RESOURCE_TYPE,
         SLING_SERVLET_METHODS + "=" + METHOD_GET})
 public class ResponsiveInclude extends SlingSafeMethodsServlet implements ResourceChangeListener {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(this.getClass());
     public static final String RESOURCE_TYPE = "dx/admin/responsive/include";
     private static final String PN_TYPE = "resourceType";
     private static final String PN_LOOP = "dxResponsiveItem";
@@ -87,7 +86,6 @@ public class ResponsiveInclude extends SlingSafeMethodsServlet implements Resour
     private static final String PN_NAME = "name";
     private static final String PN_TITLE = "jcr:title";
     private static final String PN_PATH = "path";
-    private static final String PN_DESCRIPTION = "jcr:description";
     private static final String PN_INVALID = "invalid";
     private static final String SLING_FOLDER = "sling:Folder";
     private static final String PN_RESOURCE_TYPE = "sling:" + PN_TYPE;
@@ -129,6 +127,36 @@ public class ResponsiveInclude extends SlingSafeMethodsServlet implements Resour
         }
     }
 
+    private class Context implements AutoCloseable {
+        ResourceResolver resolver;
+        Collection<String> paths;
+
+        Collection<String> getPaths() {
+            return paths;
+        }
+
+        void addPath(String path) {
+            if (paths == null) {
+                paths = new ArrayList<>();
+            }
+            paths.add(path);
+        }
+
+        ResourceResolver getResolver() throws LoginException {
+            if (resolver == null) {
+                resolver = factory.getServiceResourceResolver(ADMIN_SERVICE_ACCOUNT);
+            }
+            return resolver;
+        }
+
+        @Override
+        public void close() {
+            if (resolver != null) {
+                resolver.close();
+            }
+        }
+    }
+
     /**
      * @param path change path
      * @return responsive include containing the change if any
@@ -153,42 +181,36 @@ public class ResponsiveInclude extends SlingSafeMethodsServlet implements Resour
         return null;
     }
 
+    void fillPathFromConfChange(Context ctx) throws LoginException {
+        applyToAllDialog(ctx.getResolver(), r -> ctx.addPath(r.getPath()));
+    }
+
+    void fillPathFromDialogChange(Context ctx, String path) throws LoginException {
+        if (StringUtils.startsWithAny(path, configuration.dialogRoots())) {
+            String ref = handleDialogPath(ctx.getResolver(), path);
+            if (StringUtils.isNotBlank(ref)) {
+                ctx.addPath(configuration.cacheRoot() + ref);
+            }
+        }
+    }
+
     @Override
     public void onChange(@NotNull List<ResourceChange> list) {
         if (configuration.appChange()) {
-            ResourceResolver resolver = null;
-            try {
-                Collection<String> paths = null;
+            try (Context ctx = new Context()) {
                 for (ResourceChange change : list) {
                     if (change.getPath().contains(ResponsiveConfiguration.class.getName())) {
-                        final ArrayList allPaths = new ArrayList<>();
-                        applyToAllDialog(resolver, r -> allPaths.add(r.getPath()));
-                        paths = allPaths;
+                        fillPathFromConfChange(ctx);
                         break;
                     } else {
-                        if (StringUtils.startsWithAny(change.getPath(), configuration.dialogRoots())) {
-                            if (resolver == null) {
-                                resolver = factory.getServiceResourceResolver(ADMIN_SERVICE_ACCOUNT);
-                            }
-                            String ref = handleDialogPath(resolver, change.getPath());
-                            if (StringUtils.isNotBlank(ref)) {
-                                if (paths == null) {
-                                    paths = new ArrayList<>();
-                                }
-                                paths.add(configuration.cacheRoot() + ref);
-                            }
-                        }
+                        fillPathFromDialogChange(ctx, change.getPath());
                     }
                 }
-                if (paths != null) {
-                    markInvalidation(paths);
+                if (ctx.getPaths() != null) {
+                    markInvalidation(ctx.getPaths());
                 }
-            } catch (LoginException e) {
+            } catch (Exception e) {
                 logger.error("unable to login with admin session", e);
-            } finally {
-                if (resolver != null) {
-                    resolver.close();
-                }
             }
         }
     }
@@ -203,7 +225,6 @@ public class ResponsiveInclude extends SlingSafeMethodsServlet implements Resour
     }
 
     void scanRoots(ResourceResolver resolver) {
-        TypeFilter filter = new TypeFilter(new String[] {RESOURCE_TYPE});
         final Breakpoint[] breakpoints = getBreakpoints(resolver.getResource(CONTENT_ROOT));
         applyToAllDialog(resolver, r -> {
             try {
@@ -242,11 +263,8 @@ public class ResponsiveInclude extends SlingSafeMethodsServlet implements Resour
 
     Breakpoint[] getBreakpoints(Resource contentResource) {
         if (contentResource != null) {
-            ResponsiveConfiguration configuration = contentResource.adaptTo(ConfigurationBuilder.class)
-                .as(ResponsiveConfiguration.class);
-            if (configuration != null) {
-                return configuration.breakpoints();
-            }
+            return contentResource.adaptTo(ConfigurationBuilder.class)
+                .as(ResponsiveConfiguration.class).breakpoints();
         }
         return new Breakpoint[0];
     }
@@ -273,6 +291,22 @@ public class ResponsiveInclude extends SlingSafeMethodsServlet implements Resour
             copyTree(breakpoints, loop, target.getResourceResolver().getResource(child.getPath()), breakpoint);
         }
     }
+    
+    void handleChildCopy(Breakpoint[] breakpoints, Breakpoint currentBreakpoint, Node child, Resource target, Node targetNode) throws RepositoryException {
+        String name = child.getName();
+        if (currentBreakpoint == null && child.hasProperty(PN_LOOP)) {
+            loopTree(breakpoints, child, target);
+        } else if (currentBreakpoint != null && child.hasProperty(PN_FOLLOW) && child.hasProperty(PN_PATH)) {
+            String path = child.getProperty(PN_PATH).getString();
+            path = path.startsWith(SLASH) ? path : APPS_PREFIX + path;
+            Node followedChild = child.getSession().getNode(path);
+            copyTree(breakpoints, followedChild, target, currentBreakpoint);
+        } else {
+            Node childTarget = targetNode.hasNode(name) ? targetNode.getNode(name) : targetNode.addNode(name, child.getPrimaryNodeType().getName());
+            logger.debug("writing tree {}", childTarget.getPath());
+            copyTree(breakpoints, child, target.getResourceResolver().getResource(childTarget.getPath()), currentBreakpoint);
+        }
+    }
 
     /**
      * @param referrer source JCR tree to dub to the cache
@@ -282,35 +316,22 @@ public class ResponsiveInclude extends SlingSafeMethodsServlet implements Resour
     void copyTree(Breakpoint[] breakpoints, Node referrer, Resource target, Breakpoint breakpoint) throws RepositoryException {
         ResourceResolver resolver = target.getResourceResolver();
         copyProperties(resolver.getResource(referrer.getPath()), target, breakpoint);
-        NodeIterator childrenConf = referrer.getNodes();
-        if (childrenConf.hasNext()){
+        NodeIterator children = referrer.getNodes();
+        if (children.hasNext()){
             Node targetNode = target.adaptTo(Node.class);
             if (targetNode != null) {
                 logger.debug("dubbing {} at {}", referrer.getPath(), target.getPath());
-                while (childrenConf.hasNext()) {
-                    Node childConf = childrenConf.nextNode();
-                    String name = childConf.getName();
-                    if (breakpoint == null && childConf.hasProperty(PN_LOOP)) {
-                        loopTree(breakpoints, childConf, target);
-                    } else if (breakpoint != null && childConf.hasProperty(PN_FOLLOW) && childConf.hasProperty(PN_PATH)) {
-                        String path = childConf.getProperty(PN_PATH).getString();
-                        path = path.startsWith(SLASH) ? path : APPS_PREFIX + path;
-                        Node followedChildConf = childConf.getSession().getNode(path);
-                        copyTree(breakpoints, followedChildConf, target, breakpoint);
-                    } else {
-                        Node childTarget = targetNode.hasNode(name) ? targetNode.getNode(name) : targetNode.addNode(name, childConf.getPrimaryNodeType().getName());
-                        logger.debug("writing tree {}", childTarget.getPath());
-                        copyTree(breakpoints, childConf, resolver.getResource(childTarget.getPath()), breakpoint);
-                    }
+                while (children.hasNext()) {
+                    handleChildCopy(breakpoints, breakpoint,  children.nextNode(), target, targetNode);
                 }
             }
         }
     }
 
     Resource buildInclude(Breakpoint[] breakpoints, Resource resource) {
-        String path = getIncludePath(resource);
-        Resource referrer = resource.getResourceResolver().getResource(getRawPath(resource));
         try (ResourceResolver writeResolver = factory.getServiceResourceResolver(ADMIN_SERVICE_ACCOUNT)) {
+            String path = getIncludePath(resource);
+            Resource referrer = resource.getResourceResolver().getResource(getRawPath(resource));
             Map<String, Object> properties = new HashMap<>();
             properties.put(JCR_LASTMODIFIED, new Date());
             Resource target = ResourceUtil.getOrCreateResource(writeResolver, path, properties, SLING_FOLDER,false);
@@ -320,14 +341,15 @@ public class ResponsiveInclude extends SlingSafeMethodsServlet implements Resour
                 target.adaptTo(ModifiableValueMap.class).put(PN_RESOURCE_TYPE, targetType);
             }
             writeResolver.commit();
+            return resource.getResourceResolver().getResource(path);
         } catch (LoginException e) {
             logger.error("unable to login for a write session", e);
         } catch (RepositoryException e) {
             logger.error("JCR error while copying the tree", e);
         } catch (PersistenceException e) {
             logger.error("unable to write the cache", e);
-         }
-        return resource.getResourceResolver().getResource(path);
+        }
+        return null;
     }
 
     boolean isValidInclude(Resource resource) {

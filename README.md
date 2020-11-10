@@ -24,6 +24,9 @@ DX is a set of modules that can be used separately, you can build them all using
 command at the root of the project.
 `all` package contains all modules. 
 
+you might want to just install docs application, after the build just run
+```cd apps/docs && mvn content-package:install```
+
 if you want your build to be directly installed to your local aem instance, just add `install-all` maven profile
 
 ```mvn -Pinstall-all``` 
