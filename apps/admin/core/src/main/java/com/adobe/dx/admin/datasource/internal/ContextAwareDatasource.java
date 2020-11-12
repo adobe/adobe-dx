@@ -23,23 +23,23 @@ import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+
+import java.util.*;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.ModifiableValueMap;
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ResourceMetadata;
-import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.SyntheticResource;
+import org.apache.sling.api.resource.*;
+import org.apache.sling.api.wrappers.ValueMapDecorator;
 import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+
+import static javax.jcr.nodetype.NodeType.NT_UNSTRUCTURED;
 
 /**
  * Context Aware DataSource that returns a list of resources based on component DS properties.
@@ -74,6 +74,8 @@ public class ContextAwareDatasource {
     private static final String DEFAULT_BUCKET_NAME = "sling:configs";
     private static final String WCM_POLICIES = "/wcm/policies";
     private static final String CONTENT_ROOT_PATH = "/content";
+    private static final String VALUE_KEY = "value";
+    private static final String TEXT_KEY = "text";
 
     @Self
     private SlingHttpServletRequest request;
@@ -97,37 +99,29 @@ public class ContextAwareDatasource {
         Resource contentResource = getContentResource();
 
         if (contentResource != null) {
-            Collection<Resource> configResources =
-                configurationResolver.getResourceCollection(contentResource, bucketName, confName);
+            Collection<Resource> resources = configurationResolver.getResourceCollection(contentResource, bucketName, confName);
+            final List<Resource> rList = resources == null ? ListUtils.EMPTY_LIST :
+                resources.stream().map(r -> {
+                    String name = r.getName();
+                    ValueMap props = r.getValueMap();
+                    ValueMap decorator = new ValueMapDecorator(new HashMap<>());
 
-            List<Resource> rawResourceList = new ArrayList<>(configResources);
-            List<Resource> modifiedResourceList = new ArrayList<Resource>();
-            for (Resource resource : rawResourceList) {
-                String name = resource.getName();
-                ModifiableValueMap props = resource.adaptTo(ModifiableValueMap.class);
+                    // Store the initial value in case it's needed.
+                    decorator.put("initialValue", props.get(VALUE_KEY));
+                    decorator.put(VALUE_KEY, name);
 
-                // Store the initial value in case it's needed.
-                props.put("initialValue", props.get("value"));
-
-                // Reset the value to the CA-Config name for retrieval on render
-                props.remove("value");
-                props.put("value", name);
-
-                // Ensure the is text property exists
-                String text = props.get("text", String.class);
-                if (text == null) {
-                    text = props.get("label", String.class);
+                    // Ensure the is text property exists
+                    String text = props.get(TEXT_KEY, String.class);
                     if (text == null) {
-                        text = name;
+                        text = props.get("label", String.class);
+                        if (text == null) {
+                            text = name;
+                        }
                     }
-                    props.put("text", text);
-                }
-                Resource modifiedResource = new ValueMapResource(resourceResolver, new ResourceMetadata(), "nt:unstructured", props);
-
-                modifiedResourceList.add(modifiedResource);
-            }
-
-            DataSource dataSource = new SimpleDataSource(modifiedResourceList.iterator());
+                    decorator.put(TEXT_KEY, text);
+                    return new ValueMapResource(resourceResolver, new ResourceMetadata(), NT_UNSTRUCTURED, decorator);
+                }).collect(Collectors.toList());
+            DataSource dataSource = new SimpleDataSource(rList.iterator());
             request.setAttribute(DataSource.class.getName(), dataSource);
         }
     }
