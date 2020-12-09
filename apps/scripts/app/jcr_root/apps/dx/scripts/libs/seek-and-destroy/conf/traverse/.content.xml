@@ -3,4 +3,4 @@
     jcr:primaryType="sling:OrderedFolder"
     jcr:description="traverse all pages"
     sling:resourceType="slingPipes/reference"
-    expr='/apps/dx/scripts/libs/traverse'/>
+    expr='traverse'/>
