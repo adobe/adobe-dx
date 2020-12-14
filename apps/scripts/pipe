@@ -1,0 +1,99 @@
+#!/bin/bash
+#Copyright 2020 Adobe. All rights reserved.
+#This file is licensed to you under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License. You may obtain a copy
+#of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+#Unless required by applicable law or agreed to in writing, software distributed under
+#the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+#OF ANY KIND, either express or implied. See the License for the specific language
+#governing permissions and limitations under the License.
+
+#
+# pipe
+#
+# triggers a sling pipe (https://sling.apache.org/documentation/bundles/sling-pipes.html) build and execution on a remote
+# AEM instance.
+#
+###############################################################################
+
+#main function that ends up being called by this client
+function do_curl() {
+  curlCommand="curl -u $user -s -S $opts $server$uri"
+  if [ "$pipe_debug" ]; then
+    echo "$curlCommand"
+  fi
+  eval "$curlCommand"
+}
+
+function show_help() {
+    echo "Usage: pipe [args] <pipe>"
+    echo
+    echo "Command line tool to help writing and executing pipes quickly from a terminal"
+    echo
+    echo args can be
+    echo '-h': show this help
+    echo '-s <server>': sets the server, that defaults to http://localhost:4502
+    echo '-u <user>': sets the credentials, that defaults to admin:admin
+    echo '-d': sets dry run option, this pipe will not make any change, but you can read what it intended to do in the logs
+    echo '-c': sets output in csv
+    echo '-o': sets outputs columns, as a json object, default will just set path. Bindings can be used in values
+    echo '-n <size>': set the number of items needed in the outputs
+    opts="-d pipe_help=1"
+    do_curl
+}
+
+opts=""
+if [ -z "$user" ]; then
+  user=admin:admin
+fi
+if [ -z "$server" ]; then
+  server=http://localhost:4502
+fi
+if [ -z "$ext" ]; then
+  ext=json
+fi
+if [ -z "$uri" ]; then
+	uri=/apps/dx/scripts/exec.$ext
+fi
+
+while [ $# -gt 0 ]; do
+    # --options
+    if [[ $1 == --* ]]; then
+        opt=${1#*--}
+        case $opt in
+            help)  show_help; exit ;;
+            *)     userfail "Unrecognized option '--$opt'. See usage help with -h." ;;
+        esac
+
+    # -o options, can be combined: -fq
+    elif [[ $1 == -* ]]; then
+        arg=${1#*-}
+        while [ -n "$arg" ]; do
+            opt=${arg:0:1}
+            arg=${arg:1}
+            case $opt in
+                h)  show_help; exit ;;
+                s)  server=$2; shift ;;
+                u)  user=$2; shift ;;
+                d)  opts="-d dryRun=true $opts";;
+                c)  uri=/apps/dx/scripts/exec.csv ;;
+                n)  opts="-d size=$2 $opts"; shift ;;
+                o)  opts="-d writer=$2 $opts"; shift ;;
+                *)  userfail "Unrecognized option." ;;
+            esac
+        done
+    # arguments after options
+    else
+        cmd=$1
+    fi
+    shift
+done
+
+if [ -f "$cmd" ]; then
+  opts="-F pipe_cmdfile=@$cmd $opts"
+  do_curl
+else
+	opts="-d pipe_cmd=\"$cmd\" $opts"
+	do_curl
+fi

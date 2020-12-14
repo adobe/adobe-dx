@@ -2,9 +2,9 @@
 
 this module allows to execute content script on an instance
 
-# pipes.sh client
-once below content package is installed, for easier usage, you can symlink ./pipe.sh 
-e.g. `ln -s ~/Documents/dx/scripts/pipe.sh /usr/local/bin/pipe`
+# pipe client
+once below content package is installed, for easier usage, you can symlink ./pipe 
+e.g. `ln -s ~/Documents/dx/scripts/pipe /usr/local/bin/pipe`
 
 then you can run pipe from your terminal like
 ```pipe "echo /content | $ foo/bar"```
@@ -13,7 +13,8 @@ or
 
 ```pipe ~/Document/myPipeScript.txt```
 
-where myPipeScript.txt contains pipe instruction (see https://sling.apache.org/documentation/bundles/sling-pipes.html for further information)
+where myPipeScript.txt contains pipe instruction 
+(run `pipe -h` or see https://sling.apache.org/documentation/bundles/sling-pipes.html for further information)
 
 # app content-package
 this package contains pipes and its dependencies.
