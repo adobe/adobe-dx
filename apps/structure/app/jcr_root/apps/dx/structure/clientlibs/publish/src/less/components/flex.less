@@ -1,0 +1,263 @@
+.dx-Flex {
+    position: relative;
+
+    &.has-Toggle:not(.is-Selected) {
+        &:not(.dx-Author-Padding) {
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        &.dx-Author-Padding {
+            height: auto;
+        }
+    }
+
+    &.is-Selected {
+        height: auto;
+    }
+
+    /* Background Video */
+    &.has-video {
+        .dx-Flex-Items {
+            position: relative;
+        }
+    }
+
+    .dx-Flex-Items.crop-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+
+        &.show-controls {
+            pointer-events: none;
+        }
+    }
+}
+
+// For IE-11 only
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .dx-Flex {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Flexbox image resizing bug
+    /* https://github.com/philipwalton/flexbugs/issues/75
+    */
+    .dx-Flex-Items {
+        min-height: 1px;
+    }
+}
+
+/*
+* For IE-11 Desktop only
+* Flexbox margin auto bug
+* https://github.com/philipwalton/flexbugs#flexbug-15
+*/
+@media all and (-ms-high-contrast: none) and (min-width: 75rem), (-ms-high-contrast: active) and (min-width: 75rem) {
+    .dx-Flex-Items {
+        &.container {
+            // Flex items not flexing with align self center.
+            width: 100%;
+        }
+    }
+}
+
+.dx-Flex-Items {
+    display: flex;
+    flex-wrap: wrap;
+
+    /* Stretch by Default */
+    justify-content: stretch;
+
+    /*
+     * Flex basis is set to 1%
+     * so non-defined columns with
+     * large content (lots of text)
+     * don't wrap to a new line.
+     */
+    > * {
+        flex: 1 1 1%;
+        max-width: 100%;
+    }
+
+    /*
+     * Setup some good full-height defaults for common
+     * layout scenarios.
+     *
+     * 1. Position directly in flex
+     * 2. XF directly in flex
+     * 3. XF with direct flex in flex
+     */
+    > .position > .dx-Position,
+    > .flex > .dx-Flex,
+    > .flex > .dx-Flex > .dx-Flex-Items,
+    > .xfreference > .xfpage,
+    > .xfreference > .xfpage > .xf-content-height,
+    > .xfreference > .xfpage > .xf-content-height > .aem-Grid,
+    > .xfreference > .xfpage > * .aem-Grid > .flex,
+    > .xfreference > .xfpage > * .aem-Grid > .flex > .dx-Flex,
+    > .xfreference > .xfpage > * .aem-Grid > .flex > .dx-Flex > .dx-Flex-Items {
+        height: 100%;
+    }
+
+    .setupFlexSize(mobile);
+
+    @media @for-phone-only {
+        > .dx-parlite--phone--hide {
+            display: none;
+        }
+    }
+
+    @media @for-tablet-portrait-up {
+        .setupFlexSize(tablet);
+    }
+
+    @media @for-tablet-only {
+        > .dx-parlite--tablet--hide {
+            display: none;
+        }
+    }
+
+    @media @for-desktop-up {
+        .setupFlexSize(desktop);
+
+        &.container {
+            margin-right: auto !important;
+            margin-left: auto !important;
+        }
+
+        > .dx-parlite--default--hide {
+            display: none;
+        }
+    }
+}
+
+.dx-Flex--GapWrapper {
+    height: 100%;
+    overflow: hidden;
+
+    > .dx-Flex-Items {
+        height: 100%;
+        // IE 10 and 11 feature detection
+        // IE likes height set to auto - but needs height set to 100% when items have a min-height set
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+            height: auto;
+        }
+    }
+}
+
+/* Mixin */
+.setupFlexSize(@size) {
+    /* Justification */
+    &.dx-Flex--@{size}JustifyStretch {
+        justify-content: stretch;
+    }
+
+    &.dx-Flex--@{size}JustifyStart {
+        justify-content: flex-start;
+
+        // Do not stretch or grow so this setting
+        // does something with no item definitions.
+        > * {
+            flex: 0 0 auto;
+        }
+    }
+
+    &.dx-Flex--@{size}JustifyCenter {
+        justify-content: center;
+
+        // Do not stretch or grow so this setting
+        // does something with no item definitions.
+        > * {
+            flex: 0 0 auto;
+        }
+    }
+
+    &.dx-Flex--@{size}JustifyEnd {
+        justify-content: flex-end;
+
+        // Do not stretch or grow so this setting
+        // does something with no item definitions.
+        > * {
+            flex: 0 0 auto;
+        }
+    }
+
+    &.dx-Flex--@{size}JustifySpaceBetween {
+        justify-content: space-between;
+
+        // Do not stretch or grow so this setting
+        // does something with no item definitions.
+        > * {
+            flex: 0 0 auto;
+        }
+    }
+
+    /* Item Alignment */
+    &.dx-Flex--@{size}AlignItemStart {
+        align-items: flex-start;
+    }
+
+    &.dx-Flex--@{size}AlignItemCenter {
+        align-items: center;
+    }
+
+    &.dx-Flex--@{size}AlignItemEnd {
+        align-items: flex-end;
+    }
+
+    &.dx-Flex--@{size}AlignItemStretch {
+        align-items: stretch;
+    }
+
+    /* Content Alignment */
+    &.dx-Flex--@{size}AlignContentStart {
+        align-content: flex-start;
+    }
+
+    &.dx-Flex--@{size}AlignContentCenter {
+        align-content: center;
+    }
+
+    &.dx-Flex--@{size}AlignContentEnd {
+        align-content: flex-end;
+    }
+
+    &.dx-Flex--@{size}AlignContentStretch {
+        align-content: stretch;
+    }
+
+    &.dx-Flex--@{size}AlignContentSpaceBetween {
+        align-content: space-between;
+    }
+
+    // Item Content Alignment
+    &.dx-Flex--@{size}AlignItemContentCenter,
+    &.dx-Flex--@{size}AlignItemContentEnd {
+        > .position > .dx-Position {
+            display: flex;
+
+            > .aem-Grid,
+            > .dx-Author-Padding {
+                width: 100%;
+            }
+        }
+    }
+
+    &.dx-Flex--@{size}AlignItemContentCenter {
+        > .position > .dx-Position {
+            align-items: center;
+        }
+    }
+
+    &.dx-Flex--@{size}AlignItemContentEnd {
+        > .position > .dx-Position {
+            align-items: flex-end;
+        }
+    }
+}

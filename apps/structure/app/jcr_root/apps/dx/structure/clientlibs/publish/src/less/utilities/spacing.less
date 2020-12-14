@@ -1,0 +1,24 @@
+.set-air(@size, @counter, @airType, @side) when (@counter >= 0) {
+    .set-air(@size, (@counter - 4), @airType, @side);
+
+    &.@{size}-@{airType}-@{side}-@{counter} {
+        @{airType}-@{side}: unit(@counter, px);
+    }
+}
+
+.set-all-air(@responsiveSize, @index: length(@sides)) when (@index > 0) {
+    @sideName: extract(@sides, @index);
+    .set-air(@size: @responsiveSize, @counter: 100, @airType: padding, @side: @sideName);
+    .set-air(@size: @responsiveSize, @counter: 100, @airType: margin, @side: @sideName);
+    .set-all-air(@responsiveSize, (@index - 1));
+}
+
+.set-all-air(mobile);
+
+@media (min-width: @size-responsive-tablet-portrait-up) {
+    .set-all-air(tablet);
+}
+
+@media (min-width: @size-responsive-desktop) {
+    .set-all-air(desktop);
+}

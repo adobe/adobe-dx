@@ -1,0 +1,24 @@
+// Breakpoints
+// Reference: https://medium.freecodecamp.org/the-100-correct-way-to-do-css-breakpoints-88d6a5ba1862
+@size-responsive-phone-only: 599px;
+@size-responsive-tablet-portrait-up: 600px;
+@size-responsive-tablet-portrait-max: 899px;
+@size-responsive-tablet-landscape-up: 900px;
+@size-responsive-tablet-landscape-max: 1199px;
+@size-responsive-desktop: 1200px;
+@size-responsive-max: 1440px;
+
+// Media Queries
+@for-phone-only: %(~"only screen and (max-width: %s)", @size-responsive-phone-only);
+@for-tablet-portrait-up: %(~"only screen and (min-width: %s)", @size-responsive-tablet-portrait-up);
+@for-tablet-landscape-up: %(~"only screen and (min-width: %s)", @size-responsive-tablet-landscape-up);
+@for-desktop-up: %(~"only screen and (min-width: %s)", @size-responsive-desktop);
+@for-big-desktop-up: %(~"only screen and (min-width: %s)", @size-responsive-max);
+
+@for-tablet-only: %(
+    ~"only screen and (min-width:%s) and (max-width:%s)",
+    @size-responsive-tablet-portrait-up,
+    @size-responsive-tablet-landscape-max
+);
+
+@for-IE11-only: ~"all and (-ms-high-contrast: none), (-ms-high-contrast: active)";
