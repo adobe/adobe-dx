@@ -3,4 +3,4 @@
     jcr:primaryType="sling:OrderedFolder"
     jcr:description="all roots associated with a given app"
     sling:resourceType="slingPipes/json"
-    expr='\[\"/content/${caconfig.conf.pipesConfig.app}\",\"/content/experience-fragments/${caconfig.conf.pipesConfig.app}\"]'/>
+    expr='\[\"/content/${app}\",\"/content/experience-fragments/${app}\"]'/>
