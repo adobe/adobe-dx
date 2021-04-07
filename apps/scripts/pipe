@@ -26,6 +26,11 @@ function do_curl() {
   eval "$curlCommand"
 }
 
+#function to generate transform arg1=val1,arg2=val2 into {"arg1":"val1","arg2":"val2"}
+function generate_json() {
+  echo {\"`echo "$1"| sed s/=/\":\"/g| sed s/\,/\"\,\"/g`\"}
+}
+
 function show_help() {
     echo "Usage: pipe [args] <pipe>"
     echo
@@ -36,8 +41,9 @@ function show_help() {
     echo '-s <server>': sets the server, that defaults to http://localhost:4502
     echo '-u <user>': sets the credentials, that defaults to admin:admin
     echo '-d': sets dry run option, this pipe will not make any change, but you can read what it intended to do in the logs
+    echo '-b': sets additional bindings, in the form b1=v1,b2=v2,...
     echo '-c': sets output in csv
-    echo '-o': sets outputs columns, as a json object, default will just set path. Bindings can be used in values
+    echo '-o': sets outputs column, in the form o1=v1,o2=v2,.... Bindings can be used in values
     echo '-n <size>': set the number of items needed in the outputs
     opts="-d pipe_help=1"
     do_curl
@@ -76,10 +82,11 @@ while [ $# -gt 0 ]; do
                 h)  show_help; exit ;;
                 s)  server=$2; shift ;;
                 u)  user=$2; shift ;;
-                d)  opts="-d dryRun=true $opts";;
+                d)  opts="-F dryRun=true $opts";;
+		            b)  opts="-F bindings='`generate_json "$2"`' $opts"; shift ;;
                 c)  uri=/apps/dx/scripts/exec.csv ;;
-                n)  opts="-d size=$2 $opts"; shift ;;
-                o)  opts="-d writer=$2 $opts"; shift ;;
+                n)  opts="-F size=$2 $opts"; shift ;;
+                o)  opts="-F writer=$2 $opts"; shift ;;
                 *)  userfail "Unrecognized option." ;;
             esac
         done
