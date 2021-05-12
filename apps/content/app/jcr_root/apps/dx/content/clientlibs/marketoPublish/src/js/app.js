@@ -1,4 +1,5 @@
 import { getMarketoConfig, loadMarketoForm } from './shared';
+import { initProfileService } from './profile';
 
 /**
  * Initialize all Marketo components using the Marketo footer script.
@@ -10,6 +11,9 @@ const initAll = () => {
         const idArray = JSON.parse(config.formIds);
         idArray.forEach((id) => {
             loadMarketoForm(config.url, config.munchkinId, id);
+            if (!window.dx?.author) {
+                initProfileService(config.url, config.munchkinId, config.profileUrl, id);
+            }
         });
     }
 };

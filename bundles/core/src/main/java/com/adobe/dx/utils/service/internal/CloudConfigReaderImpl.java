@@ -22,12 +22,14 @@ import static org.apache.sling.api.resource.ResourceResolverFactory.SUBSERVICE;
 import com.adobe.dx.utils.service.CloudConfigReader;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
@@ -42,8 +44,7 @@ public class CloudConfigReaderImpl implements CloudConfigReader {
 
     private static final String BUCKET_NAME = "settings/cloudconfigs";
 
-    private static final Map<String, Object> SERVICE_USER = Collections.singletonMap(SUBSERVICE,
-        "readService");
+    private static final Map<String, Object> SERVICE_USER = Collections.singletonMap(SUBSERVICE, "readService");
 
     @Reference
     private ConfigurationResourceResolver configurationResolver = null;
@@ -54,15 +55,32 @@ public class CloudConfigReaderImpl implements CloudConfigReader {
     @Override
     public <T> T getContextAwareCloudConfigRes(@NotNull String resourcePath, String configName, Class<T> type) {
         try (ResourceResolver resolver = resourceResolverFactory.getServiceResourceResolver(SERVICE_USER)) {
-            Resource resource = resolver.getResource(resourcePath);
-            Resource confRes = null != resource ? configurationResolver.getResource(resource, BUCKET_NAME,
-                configName) : null;
-            if (null != confRes) {
-                Resource jcrContentRes = confRes.getChild(JCR_CONTENT);
-                return null != jcrContentRes ? jcrContentRes.adaptTo(type) : confRes.adaptTo(type);
-            }
+            return getContextAwareCloudConfigRes(resolver, resourcePath, configName, type);
         } catch (LoginException e) {
             LOG.error("Login Exception occurred when reading config ", e);
+        }
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getContextAwareCloudConfigRes(@NotNull String resourcePath, String configName) {
+        try (ResourceResolver resolver = resourceResolverFactory.getServiceResourceResolver(SERVICE_USER)) {
+            ValueMap vm = getContextAwareCloudConfigRes(resolver, resourcePath, configName, ValueMap.class);
+            return new HashMap<>(vm);
+        } catch (LoginException e) {
+            LOG.error("Login Exception occurred when reading config ", e);
+        }
+        return null;
+    }
+
+    private <T> T getContextAwareCloudConfigRes(ResourceResolver resolver, @NotNull String resourcePath,
+            String configName, Class<T> type) {
+        Resource resource = resolver.getResource(resourcePath);
+        Resource confRes = null != resource ? configurationResolver.getResource(resource, BUCKET_NAME, configName)
+                : null;
+        if (null != confRes) {
+            Resource jcrContentRes = confRes.getChild(JCR_CONTENT);
+            return null != jcrContentRes ? jcrContentRes.adaptTo(type) : confRes.adaptTo(type);
         }
         return null;
     }

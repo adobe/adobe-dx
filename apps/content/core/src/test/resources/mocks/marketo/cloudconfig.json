@@ -12,6 +12,7 @@
     ],
     "clientId": "validClient",
     "sling:resourceType": "dx/config-manager/marketo-config",
-    "restApiBaseUrl": "//123-shs-456.mktorest.com"
+    "restApiBaseUrl": "//123-shs-456.mktorest.com",
+    "profileUrl": "//www.adobe.com/api/dexter/marketo-profile-service"
   }
 }

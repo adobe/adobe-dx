@@ -1,0 +1,11 @@
+{
+    "jcr:primaryType": "cq:Page",
+    "jcr:content": {
+      "jcr:primaryType": "cq:PageContent",
+      "jcr:title": "Test page",
+      "prop1": "/api",
+      "prop2": "",
+      "prop3": true,
+      "prop4": false
+  }
+}

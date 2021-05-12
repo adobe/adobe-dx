@@ -24,6 +24,57 @@
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="dx/author/components/datasource/marketoDataSource"/>
                     </marketoForms>
+                    <profileService
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Profile Service"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/fieldset">
+                        <granite:rendercondition
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="dx/admin/rendercondition/cloudconfigproperty"
+                            cloudConfigName="marketo-config"
+                            propertyName="profileUrl"
+                             />
+                        <items jcr:primaryType="nt:unstructured">
+                            <profileService
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                checked="true"
+                                name="./profiling"
+                                text="Enable"
+                                value="{Boolean}true"/>
+                            <profileServiceTypeHint
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                name="./profiling@TypeHint"
+                                value="Boolean"/>
+                            <submitText
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/foundation/form/textfield"
+                                fieldLabel="Submit text"
+                                fieldDescription="If all the form fields are pre-filled, change the submit button text with this one."
+                                name="./submitText"/>    
+                            <autoSubmitForm
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                checked="true"
+                                fieldDescription="If all the fields are pre-filled, auto submits the form, requires profiling to be enabled."
+                                name="./autoSubmitForm"
+                                text="Auto Submit Form"
+                                value="{Boolean}true"/>
+                            <autoSubmitFormTypeHint
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                name="./autoSubmitForm@TypeHint"
+                                value="Boolean"/>
+                            <destinationUrl
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                fieldLabel="Destination URL"
+                                fieldDescription="Page to redirect after form submmision."
+                                name="./destinationUrl"
+                                rootPath="/content" />
+                        </items>
+                    </profileService>
                 </items>
             </column>
         </items>

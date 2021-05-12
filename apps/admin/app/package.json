@@ -32,6 +32,7 @@
     "aemsync": "^4.0.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "eslint-plugin-jest": "^24.3.6",
     "husky": "^4.2.5",
     "jest": "^25.3.0",
     "jest-raw-loader": "^1.0.1",

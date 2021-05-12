@@ -16,9 +16,12 @@
 
 package com.adobe.dx.utils.service;
 
+import java.util.Map;
+
 import org.jetbrains.annotations.NotNull;
 
 public interface CloudConfigReader {
 
+  Map<String,Object> getContextAwareCloudConfigRes(@NotNull String resourcePath, String configName);
     <T> T getContextAwareCloudConfigRes(@NotNull String resourcePath, String configName, Class<T> type);
 }   

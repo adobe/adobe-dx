@@ -39,7 +39,7 @@ class CaColorfieldModelTest extends AbstractRequestModelTest {
     }
 
     @Test
-    public void testStandardUsage() {
+    public void testStandardUsage() throws ReflectiveOperationException {
         CaColorfieldModel model = getModel(CaColorfieldModel.class);
         assertNotNull(model);
         assertEquals("./myColor", model.getName());

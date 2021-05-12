@@ -25,6 +25,7 @@ import com.adobe.dx.testing.AbstractTest;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -66,6 +67,15 @@ class CloudConfigReaderImplTest extends AbstractTest {
         ValueMap cloudConfig = cloudConfigReaderImpl.getContextAwareCloudConfigRes("/content/dx",
             "simpleConfig/jcr:content", ValueMap.class);
         validateCloudConfigValues(cloudConfig);
+    }
+
+    @Test
+    void testValuesAsMap() {
+        Map<String, Object> cloudConfig = cloudConfigReaderImpl.getContextAwareCloudConfigRes("/content/dx",
+            "simpleConfig/jcr:content");
+        assertNotNull(cloudConfig);
+        assertEquals("Simple Config", cloudConfig.get("name"));
+        assertArrayEquals(new String[] {"array1", "array2"}, (String[])cloudConfig.get("array"));
     }
 
     private void validateCloudConfigValues(ValueMap cloudConfig) {

@@ -149,6 +149,14 @@ export default class MarketoConfig extends React.Component {
                                     onChange={this.onContentChange}
                                 />
                             </FormItem>
+                            <FormItem label="Profile URL">
+                                <Textfield
+                                    name="profileUrl"
+                                    value={this.state.data[JCR_CONTENT].profileUrl}
+                                    placeholder="ProfileUrl"
+                                    onChange={this.onContentChange}
+                                />
+                            </FormItem>
                         </GridColumn>
                     </GridRow>
                 </Grid>

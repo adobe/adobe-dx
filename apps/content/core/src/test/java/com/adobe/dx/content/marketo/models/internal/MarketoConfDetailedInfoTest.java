@@ -66,5 +66,6 @@ class MarketoConfDetailedInfoTest extends AbstractTest {
         assertEquals(marketoConfDetailedInfo.getClientInfo() , "//123-shs-456.mktorest.comvalidClient"
             + expectedDecryptedValue);
         assertEquals(marketoConfDetailedInfo.getBaseUrl() , "//app-ab12.marketo.com");
+        assertEquals(marketoConfDetailedInfo.getProfileUrl() , "//www.adobe.com/api/dexter/marketo-profile-service");
     }
 }

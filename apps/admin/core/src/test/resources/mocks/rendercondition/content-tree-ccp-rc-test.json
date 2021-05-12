@@ -1,0 +1,54 @@
+{
+  "page": {
+    "jcr:primaryType": "cq:Page",
+    "jcr:content": {
+      "jcr:primaryType": "cq:PageContent",
+      "jcr:title": "Test page",
+      "sling:configRef": "/conf/foo"
+    }
+  },
+  "dialog1": {
+    "jcr:primaryType": "nt:unstructured",
+    "granite:rendercondition": {
+      "jcr:primaryType": "nt:unstructured",
+      "propertyName": "prop1",
+      "cloudConfigName": "ccp-rc-test",
+      "sling:resourceType": "dx/admin/rendercondition/cloudconfigproperty"
+    }
+  },
+  "dialog2": {
+    "jcr:primaryType": "nt:unstructured",
+    "granite:rendercondition": {
+      "jcr:primaryType": "nt:unstructured",
+      "propertyName": "prop2",
+      "cloudConfigName": "ccp-rc-test",
+      "sling:resourceType": "dx/admin/rendercondition/cloudconfigproperty"
+    }
+  },
+  "dialog3": {
+    "jcr:primaryType": "nt:unstructured",
+    "granite:rendercondition": {
+      "jcr:primaryType": "nt:unstructured",
+      "propertyName": "prop3",
+      "cloudConfigName": "ccp-rc-test",
+      "sling:resourceType": "dx/admin/rendercondition/cloudconfigproperty"
+    }
+  },
+  "dialog4": {
+    "jcr:primaryType": "nt:unstructured",
+    "granite:rendercondition": {
+      "jcr:primaryType": "nt:unstructured",
+      "propertyName": "prop4",
+      "cloudConfigName": "ccp-rc-test",
+      "sling:resourceType": "dx/admin/rendercondition/cloudconfigproperty"
+    }
+  },
+  "dialog5": {
+    "jcr:primaryType": "nt:unstructured",
+    "granite:rendercondition": {
+      "jcr:primaryType": "nt:unstructured",
+      "propertyName": "prop4",
+      "sling:resourceType": "dx/admin/rendercondition/cloudconfigproperty"
+    }
+  }
+}

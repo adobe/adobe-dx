@@ -32,6 +32,9 @@ public class MarketoConfBasicInfo {
     private String munchkinId;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String profileUrl;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(values = {"dx/content/components/marketo"})
     private String[] marketoComponentTypes;
 
@@ -45,5 +48,9 @@ public class MarketoConfBasicInfo {
 
     public String[] getMarketoComponentTypes() {
         return marketoComponentTypes;
+    }
+
+    public String getProfileUrl() {
+        return profileUrl;
     }
 }

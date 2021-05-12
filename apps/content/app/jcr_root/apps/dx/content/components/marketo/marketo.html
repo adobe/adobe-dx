@@ -1,4 +1,17 @@
-<form data-sly-test.selectedFormId="${properties.marketoFormId}" class="dx-Marketo" id="mktoForm_${selectedFormId}"></form>
+<sly
+    data-sly-use.footer="com.adobe.dx.content.marketo.models.MarketoFooter"
+    data-sly-use.form="com.adobe.dx.content.marketo.models.MarketoForm"
+    data-sly-test.profiling="${!wcmmode.edit  && !(!(form.profiling && footer.marketoConfBasicInfo.profileUrl))}">
+</sly>
+<form data-sly-test.selectedFormId="${form.marketoFormId}"
+    class="dx-Marketo ${profiling && 'dx-Marketo--profiling'}"
+    id="mktoForm_${selectedFormId}"
+    data-profile="${profiling}"
+    data-auto-submit="${!wcmmode.edit && profiling && properties.autoSubmitForm}"
+    data-sly-attribute.data-submit-text="${profiling &&form.submitText}"
+    data-sly-attribute.data-destination-url="${profiling && form.destinationUrl}"
+    >
+</form>
 <div data-sly-test="${!wcmmode.disabled && !selectedFormId}"
      class="cq-placeholder"
      data-emptytext="${component.properties.jcr:title}"></div>

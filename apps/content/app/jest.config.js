@@ -24,6 +24,7 @@ const config = {
         },
     ],
     testResultsProcessor: 'jest-sonar-reporter',
+    testEnvironment: 'jest-environment-jsdom-global',
 };
 
 module.exports = config;

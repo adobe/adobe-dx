@@ -46,7 +46,10 @@ if (!isProduction) {
 
 module.exports = {
     entry: {
-        marketoPublish: [`${PROJECT_PATH}/marketoPublish/src/js/app.js`],
+        marketoPublish: [
+            `${PROJECT_PATH}/marketoPublish/src/js/app.js`,
+            `${PROJECT_PATH}/marketoPublish/src/less/app.less`,
+        ],
         marketoAuthor: [`${PROJECT_PATH}/marketoAuthor/src/js/app.js`],
     },
     output: {
