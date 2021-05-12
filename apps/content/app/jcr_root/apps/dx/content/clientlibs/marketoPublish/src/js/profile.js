@@ -74,7 +74,7 @@ const initProfileService = (url, munchkinId, profileUrl, formId) => {
                     if (destinationUrl) {
                         form.onSuccess(() => {
                             if (fields.length > 0) {
-                                window.location.href = destinationUrl;
+                                window.location.assign(destinationUrl);
                             } else {
                                 window.location.replace(destinationUrl);
                             }

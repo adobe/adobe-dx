@@ -4,7 +4,7 @@ import { initProfileService } from '../profile';
 
 const { location } = global;
 delete global.location;
-global.location = { ...location, replace: jest.fn() };
+global.location = { ...location, replace: jest.fn(), assign: jest.fn() };
 
 const fields = ['FirstName', 'LastName', 'Email', 'Company'];
 const fieldsEls = fields
@@ -95,7 +95,7 @@ describe('Marketo profile Forms', () => {
         };
     });
 
-    test('Form is not profile', async () => {
+    test('Form without profile service', async () => {
         setDom();
         expect(document.querySelector('[data-profile]')).toBeNull();
         await doProfile();
@@ -103,7 +103,7 @@ describe('Marketo profile Forms', () => {
         expect(document.querySelector('[data-field-open]')).toBeNull();
     });
 
-    test('Form is profile and no field is pre-filled', async () => {
+    test('Form with profile service and no field is pre-filled', async () => {
         setDom(true);
         fetch.mockResponseOnce(JSON.stringify({ fields }));
         await doProfile();
@@ -112,7 +112,7 @@ describe('Marketo profile Forms', () => {
         expect(document.querySelectorAll('.mktoFieldDescriptor').length).toEqual(4);
     });
 
-    test('Form is profile and some fields are pre-filled', async () => {
+    test('Form with profile service and some fields are pre-filled', async () => {
         setDom(true);
         fetch.mockResponseOnce(JSON.stringify({ fields: ['FirstName', 'LastName'] }));
         await doProfile();
@@ -121,7 +121,7 @@ describe('Marketo profile Forms', () => {
         expect(document.querySelectorAll('.mktoFieldDescriptor').length).toEqual(2);
     });
 
-    test('Form is profile and all the fields are pre-filled', async () => {
+    test('Form with profile service and all the fields are pre-filled', async () => {
         setDom(true);
         fetch.mockResponseOnce(JSON.stringify({ fields: [] }));
         await doProfile();
@@ -131,7 +131,7 @@ describe('Marketo profile Forms', () => {
         expect(queryByText(document, submitText)).toBeTruthy();
     });
 
-    test('Form is profile and auto submit is enabled', async () => {
+    test('Form with profile service and auto submit is enabled', async () => {
         setDom(true, true);
         fetch.mockResponseOnce(JSON.stringify({ fields: ['FirstName', 'LastName'] }));
         await doProfile();
@@ -141,7 +141,7 @@ describe('Marketo profile Forms', () => {
         expect(submitFn.mock.calls.length).toEqual(0);
     });
 
-    test('Form is profile, all the fields are pre-filled and auto submit is enabled', async () => {
+    test.only('Form with profile service, all the fields are pre-filled and auto submit is enabled', async () => {
         setDom(true, true);
         fetch.mockResponseOnce(JSON.stringify({ fields: [] }));
         await doProfile();
@@ -150,9 +150,10 @@ describe('Marketo profile Forms', () => {
         expect(document.querySelectorAll('.mktoFieldDescriptor').length).toEqual(0);
         expect(submitFn.mock.calls.length).toEqual(1);
         expect(window.location.replace).toBeCalledWith(destinationUrl);
+        expect(window.location.assign.mock.calls.length).toEqual(0);
     });
 
-    test('Form is profile, first visit (no munckin cookie)', async () => {
+    test('Form with profile service, first visit (no munckin cookie)', async () => {
         setDom(true, true, 0);
         await doProfile();
         expect(document.querySelector('.dx-Marketo--profiling')).toBeNull();
