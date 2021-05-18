@@ -141,7 +141,7 @@ describe('Marketo profile Forms', () => {
         expect(submitFn.mock.calls.length).toEqual(0);
     });
 
-    test.only('Form with profile service, all the fields are pre-filled and auto submit is enabled', async () => {
+    test('Form with profile service, all the fields are pre-filled and auto submit is enabled', async () => {
         setDom(true, true);
         fetch.mockResponseOnce(JSON.stringify({ fields: [] }));
         await doProfile();

@@ -1,0 +1,16 @@
+{
+  "jcr:primaryType": "cq:Page",
+  "jcr:content": {
+    "jcr:primaryType": "cq:PageContent",
+    "jcr:title": "Marketo Form Page",
+      "marketo": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "dx/content/components/marketo",
+        "profiling": true,
+        "autoSubmitForm": true,
+        "marketoFormId": "1234",
+        "submitText": "Submit",
+        "destinationUrl": "/test"
+    }
+  }
+}
