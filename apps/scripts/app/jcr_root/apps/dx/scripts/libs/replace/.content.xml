@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
-    jcr:primaryType="sling:Folder"
-    jcr:description="pls use that pipe as a reference, specifying in bindings a 'property' and 'oldValue' you want to replace, plus 'newValue'"
-    sling:resourceType="slingPipes/container"/>
+          jcr:title="Replace Property value"
+          jcr:primaryType="sling:Folder"
+          jcr:description="This pipe can be used to change a property of a resource. The search consists of two properties to search for.
+    curl -u admin:admin http://localhost:4502/apps/dx/scripts/libs/replace.json
+    -X POST -v -F bindings=&quot;{
+      'root':'/content/{path}',
+      'type':'cq:PageContent',
+      'property':'sling:resourceType',
+      'criteria':'cq:template',
+      'criteriavalue':'/conf/myproject/settings/wcm/templates/mytemplate',
+      'oldValue':'myApp/components/structure/page',
+      'newValue':'myApp/components/structure/newPage'}&quot;"
+          sling:resourceType="slingPipes/container"/>
