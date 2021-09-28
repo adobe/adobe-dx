@@ -3,4 +3,4 @@
           jcr:primaryType="sling:OrderedFolder"
           jcr:description="searches for all nodes with property '${property}' equals to '${oldvalue}' and property '${criteria}' eqals to '${criteriavalue}' within ${root}"
           sling:resourceType="slingPipes/xpath"
-          expr='/jcr:root${root}//element(*,${type})[@${property}="${oldValue}" and @${criteria}="${criteriavalue}"]'/>
+          expr='/jcr:root${root}//element(*,${type})[${criteria}]'/>
