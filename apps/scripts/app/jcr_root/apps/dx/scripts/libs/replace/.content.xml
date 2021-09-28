@@ -7,9 +7,7 @@
     -X POST -v -F bindings=&quot;{
       'root':'/content/{path}',
       'type':'cq:PageContent',
+      'criteria':'@cq:template=&quot;/conf/myproject/settings/wcm/templates/mytemplate&quot; and @sling:resourceType=&quot;myApp/components/structure/page&quot;',
       'property':'sling:resourceType',
-      'criteria':'cq:template',
-      'criteriavalue':'/conf/myproject/settings/wcm/templates/mytemplate',
-      'oldValue':'myApp/components/structure/page',
       'newValue':'myApp/components/structure/newPage'}&quot;"
           sling:resourceType="slingPipes/container"/>
