@@ -27,8 +27,9 @@ function do_curl() {
 }
 
 #function to generate transform arg1=val1,arg2=val2 into {"arg1":"val1","arg2":"val2"}
+#the function also accepts values with spaces. These statements must then be surrounded with single quotes. e.g. arg1='value with space'
 function generate_json() {
-  echo {\"`echo "$1"| sed s/=/\":\"/g| sed s/\,/\"\,\"/g`\"}
+  echo "$1" | sed 's/\(.*\)/\1,/' | sed -r 's/([^=,]*)\=['\'']?([^,'\'']*)['\'']?[,]/"\1":"\2",/g' | sed 's/.$//' | sed 's/\(.*\)/\{\1\}/'
 }
 
 function show_help() {
@@ -83,7 +84,7 @@ while [ $# -gt 0 ]; do
                 s)  server=$2; shift ;;
                 u)  user=$2; shift ;;
                 d)  opts="-F dryRun=true $opts";;
-		            b)  opts="-F bindings='`generate_json "$2"`' $opts"; shift ;;
+                b)  opts="-F bindings='`generate_json "$2"`' $opts"; shift ;;
                 c)  uri=/apps/dx/scripts/exec.csv ;;
                 n)  opts="-F size=$2 $opts"; shift ;;
                 o)  opts="-F writer=$2 $opts"; shift ;;
