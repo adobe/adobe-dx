@@ -101,6 +101,6 @@ if [ -f "$cmd" ]; then
   opts="-F pipe_cmdfile=@$cmd $opts"
   do_curl
 else
-	opts="-d pipe_cmd=\"$cmd\" $opts"
+	opts="-F pipe_cmd=\"$cmd\" $opts"
 	do_curl
 fi
