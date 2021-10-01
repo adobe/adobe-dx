@@ -40,3 +40,11 @@ Traverses pages in /content/{app} and /content/experience-fragments/{app}, consi
 This pipe is meant to be used by others (it is used by above fix-invalid-page)
 ### usage
 generates a report under /var/pipes/libs/usage/report of used types
+
+## Examples for the pipe client
+### running a custom pipe
+```pipe "ref /apps/path/to/custom/pipe```
+### running a xpath pipe
+```pipe "xpath /jcr:root/content//*[sling:resourceType='my/sling/resource/type']"```
+### executing a pipe with a different server
+```pipe -s http://myserver:8080 "echo /content"```
