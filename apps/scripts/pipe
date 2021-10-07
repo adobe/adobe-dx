@@ -46,6 +46,7 @@ function show_help() {
     echo '-c': sets output in csv
     echo '-o': sets outputs column, in the form o1=v1,o2=v2,.... Bindings can be used in values
     echo '-n <size>': set the number of items needed in the outputs
+    echo '-f <file>': add a file as input parameter
     opts="-d pipe_help=1"
     do_curl
 }
@@ -87,6 +88,7 @@ while [ $# -gt 0 ]; do
                 b)  opts="-F bindings='`generate_json "$2"`' $opts"; shift ;;
                 c)  uri=/apps/dx/scripts/exec.csv ;;
                 n)  opts="-F size=$2 $opts"; shift ;;
+		f)  opts="-F pipes_inputFile=@$2"; shift ;;
                 o)  opts="-F writer=$2 $opts"; shift ;;
                 *)  userfail "Unrecognized option." ;;
             esac
