@@ -19,7 +19,7 @@
 
 #main function that ends up being called by this client
 function do_curl() {
-  curlCommand="curl -u $user -s -S $opts $server$uri"
+  curlCommand="curl -u $user -s --fail -S $opts $server$uri"
   if [ "$pipe_debug" ]; then
     echo "$curlCommand"
   fi
