@@ -67,6 +67,7 @@ if [ -z "$uri" ]; then
 fi
 if [ -z "$verbose" ]; then
 	verbose=" --fail "
+	pipe_debug=1
 fi
 
 while [ $# -gt 0 ]; do
