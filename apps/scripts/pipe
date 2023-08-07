@@ -19,11 +19,16 @@
 
 #main function that ends up being called by this client
 function do_curl() {
-  curlCommand="curl -u $user -s $verbose -S $opts $server$uri"
   if [ "$pipe_debug" ]; then
-    echo "$curlCommand"
+    set -x
   fi
-  eval "$curlCommand"
+  curl \
+    --user $user \
+    --show-error --silent \
+    $verbose \
+    --form "$cmd" \
+    $opts \
+    $server$uri
 }
 
 #function to generate transform arg1=val1,arg2=val2 into {"arg1":"val1","arg2":"val2"}
@@ -66,8 +71,8 @@ if [ -z "$uri" ]; then
 	uri=/apps/dx/scripts/exec.$ext
 fi
 if [ -z "$verbose" ]; then
-	verbose=" --fail "
-	pipe_debug=1
+	verbose="--fail"
+  pipe_debug=true
 fi
 
 while [ $# -gt 0 ]; do
@@ -89,13 +94,13 @@ while [ $# -gt 0 ]; do
                 h)  show_help; exit ;;
                 s)  server=$2; shift ;;
                 u)  user=$2; shift ;;
-		v)  verbose=' -v '; shift ;;
-                d)  opts="-F dryRun=true $opts";;
-                b)  opts="-F bindings='`generate_json "$2"`' $opts"; shift ;;
+		            v)  verbose="--verbose"; shift ;;
+                d)  opts="--form dryRun=true $opts";;
+                b)  opts="--form bindings='$(generate_json "$2")' $opts"; shift ;;
                 c)  uri=/apps/dx/scripts/exec.csv ;;
-                n)  opts="-F size=$2 $opts"; shift ;;
-		f)  opts="-F pipes_inputFile=@$2"; shift ;;
-                o)  opts="-F writer=$2 $opts"; shift ;;
+                n)  opts="--form size=$2 $opts"; shift ;;
+		            f)  opts="--form pipes_inputFile=@$2"; shift ;;
+                o)  opts="--form writer=$2 $opts"; shift ;;
                 *)  userfail "Unrecognized option." ;;
             esac
         done
@@ -107,9 +112,9 @@ while [ $# -gt 0 ]; do
 done
 
 if [ -f "$cmd" ]; then
-  opts="-F pipe_cmdfile=@$cmd $opts"
-  do_curl
+  cmd="pipe_cmdfile=@$cmd"
 else
-	opts="-F pipe_cmd=\"$cmd\" $opts"
-	do_curl
+	cmd="pipe_cmd=$cmd"
 fi
+
+do_curl
