@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - id: log
-      run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
+      run: echo "message=$(git log --no-merges -1 --oneline)" >> $GITHUB_OUTPUT
     - if: "contains(steps.log.outputs.message, '@releng')"
       run: echo "exiting...this is a CI commit" && exit 1
     - uses: actions/setup-java@v1
